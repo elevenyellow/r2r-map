@@ -93,6 +93,16 @@
     //
     //
     //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
 
 function pointyHexagonalCorner(center_x, center_y, size, i) {
     var angle_deg = 60 * i
@@ -103,19 +113,48 @@ function pointyHexagonalCorner(center_x, center_y, size, i) {
     ]
 }
 
+function getHexagonPoints(size) {
+    var points = []
+    for (var i=0; i<6; ++i) {
+        points.push(pointyHexagonalCorner(0, 0, size, i))
+    }
+    return points
+}
 
 function createHexagon(size, color) {
-    var heartShape = new THREE.Shape()
-    for (var i=0; i<6; ++i) {
-        var point = pointyHexagonalCorner(0, 0, size, i)
-        i === 0 ?
-            heartShape.moveTo( point[0], point[1] ) :
-            heartShape.lineTo( point[0], point[1] )
-    }
-    var geometry = new THREE.ShapeGeometry( heartShape );
+    var shape = new THREE.Shape()
+    var points = getHexagonPoints(size)
+    points.forEach(function(point, index) {
+        index === 0 ?
+            shape.moveTo( point[0], point[1] ) :
+            shape.lineTo( point[0], point[1] )
+    })
+
+
+
+
+    // // LINE MATERIAL
+    // shape.autoClose = true;
+    // var points = shape.getPoints();
+    // var spacedPoints = shape.getSpacedPoints( 50 );
+    // var geometryPoints = new THREE.BufferGeometry().setFromPoints( points );
+    // var geometrySpacedPoints = new THREE.BufferGeometry().setFromPoints( spacedPoints );
+    // // var mesh = new THREE.Points( geometrySpacedPoints, new THREE.PointsMaterial( { color: color, size: 1 } ) );
+    // var mesh = new THREE.Line( geometryPoints, new THREE.LineBasicMaterial( { color: color,
+    // 	linewidth: 20,
+    //  } ) );
+
+
+    var geometry = new THREE.ShapeGeometry( shape );
     var material = new THREE.MeshBasicMaterial( { color: color } );
+    // material.transparent = true
+    material.opacity = 0.2
     var mesh = new THREE.Mesh( geometry, material ) ;
-    mesh.position.y += .01
+
+
+
+     
+    mesh.position.y += 0.01
     mesh.rotation.x = - Math.PI / 2;
     return mesh
 }
@@ -131,7 +170,6 @@ function getPositionByCordinate(col, row, size) {
 function createAndPlaceHexagon(col, row, size, color) {
     var hexagon = createHexagon(size, color)
     var position = getPositionByCordinate(col, row, size)
-    console.log(position)
     hexagon.position.x = position[1]
     hexagon.position.z = -position[0]
     return hexagon
@@ -152,6 +190,12 @@ for (i=0;i<6;++i) {
 
 
 
+    //
+    //
+    //
+    //
+    //
+    //
     //
     //
     //
@@ -268,7 +312,7 @@ scene.add( mesh1 );
 
 
         // scene.add(new THREE.GridHelper(50, 100, 0xaaaaaa, 0x999999))
-scene.add(new THREE.AxesHelper(10))
+// scene.add(new THREE.AxesHelper(10))
 
 
 

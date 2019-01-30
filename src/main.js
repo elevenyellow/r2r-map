@@ -1,11 +1,28 @@
 import * as THREE from 'three'
 import * as d3 from './d3'
-import ThreeGameCamera from '/mnt/c/Users/enzo/drive/projects/three-game-camera/'
-import go from './code'
+import ThreeIsoGameCamera from '/mnt/c/Users/enzo/drive/projects/three-iso-game-camera/'
+import goCode from './code'
 
 const canvas = document.getElementById('canvas')
-const Iso = ThreeGameCamera({ canvas, THREE, d3 })
-const scene = Iso.scene
-const renderer = Iso.renderer
+const scene = new THREE.Scene()
+const renderer = new THREE.WebGLRenderer({
+    canvas,
+    alpha: true,
+    antialias: true
+})
+const camera = new THREE.PerspectiveCamera(
+    10, // fov
+    window.innerWidth / window.innerHeight, // aspect
+    1, // near
+    99999 // far
+)
+const GameCamera = new ThreeIsoGameCamera({
+    angleV: 35,
+    camera,
+    renderer,
+    THREE,
+    d3
+})
+GameCamera.startRender(scene)
 
-go({ scene, renderer })
+goCode({ scene, renderer })

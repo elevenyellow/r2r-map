@@ -43,7 +43,7 @@ function createHexagon(size, color) {
     material.opacity = 0.2
     const mesh = new THREE.Mesh(geometry, material)
 
-    mesh.position.y += 0.01
+    mesh.position.y += 0.1
     mesh.rotation.x = -Math.PI / 2
     return mesh
 }
@@ -217,6 +217,7 @@ export default function go({ scene, renderer }) {
     const geometry = new THREE.PlaneBufferGeometry(100, 100)
 
     var mesh1 = new THREE.Mesh(geometry, material1)
+    mesh1.position.y -= 0.2
     mesh1.rotation.x = -Math.PI / 2
     mesh1.scale.set(200, 200, 200)
     scene.add(mesh1)

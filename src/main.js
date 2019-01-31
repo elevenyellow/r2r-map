@@ -12,9 +12,9 @@ const renderer = three.renderer
 addTerrain({ scene, renderer, url: 'assets/tile2.png' })
 
 const spriteList = [
-    { id: 'tree1', frecuencyRatio: 20 },
+    { id: 'tree1', frecuencyRatio: 8 },
     { id: 'tree2', frecuencyRatio: 8 },
-    { id: 'tree3', frecuencyRatio: 20 },
+    { id: 'tree3', frecuencyRatio: 40 },
     { id: 'tree4', frecuencyRatio: 8 },
     { id: 'bush1', frecuencyRatio: 5 },
     // { id: 'rock1', frecuencyRatio: 2 },
@@ -23,7 +23,7 @@ const spriteList = [
     { id: 'trunk2', frecuencyRatio: 10 }
 ]
 const sprites = generateRandomDecorativeSprites({
-    quantity: 400,
+    quantity: 500,
     sprites: spriteList,
     point1: { x: -100, z: -100 },
     point2: { x: 100, z: 100 }
@@ -51,6 +51,16 @@ addDecorativeSprite({
     element: {
         url: 'assets/village.png',
         scale: { x: 10, y: 10, z: 10 }
+    }
+})
+
+addDecorativeSprite({
+    scene,
+    x: 10,
+    z: 5,
+    element: {
+        url: 'assets/cottage.png',
+        scale: { x: 4, y: 4, z: 4 }
     }
 })
 

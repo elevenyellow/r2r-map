@@ -199,29 +199,6 @@ export default function go({ scene, renderer }) {
     sprite9.position.z += 1.25
     scene.add(sprite9)
 
-    var maxAnisotropy = renderer.capabilities.getMaxAnisotropy()
-
-    // var texture1 = textureLoader.load( "assets/crate.gif" );
-    var texture1 = textureLoader.load('assets/tile2.png')
-    // var texture1 = textureLoader.load( "assets/Green_grass_ground_land_dirt_aerial_top_seamless_texture.jpg" );
-    // var texture1 = textureLoader.load( "assets/grass.jpg" );
-    var material1 = new THREE.MeshBasicMaterial({
-        color: 0xffffff,
-        map: texture1
-    })
-
-    texture1.anisotropy = maxAnisotropy
-    texture1.wrapS = texture1.wrapT = THREE.RepeatWrapping
-    texture1.repeat.set(512, 512)
-
-    const geometry = new THREE.PlaneBufferGeometry(100, 100)
-
-    var mesh1 = new THREE.Mesh(geometry, material1)
-    mesh1.position.y -= 0.2
-    mesh1.rotation.x = -Math.PI / 2
-    mesh1.scale.set(200, 200, 200)
-    scene.add(mesh1)
-
     // scene.add(new THREE.GridHelper(50, 100, 0xaaaaaa, 0x999999))
     // scene.add(new THREE.AxesHelper(10))
 }

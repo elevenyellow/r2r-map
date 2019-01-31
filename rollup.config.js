@@ -2,6 +2,7 @@ import babel from 'rollup-plugin-babel'
 import resolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
 import { uglify } from 'rollup-plugin-uglify'
+import json from 'rollup-plugin-json'
 
 // `npm run build` -> `production` is true
 // `npm run dev` -> `production` is false
@@ -15,6 +16,9 @@ export default {
         sourcemap: true
     },
     plugins: [
+        json({
+            exclude: 'node_modules/**'
+        }),
         resolve(), // tells Rollup how to find date-fns in node_modules
         babel({
             exclude: 'node_modules/**'

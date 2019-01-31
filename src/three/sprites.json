@@ -13,7 +13,7 @@
     },
     "tree4": {
         "url": "assets/obj/tree4.png",
-        "scale": { "x": 1, "y": 1, "z": 1 }
+        "scale": { "x": 1.25, "y": 1.25, "z": 1.25 }
     },
     "bush1": {
         "url": "assets/obj/bush1.png",

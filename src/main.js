@@ -1,6 +1,8 @@
 import { createThreeWorld } from './three/'
 import { addTerrain, addDecorativeSprite } from './three/scenario'
-import sprites from './three/sprites'
+import spritesConfig from './three/sprites'
+import { generateRandomDecorativeSprites } from './server'
+import go from './code'
 
 const canvas = document.getElementById('canvas')
 const three = createThreeWorld(canvas)
@@ -8,17 +10,50 @@ const scene = three.scene
 const renderer = three.renderer
 
 addTerrain({ scene, renderer, url: 'assets/tile2.png' })
-addDecorativeSprite({ scene, x: 0, z: 0, element: sprites.tree1 })
-addDecorativeSprite({ scene, x: 0, z: 1, element: sprites.tree2 })
-addDecorativeSprite({ scene, x: 1, z: 0, element: sprites.tree3 })
-addDecorativeSprite({ scene, x: 1, z: 1, element: sprites.tree4 })
 
-addDecorativeSprite({ scene, x: 2, z: 2, element: sprites.bush1 })
-addDecorativeSprite({ scene, x: 1, z: -1, element: sprites.rock1 })
-addDecorativeSprite({ scene, x: -1, z: 1, element: sprites.rock2 })
-addDecorativeSprite({ scene, x: -1, z: -1, element: sprites.trunk1 })
-addDecorativeSprite({ scene, x: -2, z: -2, element: sprites.trunk2 })
-addDecorativeSprite({ scene, x: 4, z: 3, element: sprites.tree3 })
+const spriteList = [
+    { id: 'tree1', frecuencyRatio: 20 },
+    { id: 'tree2', frecuencyRatio: 8 },
+    { id: 'tree3', frecuencyRatio: 20 },
+    { id: 'tree4', frecuencyRatio: 8 },
+    { id: 'bush1', frecuencyRatio: 5 },
+    // { id: 'rock1', frecuencyRatio: 2 },
+    { id: 'rock2', frecuencyRatio: 3 },
+    { id: 'trunk1', frecuencyRatio: 10 },
+    { id: 'trunk2', frecuencyRatio: 10 }
+]
+const sprites = generateRandomDecorativeSprites({
+    quantity: 400,
+    sprites: spriteList,
+    point1: { x: -100, z: -100 },
+    point2: { x: 100, z: 100 }
+})
+sprites.forEach(sprite => {
+    addDecorativeSprite({
+        scene,
+        x: sprite.x,
+        z: sprite.z,
+        element: spritesConfig[sprite.id]
+    })
+})
+
+// addDecorativeSprite({
+//     scene,
+//     x: 0,
+//     z: 0,
+//     element: spritesConfig.tree3
+// })
+
+addDecorativeSprite({
+    scene,
+    x: 0,
+    z: 0,
+    element: {
+        url: 'assets/village.png',
+        scale: { x: 10, y: 10, z: 10 }
+    }
+})
 
 // scene.add(new three.isoCamera.THREE.GridHelper(50, 100, 0xaaaaaa, 0x999999))
 // scene.add(new three.isoCamera.THREE.AxesHelper(10))
+// go({ scene })

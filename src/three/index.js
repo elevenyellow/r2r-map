@@ -10,13 +10,17 @@ export function createThreeWorld(canvas) {
         antialias: true
     })
     const camera = new THREE.PerspectiveCamera(
-        10, // fov
+        5, // fov
         window.innerWidth / window.innerHeight, // aspect
         1, // near
         99999 // far
     )
+    const distance = 350
     const isoCamera = new ThreeIsoGameCamera({
         angleV: 35,
+        distance,
+        distanceMin: distance / 1.5,
+        distanceMax: distance * 2,
         camera,
         renderer,
         THREE,

@@ -1,9 +1,9 @@
 import * as THREE from 'three'
 
-export function addTerrain({ renderer, scene, texture }) {
+export function addTerrain({ renderer, scene, url }) {
     const geometry = new THREE.PlaneBufferGeometry(100, 100)
     const maxAnisotropy = renderer.capabilities.getMaxAnisotropy()
-    const textureLoaded = new THREE.TextureLoader().load(texture)
+    const textureLoaded = new THREE.TextureLoader().load(url)
     const material = new THREE.MeshBasicMaterial({
         color: 0xffffff,
         map: textureLoaded
@@ -20,17 +20,18 @@ export function addTerrain({ renderer, scene, texture }) {
     return mesh
 }
 
+const textureLoader = new THREE.TextureLoader()
 export function addDecorativeSprite({ scene, element, x, z }) {
-    const textureLoaded = new new THREE.TextureLoader().load(element.texture)
+    const textureLoaded = textureLoader.load(element.url)
     const material = new THREE.SpriteMaterial({
         map: textureLoaded,
         color: 0xffffff
     })
     const sprite = new THREE.Sprite(material)
     sprite.scale.set(element.scale.x, element.scale.y, element.scale.z)
-    sprite.position.y = element.y
+    sprite.position.y = element.scale.y / 2
     sprite.position.x = x
-    sprite.position.x = z
+    sprite.position.z = z
     scene.add(sprite)
     return sprite
 }

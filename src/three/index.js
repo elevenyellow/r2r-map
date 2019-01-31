@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import * as d3 from './d3'
 import ThreeIsoGameCamera from '/mnt/c/Users/enzo/drive/projects/three-iso-game-camera/'
 
-export default function(canvas) {
+export function createThreeWorld(canvas) {
     const scene = new THREE.Scene()
     const renderer = new THREE.WebGLRenderer({
         canvas,

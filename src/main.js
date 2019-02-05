@@ -1,5 +1,9 @@
 import { createThreeWorld } from './three/'
-import { addTerrain, addDecorativeSprite } from './three/scenario'
+import {
+    addTerrain,
+    addDecorativeMapElement,
+    addInteractiveMapElement
+} from './three/scenario'
 import spritesConfig from './three/sprites'
 import { generateRandomDecorativeSprites } from './server'
 import go from './code'
@@ -26,10 +30,11 @@ const sprites = generateRandomDecorativeSprites({
     quantity: 500,
     sprites: spriteList,
     point1: { x: -100, z: -100 },
-    point2: { x: 100, z: 100 }
+    point2: { x: 100, z: 100 },
+    ignoreAreas: [{ x: 0, z: 0, radius: 5 }, { x: 10, z: 5, radius: 2 }]
 })
 sprites.forEach(sprite => {
-    addDecorativeSprite({
+    addDecorativeMapElement({
         scene,
         x: sprite.x,
         z: sprite.z,
@@ -37,14 +42,7 @@ sprites.forEach(sprite => {
     })
 })
 
-// addDecorativeSprite({
-//     scene,
-//     x: 0,
-//     z: 0,
-//     element: spritesConfig.tree3
-// })
-
-addDecorativeSprite({
+addInteractiveMapElement({
     scene,
     x: 0,
     z: 0,
@@ -54,7 +52,7 @@ addDecorativeSprite({
     }
 })
 
-addDecorativeSprite({
+addInteractiveMapElement({
     scene,
     x: 10,
     z: 5,
@@ -65,5 +63,4 @@ addDecorativeSprite({
 })
 
 // scene.add(new three.isoCamera.THREE.GridHelper(50, 100, 0xaaaaaa, 0x999999))
-// scene.add(new three.isoCamera.THREE.AxesHelper(10))
 // go({ scene })

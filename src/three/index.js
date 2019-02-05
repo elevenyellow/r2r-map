@@ -17,9 +17,10 @@ export function createThreeWorld(canvas) {
     )
     const distance = 1000
     const isoCamera = new ThreeIsoGameCamera({
+        angleH: 45,
         angleV: 35,
         distance,
-        distanceMin: distance / 1.5,
+        // distanceMin: distance / 1.5,
         distanceMax: distance * 2,
         camera,
         renderer,

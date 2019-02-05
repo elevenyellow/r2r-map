@@ -1,8 +1,9 @@
 import { createThreeWorld } from './three/'
 import {
     addTerrain,
-    addDecorativeMapElement,
-    addInteractiveMapElement
+    addDecorativeElement,
+    addBuildingElement,
+    addUiElement
 } from './three/scenario'
 import spritesConfig from './three/sprites'
 import { generateRandomDecorativeSprites } from './server'
@@ -34,7 +35,7 @@ const sprites = generateRandomDecorativeSprites({
     ignoreAreas: [{ x: 0, z: 0, radius: 5 }, { x: 10, z: 5, radius: 2 }]
 })
 sprites.forEach(sprite => {
-    addDecorativeMapElement({
+    addDecorativeElement({
         scene,
         x: sprite.x,
         z: sprite.z,
@@ -42,7 +43,7 @@ sprites.forEach(sprite => {
     })
 })
 
-addInteractiveMapElement({
+addBuildingElement({
     scene,
     x: 0,
     z: 0,
@@ -52,13 +53,35 @@ addInteractiveMapElement({
     }
 })
 
-addInteractiveMapElement({
+addBuildingElement({
     scene,
-    x: 10,
-    z: 5,
+    x: 0,
+    z: 15,
     element: {
         url: 'assets/cottage.png',
         scale: { x: 4, y: 4, z: 4 }
+    }
+})
+
+// addUiElement({
+//     scene,
+//     x: 5,
+//     y: 0,
+//     z: 5,
+//     element: {
+//         url: 'assets/title-background.png',
+//         scale: { x: 5, y: 5, z: 5 }
+//     }
+// })
+
+addUiElement({
+    scene,
+    x: 8,
+    y: 2,
+    z: 8,
+    element: {
+        url: 'assets/title-background.png',
+        scale: { x: 0.005, y: 0.005, z: 0.005 }
     }
 })
 

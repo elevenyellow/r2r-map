@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import SpriteText from 'three-spritetext'
 
 const textureLoader = new THREE.TextureLoader()
 
@@ -22,7 +23,7 @@ export function addTerrain({ renderer, scene, url }) {
     return mesh
 }
 
-export function addDecorativeElement({ scene, element, x, z }) {
+export function addDecorativeSprite({ scene, element, x, z }) {
     const textureLoaded = textureLoader.load(element.url)
     const material = new THREE.SpriteMaterial({
         map: textureLoaded
@@ -37,7 +38,7 @@ export function addDecorativeElement({ scene, element, x, z }) {
 }
 
 // https://gamedev.stackexchange.com/questions/167762/how-to-avoid-the-cutoff-of-a-sprite-when-overlapping-in-a-terrain?noredirect=1#comment298081_167762
-export function addBuildingElement({ scene, element, x, z }) {
+export function addBuildingSprite({ scene, element, x, z }) {
     const textureLoaded = textureLoader.load(element.url)
     const material = new THREE.SpriteMaterial({
         map: textureLoaded
@@ -57,7 +58,7 @@ export function addBuildingElement({ scene, element, x, z }) {
     return sprite
 }
 
-export function addUiElement({ scene, element, x, z }) {
+export function addUiSprite({ scene, element, x, z }) {
     const textureLoaded = textureLoader.load(element.url)
     const material = new THREE.SpriteMaterial({
         map: textureLoaded
@@ -75,5 +76,25 @@ export function addUiElement({ scene, element, x, z }) {
     // helper.position.z = z
     // scene.add(helper)
 
+    return sprite
+}
+
+export function addTextSprite({
+    scene,
+    text,
+    color = 'white',
+    textHeight = 1,
+    x,
+    z
+}) {
+    const sprite = new SpriteText(text)
+    sprite.textHeight = textHeight
+    sprite.fontSize = 80
+    sprite.color = color
+    sprite.fontFace = 'Allan'
+    sprite.position.y = 10
+    sprite.position.x = x + 10
+    sprite.position.z = z + 10
+    scene.add(sprite)
     return sprite
 }

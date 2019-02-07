@@ -1,9 +1,10 @@
 import { createThreeWorld } from './three/'
 import {
     addTerrain,
-    addDecorativeElement,
-    addBuildingElement,
-    addUiElement
+    addDecorativeSprite,
+    addBuildingSprite,
+    addUiSprite,
+    addTextSprite
 } from './three/scenario'
 import spritesConfig from './three/sprites'
 import { generateRandomDecorativeSprites } from './server'
@@ -33,10 +34,10 @@ const sprites = generateRandomDecorativeSprites({
     sprites: spriteList,
     point1: { x: -100, z: -100 },
     point2: { x: 100, z: 100 },
-    ignoreAreas: [{ x: 0, z: 0, radius: 5 }, { x: 10, z: 5, radius: 2 }]
+    ignoreAreas: [{ x: 0, z: 0, radius: 5 }, { x: 10, z: 5, radius: 3 }]
 })
 sprites.forEach(sprite => {
-    addDecorativeElement({
+    addDecorativeSprite({
         scene: sceneSprites,
         x: sprite.x,
         z: sprite.z,
@@ -44,7 +45,7 @@ sprites.forEach(sprite => {
     })
 })
 
-addBuildingElement({
+addBuildingSprite({
     scene: sceneSprites,
     x: 0,
     z: 0,
@@ -54,7 +55,7 @@ addBuildingElement({
     }
 })
 
-addBuildingElement({
+addBuildingSprite({
     scene: sceneSprites,
     x: 0,
     z: 15,
@@ -64,7 +65,7 @@ addBuildingElement({
     }
 })
 
-addUiElement({
+addUiSprite({
     scene: sceneSprites,
     x: 6,
     z: 6,
@@ -74,14 +75,12 @@ addUiElement({
     }
 })
 
-addUiElement({
+addTextSprite({
     scene: sceneSprites,
-    x: 9,
-    z: 9,
-    element: {
-        url: 'assets/title-background.png',
-        scale: { x: 6, y: 6, z: 6 }
-    }
+    x: 6,
+    z: 6,
+    text: 'ENZO_MOLA_MIL_NICK',
+    textHeight: 0.8
 })
 
 // scene.add(new three.isoCamera.THREE.GridHelper(50, 100, 0xaaaaaa, 0x999999))

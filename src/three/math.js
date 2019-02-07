@@ -1,21 +1,19 @@
 import * as THREE from 'three'
 
+// https://stackoverflow.com/questions/27409074/converting-3d-position-to-2d-screen-position-r69
 export function position3dToScreen2d({
-    object,
+    x,
+    y,
+    z,
     camera,
-    canvasWith,
+    canvasWidth,
     canvasHeight
 }) {
-    const vector = new THREE.Vector3()
-
-    // TODO: need to update this when resize window
-    const widthHalf = canvasWith / 2
+    const vector = new THREE.Vector3(x, y, z)
+    const widthHalf = canvasWidth / 2
     const heightHalf = canvasHeight / 2
 
-    object.updateMatrixWorld()
-    vector.setFromMatrixPosition(object.matrixWorld)
     vector.project(camera)
-
     vector.x = vector.x * widthHalf + widthHalf
     vector.y = -(vector.y * heightHalf) + heightHalf
 

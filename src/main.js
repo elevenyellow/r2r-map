@@ -40,6 +40,7 @@ const sprites = generateRandomDecorativeSprites({
     point2: { x: 100, z: 100 },
     ignoreAreas: [{ x: 0, z: 0, radius: 5 }, { x: 10, z: 5, radius: 3 }]
 })
+
 sprites.forEach(sprite => {
     addDecorativeSprite({
         scene: sceneSprites,
@@ -61,7 +62,7 @@ addBuildingSprite({
 
 const mysprite = addBuildingSprite({
     scene: sceneSprites,
-    x: 0,
+    x: 10,
     z: 15,
     element: {
         url: 'assets/cottage.png',
@@ -92,15 +93,27 @@ addTextSprite({
 
 function updateUi() {
     const proj = position3dToScreen2d({
-        object: mysprite,
+        x: mysprite.position.x,
+        y: mysprite.position.y,
+        z: mysprite.position.z,
         camera,
-        canvasWith: window.innerWidth,
+        canvasWidth: window.innerWidth,
         canvasHeight: window.innerHeight
     })
     const divElem = document.getElementById('overlay')
     divElem.style.left = proj.x + 'px'
     divElem.style.top = proj.y + 'px'
-    // console.log(proj)
+
+    // console.log(
+    //     position3dToScreen2d({
+    //         x: 100,
+    //         y: 0,
+    //         z: 100,
+    //         camera,
+    //         canvasWidth: window.innerWidth,
+    //         canvasHeight: window.innerHeight
+    //     })
+    // )
 }
 
 // isoCamera.onChange = updateUi

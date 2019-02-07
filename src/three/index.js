@@ -26,7 +26,8 @@ export function createThreeWorld(canvas) {
         camera,
         renderer,
         THREE,
-        d3
+        d3,
+        onChange: () => true
     })
 
     return {

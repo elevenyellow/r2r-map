@@ -11,10 +11,11 @@ import go from './code'
 
 const canvas = document.getElementById('canvas')
 const three = createThreeWorld(canvas)
-const scene = three.scene
+const sceneTerrain = three.sceneTerrain
+const sceneSprites = three.sceneSprites
 const renderer = three.renderer
 
-addTerrain({ scene, renderer, url: 'assets/tile2.png' })
+addTerrain({ scene: sceneTerrain, renderer, url: 'assets/tile2.png' })
 
 const spriteList = [
     { id: 'tree1', frecuencyRatio: 8 },
@@ -36,7 +37,7 @@ const sprites = generateRandomDecorativeSprites({
 })
 sprites.forEach(sprite => {
     addDecorativeElement({
-        scene,
+        scene: sceneSprites,
         x: sprite.x,
         z: sprite.z,
         element: spritesConfig[sprite.id]
@@ -44,7 +45,7 @@ sprites.forEach(sprite => {
 })
 
 addBuildingElement({
-    scene,
+    scene: sceneSprites,
     x: 0,
     z: 0,
     element: {
@@ -54,7 +55,7 @@ addBuildingElement({
 })
 
 addBuildingElement({
-    scene,
+    scene: sceneSprites,
     x: 0,
     z: 15,
     element: {
@@ -63,25 +64,23 @@ addBuildingElement({
     }
 })
 
-// addUiElement({
-//     scene,
-//     x: 5,
-//     y: 0,
-//     z: 5,
-//     element: {
-//         url: 'assets/title-background.png',
-//         scale: { x: 5, y: 5, z: 5 }
-//     }
-// })
-
 addUiElement({
-    scene,
-    x: 8,
-    y: 2,
-    z: 8,
+    scene: sceneSprites,
+    x: 6,
+    z: 6,
     element: {
         url: 'assets/title-background.png',
-        scale: { x: 0.005, y: 0.005, z: 0.005 }
+        scale: { x: 6, y: 6, z: 6 }
+    }
+})
+
+addUiElement({
+    scene: sceneSprites,
+    x: 9,
+    z: 9,
+    element: {
+        url: 'assets/title-background.png',
+        scale: { x: 6, y: 6, z: 6 }
     }
 })
 

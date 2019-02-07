@@ -25,8 +25,7 @@ export function addTerrain({ renderer, scene, url }) {
 export function addDecorativeElement({ scene, element, x, z }) {
     const textureLoaded = textureLoader.load(element.url)
     const material = new THREE.SpriteMaterial({
-        map: textureLoaded,
-        color: 0xffffff
+        map: textureLoaded
     })
     const sprite = new THREE.Sprite(material)
     sprite.scale.set(element.scale.x, element.scale.y, element.scale.z)
@@ -38,48 +37,43 @@ export function addDecorativeElement({ scene, element, x, z }) {
 }
 
 // https://gamedev.stackexchange.com/questions/167762/how-to-avoid-the-cutoff-of-a-sprite-when-overlapping-in-a-terrain?noredirect=1#comment298081_167762
-export function addBuildingElement({ scene, element, x = 0, y = 0, z = 0 }) {
+export function addBuildingElement({ scene, element, x, z }) {
     const textureLoaded = textureLoader.load(element.url)
     const material = new THREE.SpriteMaterial({
-        map: textureLoaded,
-        color: 0xffffff
+        map: textureLoaded
+        // depthTest: false
     })
-
     const sprite = new THREE.Sprite(material)
     sprite.scale.set(element.scale.x, element.scale.y, element.scale.z)
-    sprite.position.x = x + element.scale.x / 2
-    sprite.position.y = y + element.scale.y / 2
-    sprite.position.z = z + element.scale.z / 2
-    console.log(sprite.position.y)
+    sprite.position.x = x
+    sprite.position.z = z
     scene.add(sprite)
 
-    const helper = new THREE.AxesHelper(10)
-    helper.position.x = x
-    helper.position.z = z
-    scene.add(helper)
+    // const helper = new THREE.AxesHelper(10)
+    // helper.position.x = x
+    // helper.position.z = z
+    // scene.add(helper)
 
     return sprite
 }
 
-export function addUiElement({ scene, element, x = 0, y = 0, z = 0 }) {
+export function addUiElement({ scene, element, x, z }) {
     const textureLoaded = textureLoader.load(element.url)
     const material = new THREE.SpriteMaterial({
-        map: textureLoaded,
-        color: 0xffffff,
-        sizeAttenuation: false
+        map: textureLoaded
+        // depthTest: false
     })
     const sprite = new THREE.Sprite(material)
     sprite.scale.set(element.scale.x, element.scale.y, element.scale.z)
-    sprite.position.x = x + element.scale.x / 2
-    sprite.position.y = y + element.scale.y / 2
-    sprite.position.z = z + element.scale.z / 2
-    console.log(sprite.position.y)
+    sprite.position.y = 10
+    sprite.position.x = x + 10
+    sprite.position.z = z + 10
     scene.add(sprite)
 
-    const helper = new THREE.AxesHelper(10)
-    helper.position.x = x
-    helper.position.z = z
-    scene.add(helper)
+    // const helper = new THREE.AxesHelper(10)
+    // helper.position.x = x
+    // helper.position.z = z
+    // scene.add(helper)
 
     return sprite
 }

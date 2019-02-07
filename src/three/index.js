@@ -28,7 +28,6 @@ export function createThreeWorld(canvas) {
         THREE,
         d3
     })
-    isoCamera.startRender(sceneTerrain, sceneSprites)
 
     return {
         renderer,

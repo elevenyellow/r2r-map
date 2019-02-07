@@ -89,7 +89,7 @@ export function addTextSprite({
 }) {
     const sprite = new SpriteText(text)
     sprite.textHeight = textHeight
-    sprite.fontSize = 80
+    sprite.fontSize = 100
     sprite.color = color
     sprite.fontFace = 'Allan'
     sprite.position.y = 10

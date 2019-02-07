@@ -6,15 +6,19 @@ import {
     addUiSprite,
     addTextSprite
 } from './three/scenario'
+import { position3dToScreen2d } from './three/math'
 import spritesConfig from './three/sprites'
 import { generateRandomDecorativeSprites } from './server'
 import go from './code'
 
 const canvas = document.getElementById('canvas')
-const three = createThreeWorld(canvas)
-const sceneTerrain = three.sceneTerrain
-const sceneSprites = three.sceneSprites
-const renderer = three.renderer
+const {
+    renderer,
+    camera,
+    isoCamera,
+    sceneTerrain,
+    sceneSprites
+} = createThreeWorld(canvas)
 
 addTerrain({ scene: sceneTerrain, renderer, url: 'assets/tile2.png' })
 
@@ -55,7 +59,7 @@ addBuildingSprite({
     }
 })
 
-addBuildingSprite({
+const mysprite = addBuildingSprite({
     scene: sceneSprites,
     x: 0,
     z: 15,
@@ -79,9 +83,36 @@ addTextSprite({
     scene: sceneSprites,
     x: 6,
     z: 6,
-    text: 'ENZO_MOLA_MIL_NICK',
+    text: 'ENZO',
     textHeight: 0.8
 })
 
 // scene.add(new three.isoCamera.THREE.GridHelper(50, 100, 0xaaaaaa, 0x999999))
 // go({ scene })
+
+function updateUi() {
+    const proj = position3dToScreen2d({
+        object: mysprite,
+        camera,
+        canvasWith: window.innerWidth,
+        canvasHeight: window.innerHeight
+    })
+    const divElem = document.getElementById('overlay')
+    divElem.style.left = proj.x + 'px'
+    divElem.style.top = proj.y + 'px'
+    // console.log(proj)
+}
+
+// isoCamera.onChange = updateUi
+
+function animate() {
+    // this.renderer.autoClear = true
+    ;[sceneTerrain, sceneSprites].forEach(scene => {
+        renderer.render(scene, camera)
+        renderer.clearDepth()
+        renderer.autoClear = false
+    })
+    updateUi()
+    requestAnimationFrame(animate)
+}
+animate()

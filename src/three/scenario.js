@@ -58,43 +58,43 @@ export function addBuildingSprite({ scene, element, x, z }) {
     return sprite
 }
 
-export function addUiSprite({ scene, element, x, z }) {
-    const textureLoaded = textureLoader.load(element.url)
-    const material = new THREE.SpriteMaterial({
-        map: textureLoaded
-        // depthTest: false
-    })
-    const sprite = new THREE.Sprite(material)
-    sprite.scale.set(element.scale.x, element.scale.y, element.scale.z)
-    sprite.position.y = 10
-    sprite.position.x = x + 10
-    sprite.position.z = z + 10
-    scene.add(sprite)
+// export function addUiSprite({ scene, element, x, z }) {
+//     const textureLoaded = textureLoader.load(element.url)
+//     const material = new THREE.SpriteMaterial({
+//         map: textureLoaded
+//         // depthTest: false
+//     })
+//     const sprite = new THREE.Sprite(material)
+//     sprite.scale.set(element.scale.x, element.scale.y, element.scale.z)
+//     sprite.position.y = 10
+//     sprite.position.x = x + 10
+//     sprite.position.z = z + 10
+//     scene.add(sprite)
 
-    // const helper = new THREE.AxesHelper(10)
-    // helper.position.x = x
-    // helper.position.z = z
-    // scene.add(helper)
+//     // const helper = new THREE.AxesHelper(10)
+//     // helper.position.x = x
+//     // helper.position.z = z
+//     // scene.add(helper)
 
-    return sprite
-}
+//     return sprite
+// }
 
-export function addTextSprite({
-    scene,
-    text,
-    color = 'white',
-    textHeight = 1,
-    x,
-    z
-}) {
-    const sprite = new SpriteText(text)
-    sprite.textHeight = textHeight
-    sprite.fontSize = 100
-    sprite.color = color
-    sprite.fontFace = 'Allan'
-    sprite.position.y = 10
-    sprite.position.x = x + 10
-    sprite.position.z = z + 10
-    scene.add(sprite)
-    return sprite
-}
+// export function addTextSprite({
+//     scene,
+//     text,
+//     color = 'white',
+//     textHeight = 1,
+//     x,
+//     z
+// }) {
+//     const sprite = new SpriteText(text)
+//     sprite.textHeight = textHeight
+//     sprite.fontSize = 100
+//     sprite.color = color
+//     sprite.fontFace = 'Allan'
+//     sprite.position.y = 10
+//     sprite.position.x = x + 10
+//     sprite.position.z = z + 10
+//     scene.add(sprite)
+//     return sprite
+// }

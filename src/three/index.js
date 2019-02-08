@@ -3,6 +3,8 @@ import * as d3 from './d3'
 import ThreeIsoGameCamera from '/mnt/c/Users/enzo/drive/projects/three-iso-game-camera/'
 
 export function createThreeWorld(canvas) {
+    const canvasWidth = window.innerWidth
+    const canvasHeight = window.innerHeight
     const sceneTerrain = new THREE.Scene()
     const sceneSprites = new THREE.Scene()
     const renderer = new THREE.WebGLRenderer({
@@ -12,7 +14,7 @@ export function createThreeWorld(canvas) {
     })
     const camera = new THREE.PerspectiveCamera(
         2, // fov
-        window.innerWidth / window.innerHeight, // aspect
+        canvasWidth / canvasHeight, // aspect
         1, // near
         99999 // far
     )
@@ -24,10 +26,33 @@ export function createThreeWorld(canvas) {
         // distanceMin: distance / 1.5,
         distanceMax: distance * 2,
         camera,
-        renderer,
+        domElement: canvas,
+        canvasWidth,
+        canvasHeight,
         THREE,
         d3,
-        onChange: () => true
+        onChange: e => {
+            // console.log(e.transform)
+            return true
+        }
+    })
+
+    renderer.setPixelRatio(window.devicePixelRatio)
+    renderer.setSize(canvasWidth, canvasHeight)
+
+    //
+    //
+    //
+    // onresize
+    window.addEventListener('resize', e => {
+        const canvasWidth = window.innerWidth
+        const canvasHeight = window.innerHeight
+        isoCamera.canvasWidth = canvasWidth
+        isoCamera.canvasHeight = canvasHeight
+        isoCamera.updateCameraPosition()
+        renderer.setSize(canvasWidth, canvasHeight)
+        camera.aspect = canvasWidth / canvasHeight
+        camera.updateProjectionMatrix()
     })
 
     return {

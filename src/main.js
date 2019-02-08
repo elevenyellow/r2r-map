@@ -70,53 +70,40 @@ const mysprite = addBuildingSprite({
     }
 })
 
-addUiSprite({
-    scene: sceneSprites,
-    x: 6,
-    z: 6,
-    element: {
-        url: 'assets/title-background.png',
-        scale: { x: 6, y: 6, z: 6 }
-    }
-})
+// addUiSprite({
+//     scene: sceneSprites,
+//     x: 6,
+//     z: 6,
+//     element: {
+//         url: 'assets/title-background.png',
+//         scale: { x: 6, y: 6, z: 6 }
+//     }
+// })
 
-addTextSprite({
-    scene: sceneSprites,
-    x: 6,
-    z: 6,
-    text: 'ENZO',
-    textHeight: 0.8
-})
+// addTextSprite({
+//     scene: sceneSprites,
+//     x: 6,
+//     z: 6,
+//     text: 'ENZO',
+//     textHeight: 0.8
+// })
 
 // scene.add(new three.isoCamera.THREE.GridHelper(50, 100, 0xaaaaaa, 0x999999))
 // go({ scene })
 
 function updateUi() {
-    const proj = position3dToScreen2d({
-        x: mysprite.position.x,
-        y: mysprite.position.y,
-        z: mysprite.position.z,
-        camera,
-        canvasWidth: window.innerWidth,
-        canvasHeight: window.innerHeight
-    })
-    const divElem = document.getElementById('overlay')
-    divElem.style.left = proj.x + 'px'
-    divElem.style.top = proj.y + 'px'
-
-    // console.log(
-    //     position3dToScreen2d({
-    //         x: 100,
-    //         y: 0,
-    //         z: 100,
-    //         camera,
-    //         canvasWidth: window.innerWidth,
-    //         canvasHeight: window.innerHeight
-    //     })
-    // )
+    // const proj = position3dToScreen2d({
+    //     x: mysprite.position.x,
+    //     y: mysprite.position.y,
+    //     z: mysprite.position.z,
+    //     camera,
+    //     canvasWidth: window.innerWidth,
+    //     canvasHeight: window.innerHeight
+    // })
+    // const divElem = document.getElementById('overlay')
+    // divElem.style.left = proj.x + 'px'
+    // divElem.style.top = proj.y + 'px'
 }
-
-// isoCamera.onChange = updateUi
 
 function animate() {
     // this.renderer.autoClear = true
@@ -128,4 +115,5 @@ function animate() {
     updateUi()
     requestAnimationFrame(animate)
 }
+// isoCamera.onChange = updateUi
 animate()

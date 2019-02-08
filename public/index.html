@@ -18,18 +18,20 @@
                 width: 100%;
                 height: 100%;
             }
-            #overlay {
-                width: 100px;
-                height: 100px;
+            #ui {
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
                 position: absolute;
-                background: red;
+                background: rgba(255, 255, 255, 0.5);
                 pointer-events: none;
             }
         </style>
     </head>
     <body>
-        <div id="overlay"></div>
         <canvas id="canvas"></canvas>
+        <div id="ui"></div>
     </body>
     <script src="bundle.js"></script>
 </html>

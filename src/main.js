@@ -2,16 +2,15 @@ import { createThreeWorld } from './three/'
 import {
     addTerrain,
     addDecorativeSprite,
-    addBuildingSprite,
-    addUiSprite,
-    addTextSprite
+    addBuildingSprite
 } from './three/scenario'
-import { position3dToScreen2d } from './three/math'
 import spritesConfig from './three/sprites'
+import { position3dToScreen2d } from './three/math'
+import { createSmartDiv, createPlayerTitle } from './ui'
 import { generateRandomDecorativeSprites } from './server'
-import go from './code'
 
 const canvas = document.getElementById('canvas')
+const ui = document.getElementById('ui')
 const {
     renderer,
     camera,
@@ -50,7 +49,7 @@ sprites.forEach(sprite => {
     })
 })
 
-addBuildingSprite({
+const mysprite = addBuildingSprite({
     scene: sceneSprites,
     x: 0,
     z: 0,
@@ -60,49 +59,30 @@ addBuildingSprite({
     }
 })
 
-const mysprite = addBuildingSprite({
+addBuildingSprite({
     scene: sceneSprites,
     x: 10,
-    z: 15,
+    z: 5,
     element: {
         url: 'assets/cottage.png',
         scale: { x: 4, y: 4, z: 4 }
     }
 })
 
-// addUiSprite({
-//     scene: sceneSprites,
-//     x: 6,
-//     z: 6,
-//     element: {
-//         url: 'assets/title-background.png',
-//         scale: { x: 6, y: 6, z: 6 }
-//     }
-// })
-
-// addTextSprite({
-//     scene: sceneSprites,
-//     x: 6,
-//     z: 6,
-//     text: 'ENZO',
-//     textHeight: 0.8
-// })
-
-// scene.add(new three.isoCamera.THREE.GridHelper(50, 100, 0xaaaaaa, 0x999999))
-// go({ scene })
+const div = createSmartDiv({ container: ui })
+const title = createPlayerTitle({ container: div.element })
+title.changeTitle('MOLA')
 
 function updateUi() {
-    // const proj = position3dToScreen2d({
-    //     x: mysprite.position.x,
-    //     y: mysprite.position.y,
-    //     z: mysprite.position.z,
-    //     camera,
-    //     canvasWidth: window.innerWidth,
-    //     canvasHeight: window.innerHeight
-    // })
-    // const divElem = document.getElementById('overlay')
-    // divElem.style.left = proj.x + 'px'
-    // divElem.style.top = proj.y + 'px'
+    const proj = position3dToScreen2d({
+        x: mysprite.position.x + 5,
+        y: mysprite.position.y,
+        z: mysprite.position.z + 5,
+        camera,
+        canvasWidth: window.innerWidth,
+        canvasHeight: window.innerHeight
+    })
+    div.move(proj)
 }
 
 function animate() {
@@ -115,5 +95,9 @@ function animate() {
     updateUi()
     requestAnimationFrame(animate)
 }
-// isoCamera.onChange = updateUi
 animate()
+
+// isoCamera.onChange = updateUi
+sceneSprites.add(new isoCamera.THREE.AxesHelper(10))
+// scene.add(new three.isoCamera.THREE.GridHelper(50, 100, 0xaaaaaa, 0x999999))
+// go({ scene })

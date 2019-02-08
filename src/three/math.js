@@ -18,7 +18,7 @@ export function position3dToScreen2d({
     vector.y = -(vector.y * heightHalf) + heightHalf
 
     return {
-        x: vector.x,
-        y: vector.y
+        x: Math.round(vector.x),
+        y: Math.round(vector.y)
     }
 }

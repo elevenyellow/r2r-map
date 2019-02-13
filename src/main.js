@@ -1,18 +1,7 @@
-import { createThreeWorld } from './three/'
-import { createTerrain, addDecorativeSprite } from './three/scenario'
-import spritesConfig from './three/sprites'
-import { position3dToScreen2d } from './three/math'
-import { createSmartDiv, createPlayerTitle } from './ui'
-import { generateRandomDecorativeSprites } from './server'
+import { createThreeWorld } from './api/three/'
 import { createTile } from './api'
-
-const BUILDING = {
-    VILLAGE: {
-        radius: 10,
-        url: 'assets/village.png',
-        scale: { x: 10, y: 10, z: 10 }
-    }
-}
+import { createTerrain, addDecorativeSprite } from './api/three/scenario'
+import BUILDING from './sprites/buildings'
 
 const tiles = {}
 const ui = document.getElementById('ui')

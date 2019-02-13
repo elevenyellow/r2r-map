@@ -3,6 +3,7 @@ import {
     addDecorativeSprite,
     addBuildingSprite
 } from './three/scenario'
+import { createSmartDiv, createPlayerTitle } from './ui'
 
 export const OWNER = {
     NEUTRAL: 0,

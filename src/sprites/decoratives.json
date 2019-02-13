@@ -1,37 +1,37 @@
 {
-    "tree1": {
+    "TREE1": {
         "url": "assets/obj/tree1.png",
         "scale": { "x": 1, "y": 1, "z": 1 }
     },
-    "tree2": {
+    "TREE2": {
         "url": "assets/obj/tree2.png",
         "scale": { "x": 1, "y": 1, "z": 1 }
     },
-    "tree3": {
+    "TREE3": {
         "url": "assets/obj/tree3.png",
         "scale": { "x": 1.5, "y": 1.5, "z": 1.5 }
     },
-    "tree4": {
+    "TREE4": {
         "url": "assets/obj/tree4.png",
         "scale": { "x": 1.25, "y": 1.25, "z": 1.25 }
     },
-    "bush1": {
+    "BUSH1": {
         "url": "assets/obj/bush1.png",
         "scale": { "x": 0.5, "y": 0.5, "z": 0.5 }
     },
-    "rock1": {
+    "ROCK1": {
         "url": "assets/obj/rock1.png",
         "scale": { "x": 1, "y": 1, "z": 1 }
     },
-    "rock2": {
+    "ROCK2": {
         "url": "assets/obj/rock2.png",
         "scale": { "x": 1, "y": 1, "z": 1 }
     },
-    "trunk1": {
+    "TRUNK1": {
         "url": "assets/obj/trunk1.png",
         "scale": { "x": 0.75, "y": 0.75, "z": 0.75 }
     },
-    "trunk2": {
+    "TRUNK2": {
         "url": "assets/obj/trunk2.png",
         "scale": { "x": 0.5, "y": 0.5, "z": 0.5 }
     }

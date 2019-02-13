@@ -10,6 +10,9 @@ export function createSmartDiv({ container, offsetX = 0, offsetY = 0 }) {
             const Y = y - element.offsetHeight / 2 + offsetY
             style.left = `${X}px`
             style.top = `${Y}px`
+        },
+        scale: value => {
+            style.transform = `scale(${value})`
         }
     }
 }
@@ -21,6 +24,7 @@ export function createPlayerTitle({ container }) {
     style.minWidth = '128px'
     style.minHeight = style.lineHeight = '36px'
     style.textAlign = 'center'
+    style.textTransform = 'uppercase'
     container.appendChild(element)
     return {
         element,

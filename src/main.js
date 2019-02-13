@@ -9,15 +9,51 @@ import { position3dToScreen2d } from './three/math'
 import { createSmartDiv, createPlayerTitle } from './ui'
 import { generateRandomDecorativeSprites } from './server'
 
-const canvas = document.getElementById('canvas')
+//
+//
+//
+//
+//
+// UI
 const ui = document.getElementById('ui')
+const div = createSmartDiv({ container: ui })
+const title = createPlayerTitle({ container: div.element })
+title.changeTitle('enzo')
+
+function onChangeZoom(zoom) {
+    const newScale = (zoom * 100) / 20
+    div.scale(Math.round(newScale + (100 - newScale) / 2) / 100)
+}
+
+function updateUi() {
+    const proj = position3dToScreen2d({
+        x: mysprite.position.x + 5,
+        y: mysprite.position.y,
+        z: mysprite.position.z + 5,
+        camera,
+        canvasWidth: window.innerWidth,
+        canvasHeight: window.innerHeight
+    })
+    div.move(proj)
+}
+
+//
+//
+//
+//
+//
+// 3D
+const canvas = document.getElementById('canvas')
 const {
     renderer,
     camera,
     isoCamera,
     sceneTerrain,
     sceneSprites
-} = createThreeWorld(canvas)
+} = createThreeWorld({
+    canvas,
+    onChangeZoom
+})
 
 addTerrain({ scene: sceneTerrain, renderer, url: 'assets/tile2.png' })
 
@@ -69,22 +105,20 @@ addBuildingSprite({
     }
 })
 
-const div = createSmartDiv({ container: ui })
-const title = createPlayerTitle({ container: div.element })
-title.changeTitle('MOLA')
+// isoCamera.onChange = updateUi
+sceneSprites.add(new isoCamera.THREE.AxesHelper(10))
+// scene.add(new three.isoCamera.THREE.GridHelper(50, 100, 0xaaaaaa, 0x999999))
+// go({ scene })
 
-function updateUi() {
-    const proj = position3dToScreen2d({
-        x: mysprite.position.x + 5,
-        y: mysprite.position.y,
-        z: mysprite.position.z + 5,
-        camera,
-        canvasWidth: window.innerWidth,
-        canvasHeight: window.innerHeight
-    })
-    div.move(proj)
-}
-
+//
+//
+//
+//
+//
+//
+//
+//
+// GENERAL
 function animate() {
     // this.renderer.autoClear = true
     ;[sceneTerrain, sceneSprites].forEach(scene => {
@@ -96,8 +130,3 @@ function animate() {
     requestAnimationFrame(animate)
 }
 animate()
-
-// isoCamera.onChange = updateUi
-sceneSprites.add(new isoCamera.THREE.AxesHelper(10))
-// scene.add(new three.isoCamera.THREE.GridHelper(50, 100, 0xaaaaaa, 0x999999))
-// go({ scene })

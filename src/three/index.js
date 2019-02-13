@@ -2,7 +2,8 @@ import * as THREE from 'three'
 import * as d3 from './d3'
 import ThreeIsoGameCamera from '/mnt/c/Users/enzo/drive/projects/three-iso-game-camera/'
 
-export function createThreeWorld(canvas) {
+export function createThreeWorld({ canvas, onChangeZoom }) {
+    let zoom
     const canvasWidth = window.innerWidth
     const canvasHeight = window.innerHeight
     const sceneTerrain = new THREE.Scene()
@@ -23,8 +24,8 @@ export function createThreeWorld(canvas) {
         angleH: 45,
         angleV: 35,
         distance,
-        // distanceMin: distance / 1.5,
-        distanceMax: distance * 2,
+        distanceMin: distance,
+        distanceMax: distance * 3,
         camera,
         domElement: canvas,
         canvasWidth,
@@ -32,7 +33,10 @@ export function createThreeWorld(canvas) {
         THREE,
         d3,
         onChange: e => {
-            // console.log(e.transform)
+            if (e.transform.k !== zoom) {
+                zoom = e.transform.k
+                onChangeZoom(zoom)
+            }
             return true
         }
     })

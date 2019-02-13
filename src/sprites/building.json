@@ -1,11 +1,15 @@
 {
     "VILLAGE": {
-        "radius": 10,
+        "area": 10,
+        "offsetX": 5,
+        "offsetZ": 5,
         "url": "assets/village.png",
         "scale": { "x": 10, "y": 10, "z": 10 }
     },
     "COTTAGE": {
-        "radius": 5,
+        "area": 5,
+        "offsetX": 4,
+        "offsetZ": 4,
         "url": "assets/cottage.png",
         "scale": { "x": 4, "y": 4, "z": 4 }
     }

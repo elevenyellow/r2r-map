@@ -1,26 +1,18 @@
+import BUILDING from './sprites/building'
+import DECORATIVE from './sprites/decorative'
 import {
     createThreeWorld,
     createTerrain,
-    createTile,
+    createTileFactory,
     createDecorativeSprite
 } from './api'
-import BUILDING from './sprites/buildings'
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
 // INITIAL SETUP
-const tiles = {}
+const tiles = []
 const ui = document.getElementById('ui')
 const canvas = document.getElementById('canvas')
 
-// Creating three world
+// CREATING THREE WORLD
 const {
     renderer,
     camera,
@@ -28,43 +20,48 @@ const {
     sceneTerrain,
     sceneSprites
 } = createThreeWorld({
-    canvas
-    // onChangeZoom
+    canvas,
+    onChangeZoom
 })
 
-// Adding terrain
+// ADDING TERRAIN
 const terrain = createTerrain({
     scene: sceneTerrain,
     renderer,
     url: 'assets/tile2.png'
 })
 
-const tile = createTile({
-    col: 0,
-    row: 0,
-    spriteConf: BUILDING.VILLAGE,
+// WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
+// WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
+// WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
+// WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
+// WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
+// WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
+// WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
+const createTile = createTileFactory({
     ui,
+    camera,
     scene: sceneSprites
 })
-
-tiles[tile.coordinate] = tile
-
-// function onChangeZoom(zoom) {
-//     const newScale = (zoom * 100) / 20
-//     div.scale(Math.round(newScale + (100 - newScale) / 2) / 100)
-// }
-
-// function updateUi() {
-//     const proj = position3dToScreen2d({
-//         x: tile.sprite.position.x + 5,
-//         y: tile.sprite.position.y,
-//         z: tile.sprite.position.z + 5,
-//         camera,
-//         canvasWidth: window.innerWidth,
-//         canvasHeight: window.innerHeight
-//     })
-//     div.move(proj)
-// }
+const tile1 = createTile({
+    col: 0,
+    row: 0,
+    spriteConf: BUILDING.VILLAGE
+})
+tiles.push(tile1)
+const tile2 = createTile({
+    col: 15,
+    row: 30,
+    spriteConf: BUILDING.COTTAGE
+})
+tiles.push(tile2)
+// WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
+// WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
+// WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
+// WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
+// WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
+// WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
+// WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
 
 // // Adding decorative sprites
 // const spriteList = [
@@ -102,18 +99,33 @@ tiles[tile.coordinate] = tile
 //
 //
 //
-// GENERAL
-function animate() {
+// RENDER FUNCTIONS
+function onChangeZoom(zoom) {
+    const scale = (zoom * 100) / 20
+    const scaleReduced = Math.round(scale + (100 - scale) / 2) / 100
+    // Changing  ZOOM
+    tiles.forEach(tile => tile.updateScaleDiv(scaleReduced))
+}
+
+function onAnimationFrame() {
     // this.renderer.autoClear = true
     ;[sceneTerrain, sceneSprites].forEach(scene => {
         renderer.render(scene, camera)
         renderer.clearDepth()
         renderer.autoClear = false
     })
-    requestAnimationFrame(animate)
-    // updateUi()
+    requestAnimationFrame(onAnimationFrame)
+
+    // Updating UI
+    tiles.forEach(tile =>
+        tile.updatePositionDiv({
+            camera,
+            canvasWidth: window.innerWidth,
+            canvasHeight: window.innerHeight
+        })
+    )
 }
-animate()
+onAnimationFrame()
 
 // HELPERS
 // isoCamera.onChange = updateUi

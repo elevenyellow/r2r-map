@@ -3,5 +3,10 @@
         "radius": 10,
         "url": "assets/village.png",
         "scale": { "x": 10, "y": 10, "z": 10 }
+    },
+    "COTTAGE": {
+        "radius": 5,
+        "url": "assets/cottage.png",
+        "scale": { "x": 4, "y": 4, "z": 4 }
     }
 }

@@ -33,7 +33,7 @@ export function createThreeWorld({ canvas, onChangeZoom }) {
         THREE,
         d3,
         onChange: e => {
-            if (e.transform.k !== zoom) {
+            if (typeof onChangeZoom == 'function' && e.transform.k !== zoom) {
                 zoom = e.transform.k
                 onChangeZoom(zoom)
             }

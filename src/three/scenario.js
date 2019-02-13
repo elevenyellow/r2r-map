@@ -1,9 +1,8 @@
 import * as THREE from 'three'
-import SpriteText from 'three-spritetext'
 
 const textureLoader = new THREE.TextureLoader()
 
-export function addTerrain({ renderer, scene, url }) {
+export function createTerrain({ renderer, scene, url }) {
     const geometry = new THREE.PlaneBufferGeometry(100, 100)
     const maxAnisotropy = renderer.capabilities.getMaxAnisotropy()
     const textureLoaded = textureLoader.load(url)
@@ -23,29 +22,15 @@ export function addTerrain({ renderer, scene, url }) {
     return mesh
 }
 
-export function addDecorativeSprite({ scene, element, x, z }) {
-    const textureLoaded = textureLoader.load(element.url)
-    const material = new THREE.SpriteMaterial({
-        map: textureLoaded
-    })
-    const sprite = new THREE.Sprite(material)
-    sprite.scale.set(element.scale.x, element.scale.y, element.scale.z)
-    sprite.position.y = element.scale.y / 2
-    sprite.position.x = x
-    sprite.position.z = z
-    scene.add(sprite)
-    return sprite
-}
-
 // https://gamedev.stackexchange.com/questions/167762/how-to-avoid-the-cutoff-of-a-sprite-when-overlapping-in-a-terrain?noredirect=1#comment298081_167762
-export function addBuildingSprite({ scene, element, x, z }) {
-    const textureLoaded = textureLoader.load(element.url)
+export function addBuildingSprite({ scene, spriteConf, x, z }) {
+    const textureLoaded = textureLoader.load(spriteConf.url)
     const material = new THREE.SpriteMaterial({
         map: textureLoaded
         // depthTest: false
     })
     const sprite = new THREE.Sprite(material)
-    sprite.scale.set(element.scale.x, element.scale.y, element.scale.z)
+    sprite.scale.set(spriteConf.scale.x, spriteConf.scale.y, spriteConf.scale.z)
     sprite.position.x = x
     sprite.position.z = z
     scene.add(sprite)
@@ -55,6 +40,20 @@ export function addBuildingSprite({ scene, element, x, z }) {
     // helper.position.z = z
     // scene.add(helper)
 
+    return sprite
+}
+
+export function addDecorativeSprite({ scene, spriteConf, x, z }) {
+    const textureLoaded = textureLoader.load(spriteConf.url)
+    const material = new THREE.SpriteMaterial({
+        map: textureLoaded
+    })
+    const sprite = new THREE.Sprite(material)
+    sprite.scale.set(spriteConf.scale.x, spriteConf.scale.y, spriteConf.scale.z)
+    sprite.position.y = spriteConf.scale.y / 2
+    sprite.position.x = x
+    sprite.position.z = z
+    scene.add(sprite)
     return sprite
 }
 

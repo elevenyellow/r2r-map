@@ -20,7 +20,7 @@ export function createSmartDiv({ container, offsetX = 0, offsetY = 0 }) {
 export function createPlayerTitle({ container }) {
     const element = document.createElement('div')
     const style = element.style
-    style.background = 'url("assets/title-background.png") 0 0 / 100%'
+    style.background = 'url("assets/title-background-0.png") 0 0 / 100%'
     style.minWidth = '128px'
     style.minHeight = style.lineHeight = '36px'
     style.textAlign = 'center'

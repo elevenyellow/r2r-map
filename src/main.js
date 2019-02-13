@@ -1,8 +1,21 @@
-import { createThreeWorld } from './api/three/'
-import { createTile } from './api'
-import { createTerrain, addDecorativeSprite } from './api/three/scenario'
+import {
+    createThreeWorld,
+    createTerrain,
+    createTile,
+    createDecorativeSprite
+} from './api'
 import BUILDING from './sprites/buildings'
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// INITIAL SETUP
 const tiles = {}
 const ui = document.getElementById('ui')
 const canvas = document.getElementById('canvas')
@@ -73,7 +86,7 @@ tiles[tile.coordinate] = tile
 //     ignoreAreas: [{ x: 0, z: 0, radius: 5 }, { x: 10, z: 5, radius: 3 }]
 // })
 // sprites.forEach(sprite => {
-//     addDecorativeSprite({
+//     createDecorativeSprite({
 //         scene: sceneSprites,
 //         x: sprite.x,
 //         z: sprite.z,

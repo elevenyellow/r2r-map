@@ -1,9 +1,7 @@
-import {
-    createTerrain,
-    addDecorativeSprite,
-    addBuildingSprite
-} from './three/scenario'
 import { createSmartDiv, createPlayerTitle } from './ui'
+import { addBuildingSprite } from './three/scenario'
+export { createTerrain, createDecorativeSprite } from './three/scenario'
+export { createThreeWorld } from './three/'
 
 export const OWNER = {
     NEUTRAL: 0,

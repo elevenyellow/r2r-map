@@ -43,7 +43,7 @@ export function addBuildingSprite({ scene, spriteConf, x, z }) {
     return sprite
 }
 
-export function addDecorativeSprite({ scene, spriteConf, x, z }) {
+export function createDecorativeSprite({ scene, spriteConf, x, z }) {
     const textureLoaded = textureLoader.load(spriteConf.url)
     const material = new THREE.SpriteMaterial({
         map: textureLoaded

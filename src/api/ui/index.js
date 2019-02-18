@@ -23,14 +23,14 @@ export function createPlayerTitle({ container }) {
     style.background = 'url("assets/title-background-0.png") 0 0 / 100%'
     style.minWidth = '128px'
     style.minHeight = style.lineHeight = '36px'
-    style.minHeight = style.fontSize = '18px'
+    style.fontSize = '18px'
     style.textAlign = 'center'
     style.textTransform = 'uppercase'
     container.appendChild(element)
     return {
         element,
         changeTitle: title => {
-            element.innerHTML = title // 20max
+            element.innerHTML = title
         }
     }
 }

@@ -42,7 +42,8 @@ const terrain = createTerrain({
 const createTile = createTileFactory({
     ui,
     camera,
-    scene: sceneSprites
+    scene: sceneSprites,
+    ratioZoomDiv: 4
 })
 const tile1 = createTile({
     col: 0,
@@ -60,7 +61,13 @@ tiles.push(tile2)
 tile1.updateScaleDiv(zoom)
 tile2.updateScaleDiv(zoom)
 
+const tileOwner1 = tile1.createOwner('1234')
+tileOwner1.changeTitle('Enzo')
 tile1.createOwner('1234')
+tile1.createOwner('1234')
+tile1.createOwner('1234')
+tile1.createOwner('1234')
+
 tile2.createOwner('1234')
 tile2.createOwner('sasa masa mosa')
 // tile2.createOwner('sasa')
@@ -139,3 +146,8 @@ onAnimationFrame()
 // sceneSprites.add(new isoCamera.THREE.AxesHelper(10))
 // scene.add(new three.isoCamera.THREE.GridHelper(50, 100, 0xaaaaaa, 0x999999))
 // go({ scene })
+
+// //
+// canvas.addEventListener('click', e => {
+//     console.log(e, tiles.map(tile => tile.div.element))
+// })

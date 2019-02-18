@@ -12,7 +12,12 @@ export const OWNER = {
     ENEMY: 2
 }
 
-export function createTileFactory({ ui, scene, camera }) {
+export function createTileFactory({
+    ui,
+    scene,
+    camera,
+    ratioZoomDiv = 1 // 1 to keep the original size
+}) {
     return ({ col, row, spriteConf }) => {
         const div = createSmartDiv({ container: ui })
         const owners = {}
@@ -24,6 +29,7 @@ export function createTileFactory({ ui, scene, camera }) {
             spriteConf
         })
         return {
+            div,
             sprite,
             coordinate,
             updatePositionDiv: ({ canvasWidth, canvasHeight }) => {
@@ -38,17 +44,16 @@ export function createTileFactory({ ui, scene, camera }) {
                 div.move(proj)
             },
             updateScaleDiv: zoom => {
-                const ratio = 2
                 const scale = (zoom * 100) / 20
                 const scaleReduced =
-                    Math.round(scale + (100 - scale) / ratio) / 100
+                    Math.round(scale + (100 - scale) / ratioZoomDiv) / 100
                 // Changing  ZOOM
                 div.scale(scaleReduced)
             },
             createOwner: id => {
                 const owner = createPlayerTitle({ container: div.element })
                 owners[id] = owner
-                owner.changeTitle(id)
+                return owner
             }
         }
     }

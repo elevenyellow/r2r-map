@@ -64,6 +64,7 @@ export function createThreeWorld({ canvas, onChangeZoom }) {
         sceneTerrain,
         sceneSprites,
         camera,
-        isoCamera
+        isoCamera,
+        zoom
     }
 }

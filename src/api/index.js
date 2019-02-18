@@ -14,6 +14,8 @@ export const OWNER = {
 
 export function createTileFactory({ ui, scene, camera }) {
     return ({ col, row, spriteConf }) => {
+        const div = createSmartDiv({ container: ui })
+        const owners = {}
         const coordinate = `${col}.${row}`
         const sprite = addBuildingSprite({
             scene,
@@ -21,11 +23,6 @@ export function createTileFactory({ ui, scene, camera }) {
             z: row,
             spriteConf
         })
-
-        const div = createSmartDiv({ container: ui })
-        const title = createPlayerTitle({ container: div.element })
-        title.changeTitle('')
-
         return {
             sprite,
             coordinate,
@@ -40,8 +37,18 @@ export function createTileFactory({ ui, scene, camera }) {
                 })
                 div.move(proj)
             },
-            updateScaleDiv: scale => {
-                div.scale(scale)
+            updateScaleDiv: zoom => {
+                const ratio = 2
+                const scale = (zoom * 100) / 20
+                const scaleReduced =
+                    Math.round(scale + (100 - scale) / ratio) / 100
+                // Changing  ZOOM
+                div.scale(scaleReduced)
+            },
+            createOwner: id => {
+                const owner = createPlayerTitle({ container: div.element })
+                owners[id] = owner
+                owner.changeTitle(id)
             }
         }
     }

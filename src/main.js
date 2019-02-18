@@ -18,7 +18,8 @@ const {
     camera,
     // isoCamera,
     sceneTerrain,
-    sceneSprites
+    sceneSprites,
+    zoom
 } = createThreeWorld({
     canvas,
     onChangeZoom
@@ -48,13 +49,22 @@ const tile1 = createTile({
     row: 0,
     spriteConf: BUILDING.VILLAGE
 })
-tiles.push(tile1)
 const tile2 = createTile({
     col: 15,
     row: 30,
     spriteConf: BUILDING.COTTAGE
 })
+tiles.push(tile1)
 tiles.push(tile2)
+
+tile1.updateScaleDiv(zoom)
+tile2.updateScaleDiv(zoom)
+
+tile1.createOwner('1234')
+tile2.createOwner('1234')
+tile2.createOwner('sasa masa mosa')
+// tile2.createOwner('sasa')
+// tile2.createOwner('sasa')
 // WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
 // WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
 // WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
@@ -101,10 +111,7 @@ tiles.push(tile2)
 //
 // RENDER FUNCTIONS
 function onChangeZoom(zoom) {
-    const scale = (zoom * 100) / 20
-    const scaleReduced = Math.round(scale + (100 - scale) / 2) / 100
-    // Changing  ZOOM
-    tiles.forEach(tile => tile.updateScaleDiv(scaleReduced))
+    tiles.forEach(tile => tile.updateScaleDiv(zoom))
 }
 
 function onAnimationFrame() {

@@ -17,20 +17,36 @@ export function createSmartDiv({ container, offsetX = 0, offsetY = 0 }) {
     }
 }
 
-export function createPlayerTitle({ container }) {
-    const element = document.createElement('div')
-    const style = element.style
-    style.background = 'url("assets/title-background-0.png") 0 0 / 100%'
-    style.minWidth = '128px'
-    style.minHeight = style.lineHeight = '36px'
-    style.fontSize = '18px'
-    style.textAlign = 'center'
-    style.textTransform = 'uppercase'
-    container.appendChild(element)
+export function createPlayerTitle() {
+    const titleElement = document.createElement('div')
+    titleElement.style.background =
+        'url("assets/title-background-1.png") 0 0 / 100%'
+    titleElement.style.minWidth = '128px'
+    titleElement.style.minHeight = '36px'
+
+    titleElement.style.textTransform = 'uppercase'
+    titleElement.style.position = 'relative'
+
+    const textElement = document.createElement('div')
+    textElement.style.lineHeight = '36px'
+    textElement.style.fontSize = '17px'
+    textElement.style.textAlign = 'center'
+    titleElement.appendChild(textElement)
+
+    const unitsElement = document.createElement('div')
+    unitsElement.style.position = 'absolute'
+    unitsElement.style.minWidth = '42px'
+    unitsElement.style.minHeight = '42px'
+    unitsElement.style.right = '-21px'
+    unitsElement.style.top = '-4px'
+    unitsElement.style.background =
+        'url("assets/units-background-1.png") 0 0 / 100%'
+    titleElement.appendChild(unitsElement)
+
     return {
-        element,
+        element: titleElement,
         changeTitle: title => {
-            element.innerHTML = title
+            textElement.innerHTML = title
         }
     }
 }

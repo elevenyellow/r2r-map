@@ -61,17 +61,14 @@ tiles.push(tile2)
 tile1.updateScaleDiv(zoom)
 tile2.updateScaleDiv(zoom)
 
-const tileOwner1 = tile1.createOwner('1234')
-tileOwner1.changeTitle('Enzo')
-tile1.createOwner('1234')
-tile1.createOwner('1234')
-tile1.createOwner('1234')
-tile1.createOwner('1234')
+const player1Id = 'ID1'
+tile1.addPlayer(player1Id)
+tile1.changeTitle(player1Id, 'Enzo')
+// tile1.removePlayer(owner1Id)
 
-tile2.createOwner('1234')
-tile2.createOwner('sasa masa mosa')
-// tile2.createOwner('sasa')
-// tile2.createOwner('sasa')
+tile2.addPlayer('ID2')
+tile2.changeTitle('ID2', 'AGUS')
+
 // WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
 // WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
 // WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE

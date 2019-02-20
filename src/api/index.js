@@ -20,7 +20,7 @@ export function createTileFactory({
 }) {
     return ({ col, row, spriteConf }) => {
         const div = createSmartDiv({ container: ui })
-        const owners = {}
+        const players = {}
         const coordinate = `${col}.${row}`
         const sprite = addBuildingSprite({
             scene,
@@ -50,10 +50,19 @@ export function createTileFactory({
                 // Changing  ZOOM
                 div.scale(scaleReduced)
             },
-            createOwner: id => {
-                const owner = createPlayerTitle({ container: div.element })
-                owners[id] = owner
-                return owner
+            addPlayer: id => {
+                const player = createPlayerTitle()
+                div.element.appendChild(player.element)
+                players[id] = player
+                return player
+            },
+            removePlayer: id => {
+                const player = players[id]
+                div.element.removeChild(player.element)
+            },
+            changeTitle: (id, title) => {
+                const player = players[id]
+                player.changeTitle(title)
             }
         }
     }

@@ -1,18 +1,8 @@
-// imports
-import { createSmartDiv, createOwnerUiElement } from './ui'
-import { addBuildingSprite } from './three/scenario'
-import { position3dToScreen2d } from './three/utils'
-// exports
-export { createTerrain, createDecorativeSprite } from './three/scenario'
-export { createThreeWorld } from './three/'
+import { createSmartDiv, createOwnerUiElement } from '../ui'
+import { addBuildingSprite } from '../three/scenario'
+import { position3dToScreen2d } from '../three/utils'
 
-export const OWNER = {
-    NEUTRAL: 0,
-    OWNER: 1,
-    ENEMY: 2
-}
-
-export function createTileFactory({
+export default function createTileFactory({
     ui,
     scene,
     camera,

@@ -1,12 +1,9 @@
 import BUILDING from './sprites/building'
 import DECORATIVE from './sprites/decorative'
-import {
-    OWNER,
-    createThreeWorld,
-    createTerrain,
-    createTileFactory,
-    createDecorativeSprite
-} from './api'
+import { createTerrain, createDecorativeSprite } from './three/scenario'
+import { createThreeWorld } from './three/'
+import { OWNER } from './const'
+import createTileFactory from './factories/createTileFactory'
 
 // INITIAL SETUP
 const tiles = []

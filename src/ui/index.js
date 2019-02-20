@@ -19,15 +19,10 @@ export function createSmartDiv({ container, offsetX = 0, offsetY = 0 }) {
 
 export function createOwnerUiElement() {
     const element = document.createElement('div')
-
     const textElement = document.createElement('div')
-    // textElement.className = 'tileOwnerText'
-    element.appendChild(textElement)
-
     const unitsElement = document.createElement('div')
-    // unitsElement.className = 'tileOwnerUnits'
+    element.appendChild(textElement)
     element.appendChild(unitsElement)
-
     return {
         element,
         changeName: title => {

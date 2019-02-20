@@ -4,6 +4,7 @@ import { createTerrain, createDecorativeSprite } from './three/scenario'
 import { createThreeWorld } from './three/'
 import { OWNER } from './const'
 import createTileFactory from './factories/createTileFactory'
+// import createApi from './api'
 
 // INITIAL SETUP
 const tiles = []
@@ -58,23 +59,36 @@ const tile2 = createTile({
     row: 30,
     spriteConf: BUILDING.COTTAGE
 })
+const tile3 = createTile({
+    col: 40,
+    row: 30,
+    spriteConf: BUILDING.COTTAGE
+})
 tiles.push(tile1)
 tiles.push(tile2)
+tiles.push(tile3)
 
 tile1.updateScaleDiv(zoom)
 tile2.updateScaleDiv(zoom)
+tile3.updateScaleDiv(zoom)
 
 const owner1Id = 'ID1'
 tile1.addOwner(owner1Id)
+tile1.changeOwner(owner1Id, tileOwnerStates[OWNER.PLAYER])
 tile1.changeName(owner1Id, 'Enzo')
 tile1.changeUnits(owner1Id, 234)
-tile1.changeOwner(owner1Id, tileOwnerStates[OWNER.PLAYER])
 // tile1.removeOwner(owner1Id)
 
 tile2.addOwner('ID2')
-tile2.changeName('ID2', 'AGUS')
-tile2.changeOwner('ID2', tileOwnerStates[OWNER.ENEMY])
-tile2.changeUnits('ID2', 1000)
+tile2.changeOwner('ID2', tileOwnerStates[OWNER.NEUTRAL])
+// tile2.changeName('ID2', 'AGUS')
+// tile2.changeUnits('ID2', 10)
+
+const owner3Id = 'ID3'
+tile3.addOwner(owner3Id)
+tile3.changeOwner(owner3Id, tileOwnerStates[OWNER.ENEMY])
+tile3.changeName(owner3Id, 'Agus')
+tile3.changeUnits(owner3Id, 1000)
 
 // WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
 // WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE

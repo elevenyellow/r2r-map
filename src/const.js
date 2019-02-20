@@ -1,5 +1,5 @@
 export const OWNER = {
     NEUTRAL: 0,
-    OWNER: 1,
+    PLAYER: 1,
     ENEMY: 2
 }

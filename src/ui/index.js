@@ -29,7 +29,12 @@ export function createOwnerUiElement() {
             textElement.innerHTML = title
         },
         changeUnits: number => {
-            unitsElement.innerHTML = number
+            if (number > 0) {
+                unitsElement.innerHTML = number
+                unitsElement.style.display = 'block'
+            } else {
+                unitsElement.style.display = 'none'
+            }
         },
         changeOwner: className => {
             element.className = className

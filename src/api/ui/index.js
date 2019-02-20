@@ -19,14 +19,13 @@ export function createSmartDiv({ container, offsetX = 0, offsetY = 0 }) {
 
 export function createOwnerUiElement() {
     const element = document.createElement('div')
-    element.className = 'tileOwner enemy'
 
     const textElement = document.createElement('div')
-    textElement.className = 'tileOwnerText'
+    // textElement.className = 'tileOwnerText'
     element.appendChild(textElement)
 
     const unitsElement = document.createElement('div')
-    unitsElement.className = 'tileOwnerUnits'
+    // unitsElement.className = 'tileOwnerUnits'
     element.appendChild(unitsElement)
 
     return {
@@ -36,6 +35,9 @@ export function createOwnerUiElement() {
         },
         changeUnits: number => {
             unitsElement.innerHTML = number
+        },
+        changeOwner: className => {
+            element.className = className
         }
     }
 }

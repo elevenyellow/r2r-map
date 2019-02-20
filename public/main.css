@@ -18,6 +18,7 @@ body {
     position: absolute;
     pointer-events: none;
 }
+
 .tileOwner {
     background: url('assets/title-background-1.png') 0 0 / 100%;
     min-width: 128px;
@@ -25,12 +26,12 @@ body {
     text-transform: uppercase;
     position: relative;
 }
-.tileOwnerText {
+.tileOwner > div:first-child {
     line-height: 36px;
     font-size: 17px;
     text-align: center;
 }
-.tileOwnerUnits {
+.tileOwner > div:last-child {
     position: absolute;
     width: 42px;
     height: 42px;
@@ -44,20 +45,20 @@ body {
 .tileOwner.neutral {
     background-image: url('assets/title-background-0.png');
 }
-.tileOwner.neutral .tileOwnerUnits {
+.tileOwner.neutral > div:last-child {
     display: none;
 }
 
 .tileOwner.player {
     background-image: url('assets/title-background-1.png');
 }
-.tileOwner.player .tileOwnerUnits {
+.tileOwner.player > div:last-child {
     background-image: url('assets/units-background-1.png');
 }
 
 .tileOwner.enemy {
     background-image: url('assets/title-background-2.png');
 }
-.tileOwner.enemy .tileOwnerUnits {
+.tileOwner.enemy > div:last-child {
     background-image: url('assets/units-background-2.png');
 }

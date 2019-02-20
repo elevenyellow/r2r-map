@@ -8,7 +8,7 @@ export { createThreeWorld } from './three/'
 
 export const OWNER = {
     NEUTRAL: 0,
-    Owner: 1,
+    OWNER: 1,
     ENEMY: 2
 }
 
@@ -68,6 +68,10 @@ export function createTileFactory({
             changeUnits: (id, units) => {
                 const owner = owners[id]
                 owner.changeUnits(units)
+            },
+            changeOwner: (id, className) => {
+                const owner = owners[id]
+                owner.changeOwner(className)
             }
         }
     }

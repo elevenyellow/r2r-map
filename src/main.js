@@ -40,18 +40,16 @@ const terrain = createTerrain({
 // WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
 // WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
 // WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
+const tileOwnerStates = {
+    [OWNER.NEUTRAL]: 'tileOwner neutral',
+    [OWNER.PLAYER]: 'tileOwner player',
+    [OWNER.ENEMY]: 'tileOwner enemy'
+}
 const createTile = createTileFactory({
     ui,
     camera,
     scene: sceneSprites,
-    ratioZoomDiv: 4,
-    css: {
-        owner: {
-            [OWNER.NEUTRAL]: 'tileOwner neutral',
-            [OWNER.PLAYER]: 'tileOwner player',
-            [OWNER.ENEMY]: 'tileOwner enemy'
-        }
-    }
+    ratioZoomDiv: 4
 })
 const tile1 = createTile({
     col: 0,
@@ -73,12 +71,14 @@ const owner1Id = 'ID1'
 tile1.addOwner(owner1Id)
 tile1.changeName(owner1Id, 'Enzo')
 tile1.changeUnits(owner1Id, 234)
+tile1.changeOwner(owner1Id, tileOwnerStates[OWNER.PLAYER])
 // tile1.removeOwner(owner1Id)
-tile1.addOwner('owner1Id')
-tile1.addOwner('owner1Idsa')
 
 tile2.addOwner('ID2')
 tile2.changeName('ID2', 'AGUS')
+tile2.changeOwner('ID2', tileOwnerStates[OWNER.ENEMY])
+tile2.changeUnits('ID2', 1000)
+
 // WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
 // WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
 // WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE

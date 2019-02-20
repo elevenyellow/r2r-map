@@ -1,6 +1,7 @@
 import BUILDING from './sprites/building'
 import DECORATIVE from './sprites/decorative'
 import {
+    OWNER,
     createThreeWorld,
     createTerrain,
     createTileFactory,
@@ -43,7 +44,14 @@ const createTile = createTileFactory({
     ui,
     camera,
     scene: sceneSprites,
-    ratioZoomDiv: 4
+    ratioZoomDiv: 4,
+    css: {
+        owner: {
+            [OWNER.NEUTRAL]: 'tileOwner neutral',
+            [OWNER.PLAYER]: 'tileOwner player',
+            [OWNER.ENEMY]: 'tileOwner enemy'
+        }
+    }
 })
 const tile1 = createTile({
     col: 0,
@@ -61,14 +69,16 @@ tiles.push(tile2)
 tile1.updateScaleDiv(zoom)
 tile2.updateScaleDiv(zoom)
 
-const player1Id = 'ID1'
-tile1.addPlayer(player1Id)
-tile1.changeTitle(player1Id, 'Enzo')
-// tile1.removePlayer(owner1Id)
+const owner1Id = 'ID1'
+tile1.addOwner(owner1Id)
+tile1.changeName(owner1Id, 'Enzo')
+tile1.changeUnits(owner1Id, 234)
+// tile1.removeOwner(owner1Id)
+tile1.addOwner('owner1Id')
+tile1.addOwner('owner1Idsa')
 
-tile2.addPlayer('ID2')
-tile2.changeTitle('ID2', 'AGUS')
-
+tile2.addOwner('ID2')
+tile2.changeName('ID2', 'AGUS')
 // WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
 // WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
 // WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE

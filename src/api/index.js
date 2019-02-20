@@ -1,5 +1,5 @@
 // imports
-import { createSmartDiv, createPlayerTitle } from './ui'
+import { createSmartDiv, createOwnerUiElement } from './ui'
 import { addBuildingSprite } from './three/scenario'
 import { position3dToScreen2d } from './three/utils'
 // exports
@@ -8,7 +8,7 @@ export { createThreeWorld } from './three/'
 
 export const OWNER = {
     NEUTRAL: 0,
-    ME: 1,
+    Owner: 1,
     ENEMY: 2
 }
 
@@ -20,7 +20,7 @@ export function createTileFactory({
 }) {
     return ({ col, row, spriteConf }) => {
         const div = createSmartDiv({ container: ui })
-        const players = {}
+        const owners = {}
         const coordinate = `${col}.${row}`
         const sprite = addBuildingSprite({
             scene,
@@ -50,19 +50,24 @@ export function createTileFactory({
                 // Changing  ZOOM
                 div.scale(scaleReduced)
             },
-            addPlayer: id => {
-                const player = createPlayerTitle()
-                div.element.appendChild(player.element)
-                players[id] = player
-                return player
+            addOwner: id => {
+                const owner = createOwnerUiElement()
+                div.element.appendChild(owner.element)
+                owners[id] = owner
+                return owner
             },
-            removePlayer: id => {
-                const player = players[id]
-                div.element.removeChild(player.element)
+            removeOwner: id => {
+                const owner = owners[id]
+                delete owners[id]
+                div.element.removeChild(owner.element)
             },
-            changeTitle: (id, title) => {
-                const player = players[id]
-                player.changeTitle(title)
+            changeName: (id, title) => {
+                const owner = owners[id]
+                owner.changeName(title)
+            },
+            changeUnits: (id, units) => {
+                const owner = owners[id]
+                owner.changeUnits(units)
             }
         }
     }

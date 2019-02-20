@@ -17,36 +17,25 @@ export function createSmartDiv({ container, offsetX = 0, offsetY = 0 }) {
     }
 }
 
-export function createPlayerTitle() {
-    const titleElement = document.createElement('div')
-    titleElement.style.background =
-        'url("assets/title-background-1.png") 0 0 / 100%'
-    titleElement.style.minWidth = '128px'
-    titleElement.style.minHeight = '36px'
-
-    titleElement.style.textTransform = 'uppercase'
-    titleElement.style.position = 'relative'
+export function createOwnerUiElement() {
+    const element = document.createElement('div')
+    element.className = 'tileOwner enemy'
 
     const textElement = document.createElement('div')
-    textElement.style.lineHeight = '36px'
-    textElement.style.fontSize = '17px'
-    textElement.style.textAlign = 'center'
-    titleElement.appendChild(textElement)
+    textElement.className = 'tileOwnerText'
+    element.appendChild(textElement)
 
     const unitsElement = document.createElement('div')
-    unitsElement.style.position = 'absolute'
-    unitsElement.style.minWidth = '42px'
-    unitsElement.style.minHeight = '42px'
-    unitsElement.style.right = '-21px'
-    unitsElement.style.top = '-4px'
-    unitsElement.style.background =
-        'url("assets/units-background-1.png") 0 0 / 100%'
-    titleElement.appendChild(unitsElement)
+    unitsElement.className = 'tileOwnerUnits'
+    element.appendChild(unitsElement)
 
     return {
-        element: titleElement,
-        changeTitle: title => {
+        element,
+        changeName: title => {
             textElement.innerHTML = title
+        },
+        changeUnits: number => {
+            unitsElement.innerHTML = number
         }
     }
 }

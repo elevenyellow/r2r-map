@@ -6,22 +6,21 @@ export default function createTileFactory({
     ui,
     scene,
     camera,
-    ratioZoomDiv = 1 // 1 to keep the original size
+    ratioScaleDivWhenZoom = 1 // 1 to keep the original size
 }) {
-    return ({ col, row, spriteConf }) => {
+    return ({ x, z, spriteConf }) => {
         const div = createSmartDiv({ container: ui })
         const owners = {}
-        const coordinate = `${col}.${row}`
         const sprite = addBuildingSprite({
             scene,
-            x: col,
-            z: row,
+            x,
+            z,
             spriteConf
         })
         return {
             div,
+            owners,
             sprite,
-            coordinate,
             updatePositionDiv: ({ canvasWidth, canvasHeight }) => {
                 const proj = position3dToScreen2d({
                     x: sprite.position.x + spriteConf.offsetX,
@@ -36,7 +35,8 @@ export default function createTileFactory({
             updateScaleDiv: zoom => {
                 const scale = (zoom * 100) / 20
                 const scaleReduced =
-                    Math.round(scale + (100 - scale) / ratioZoomDiv) / 100
+                    Math.round(scale + (100 - scale) / ratioScaleDivWhenZoom) /
+                    100
                 // Changing  ZOOM
                 div.scale(scaleReduced)
             },
@@ -48,8 +48,10 @@ export default function createTileFactory({
             },
             removeOwner: id => {
                 const owner = owners[id]
-                delete owners[id]
-                div.element.removeChild(owner.element)
+                if (owner !== undefined) {
+                    delete owners[id]
+                    div.element.removeChild(owner.element)
+                }
             },
             changeName: (id, title) => {
                 const owner = owners[id]

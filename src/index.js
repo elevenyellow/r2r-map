@@ -1,15 +1,14 @@
-import BUILDING from './sprites/building'
-import DECORATIVE from './sprites/decorative'
 import { createTerrain, createDecorativeSprite } from './three/scenario'
 import { createThreeWorld } from './three/'
-import { OWNER } from './const'
-import createTileFactory from './factories/createTileFactory'
-// import createApi from './api'
+import createApi from './api'
+import OTHERS from './sprites/others'
 
-// INITIAL SETUP
-const tiles = []
+// GETTING DOM
 const ui = document.getElementById('ui')
 const canvas = document.getElementById('canvas')
+
+// STATE
+const tiles = []
 
 // CREATING THREE WORLD
 const {
@@ -28,112 +27,19 @@ const {
 const terrain = createTerrain({
     scene: sceneTerrain,
     renderer,
-    url: 'assets/tile2.png'
+    url: OTHERS.TERRAIN.url
 })
 
-// WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
-// WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
-// WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
-// WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
-// WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
-// WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
-// WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
-const tileOwnerStates = {
-    [OWNER.NEUTRAL]: 'tileOwner neutral',
-    [OWNER.PLAYER]: 'tileOwner player',
-    [OWNER.ENEMY]: 'tileOwner enemy'
-}
-const createTile = createTileFactory({
+// CREATING AND EXPOSING API
+const API = createApi({
+    tiles,
     ui,
     camera,
-    scene: sceneSprites,
-    ratioZoomDiv: 4
+    sceneSprites,
+    zoom
 })
-const tile1 = createTile({
-    col: 0,
-    row: 0,
-    spriteConf: BUILDING.VILLAGE
-})
-const tile2 = createTile({
-    col: 15,
-    row: 30,
-    spriteConf: BUILDING.COTTAGE
-})
-const tile3 = createTile({
-    col: 40,
-    row: 30,
-    spriteConf: BUILDING.COTTAGE
-})
-tiles.push(tile1)
-tiles.push(tile2)
-tiles.push(tile3)
+window.API = API
 
-tile1.updateScaleDiv(zoom)
-tile2.updateScaleDiv(zoom)
-tile3.updateScaleDiv(zoom)
-
-const owner1Id = 'ID1'
-tile1.addOwner(owner1Id)
-tile1.changeOwner(owner1Id, tileOwnerStates[OWNER.PLAYER])
-tile1.changeName(owner1Id, 'Enzo')
-tile1.changeUnits(owner1Id, 234)
-// tile1.removeOwner(owner1Id)
-
-tile2.addOwner('ID2')
-tile2.changeOwner('ID2', tileOwnerStates[OWNER.NEUTRAL])
-// tile2.changeName('ID2', 'AGUS')
-// tile2.changeUnits('ID2', 10)
-
-const owner3Id = 'ID3'
-tile3.addOwner(owner3Id)
-tile3.changeOwner(owner3Id, tileOwnerStates[OWNER.ENEMY])
-tile3.changeName(owner3Id, 'Agus')
-tile3.changeUnits(owner3Id, 1000)
-
-// WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
-// WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
-// WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
-// WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
-// WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
-// WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
-// WE MUST EXPOSE THIS FOR EXTERNAL API, THIS IS JUST AN EXAMPLE
-
-// // Adding decorative sprites
-// const spriteList = [
-//     { id: 'tree1', frecuencyRatio: 8 },
-//     { id: 'tree2', frecuencyRatio: 8 },
-//     { id: 'tree3', frecuencyRatio: 40 },
-//     { id: 'tree4', frecuencyRatio: 8 },
-//     { id: 'bush1', frecuencyRatio: 5 },
-//     // { id: 'rock1', frecuencyRatio: 2 },
-//     { id: 'rock2', frecuencyRatio: 3 },
-//     { id: 'trunk1', frecuencyRatio: 10 },
-//     { id: 'trunk2', frecuencyRatio: 10 }
-// ]
-// const sprites = generateRandomDecorativeSprites({
-//     quantity: 500,
-//     sprites: spriteList,
-//     point1: { x: -100, z: -100 },
-//     point2: { x: 100, z: 100 },
-//     ignoreAreas: [{ x: 0, z: 0, radius: 5 }, { x: 10, z: 5, radius: 3 }]
-// })
-// sprites.forEach(sprite => {
-//     createDecorativeSprite({
-//         scene: sceneSprites,
-//         x: sprite.x,
-//         z: sprite.z,
-//         spriteConf: spritesConfig[sprite.id]
-//     })
-// })
-
-//
-//
-//
-//
-//
-//
-//
-//
 // RENDER FUNCTIONS
 function onChangeZoom(zoom) {
     tiles.forEach(tile => tile.updateScaleDiv(zoom))
@@ -169,3 +75,41 @@ onAnimationFrame()
 // canvas.addEventListener('click', e => {
 //     console.log(e, tiles.map(tile => tile.div.element))
 // })
+
+// // Adding decorative sprites
+// const spriteList = [
+//     { id: 'tree1', frecuencyRatio: 8 },
+//     { id: 'tree2', frecuencyRatio: 8 },
+//     { id: 'tree3', frecuencyRatio: 40 },
+//     { id: 'tree4', frecuencyRatio: 8 },
+//     { id: 'bush1', frecuencyRatio: 5 },
+//     // { id: 'rock1', frecuencyRatio: 2 },
+//     { id: 'rock2', frecuencyRatio: 3 },
+//     { id: 'trunk1', frecuencyRatio: 10 },
+//     { id: 'trunk2', frecuencyRatio: 10 }
+// ]
+// const sprites = generateRandomDecorativeSprites({
+//     quantity: 500,
+//     sprites: spriteList,
+//     point1: { x: -100, z: -100 },
+//     point2: { x: 100, z: 100 },
+//     ignoreAreas: [{ x: 0, z: 0, radius: 5 }, { x: 10, z: 5, radius: 3 }]
+// })
+// sprites.forEach(sprite => {
+//     createDecorativeSprite({
+//         scene: sceneSprites,
+//         x: sprite.x,
+//         z: sprite.z,
+//         spriteConf: spritesConfig[sprite.id]
+//     })
+// })
+
+// EXAMPLE USING API
+
+window.village1 = API.createVillage({ col: 0, row: 0 })
+window.village1.addOwnerAsPlayer('ID1', 'Enzo', 1000)
+window.village1.addOwnerAsEnemy('ID2', 'Agus', 234)
+window.village1.addOwnerAsEnemy('ID3', 'Azaru', 312)
+window.village1.removeOwner('ID3')
+
+window.cottage1 = API.createCottage({ col: 15, row: 15 })

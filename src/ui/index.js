@@ -25,12 +25,12 @@ export function createOwnerUiElement() {
     element.appendChild(unitsElement)
     return {
         element,
-        changeName: title => {
-            textElement.innerHTML = title
+        changeName: name => {
+            textElement.innerHTML = name
         },
-        changeUnits: number => {
-            if (number > 0) {
-                unitsElement.innerHTML = number
+        changeUnits: units => {
+            if (units > 0) {
+                unitsElement.innerHTML = units
                 unitsElement.style.display = 'block'
             } else {
                 unitsElement.style.display = 'none'
@@ -38,6 +38,19 @@ export function createOwnerUiElement() {
         },
         changeOwner: className => {
             element.className = className
+        }
+    }
+}
+
+export function createRecruitmentPowerUiElement({ className }) {
+    const element = document.createElement('div')
+    const textElement = document.createElement('div')
+    element.appendChild(textElement)
+    element.className = className
+    return {
+        element,
+        changePower: power => {
+            textElement.innerHTML = power
         }
     }
 }

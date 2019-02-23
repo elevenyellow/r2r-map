@@ -1,16 +1,14 @@
 import { OWNER } from './const'
-import { VISUAL } from './config/values'
-import { TILE_OWNER_CLASSES } from './config/ui'
 import BUILDING from './config/sprites/building'
 import DECORATIVE from './config/sprites/decorative'
+import { TILE_OWNER_CLASSES } from './config/ui'
 import createTileFactory from './factories/createTileFactory'
 
 export default function createApi({ tiles, ui, camera, sceneSprites }) {
     const createTile = createTileFactory({
         ui,
         camera,
-        scene: sceneSprites,
-        ratioScaleDivWhenZoom: VISUAL.RATIO_SCALE_DIV_WHEN_ZOOM
+        scene: sceneSprites
     })
     return {
         createVillage: ({ col, row }) => {
@@ -50,6 +48,9 @@ function createGenericTile({ createTile, col, row, spriteConf, tiles }) {
 
 function createTileMethods({ tile, idNeutral }) {
     return {
+        changeRecruitmentPower: power => {
+            tile.changeRecruitmentPower(power)
+        },
         addOwnerAsPlayer: (id, name = '', units = 0) => {
             tile.removeOwner(idNeutral)
             tile.addOwner(id)
@@ -76,3 +77,42 @@ function createTileMethods({ tile, idNeutral }) {
         }
     }
 }
+
+// HELPERS
+// isoCamera.onChange = updateUi
+// sceneSprites.add(new isoCamera.THREE.AxesHelper(10))
+// scene.add(new three.isoCamera.THREE.GridHelper(50, 100, 0xaaaaaa, 0x999999))
+// go({ scene })
+
+// //
+// canvas.addEventListener('click', e => {
+//     console.log(e, tiles.map(tile => tile.div.element))
+// })
+
+// // Adding decorative sprites
+// const spriteList = [
+//     { id: 'tree1', frecuencyRatio: 8 },
+//     { id: 'tree2', frecuencyRatio: 8 },
+//     { id: 'tree3', frecuencyRatio: 40 },
+//     { id: 'tree4', frecuencyRatio: 8 },
+//     { id: 'bush1', frecuencyRatio: 5 },
+//     // { id: 'rock1', frecuencyRatio: 2 },
+//     { id: 'rock2', frecuencyRatio: 3 },
+//     { id: 'trunk1', frecuencyRatio: 10 },
+//     { id: 'trunk2', frecuencyRatio: 10 }
+// ]
+// const sprites = generateRandomDecorativeSprites({
+//     quantity: 500,
+//     sprites: spriteList,
+//     point1: { x: -100, z: -100 },
+//     point2: { x: 100, z: 100 },
+//     ignoreAreas: [{ x: 0, z: 0, radius: 5 }, { x: 10, z: 5, radius: 3 }]
+// })
+// sprites.forEach(sprite => {
+//     createDecorativeSprite({
+//         scene: sceneSprites,
+//         x: sprite.x,
+//         z: sprite.z,
+//         spriteConf: spritesConfig[sprite.id]
+//     })
+// })

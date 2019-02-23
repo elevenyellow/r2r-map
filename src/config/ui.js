@@ -10,3 +10,5 @@ export const TILE_OWNER_CLASSES = {
     [OWNER.PLAYER]: 'tileOwner player',
     [OWNER.ENEMY]: 'tileOwner enemy'
 }
+
+export const RECRUITMENT_POWER_UI_ELEMENT = 'recruitmentPower'

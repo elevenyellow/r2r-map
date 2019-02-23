@@ -1,22 +1,27 @@
-import { createSmartDiv, createOwnerUiElement } from '../ui'
+import {
+    createSmartDiv,
+    createOwnerUiElement,
+    createRecruitmentPowerUiElement
+} from '../ui'
 import { addBuildingSprite } from '../three/scenario'
 import { position3dToScreen2d } from '../three/utils'
+import { VISUAL } from '../config/parameters'
+import { RECRUITMENT_POWER_UI_ELEMENT } from '../config/ui'
 
-export default function createTileFactory({
-    ui,
-    scene,
-    camera,
-    ratioScaleDivWhenZoom = 1 // 1 to keep the original size
-}) {
+export default function createTileFactory({ ui, scene, camera }) {
     return ({ x, z, spriteConf }) => {
-        const div = createSmartDiv({ container: ui })
         const owners = {}
+        const div = createSmartDiv({ container: ui })
+        const recruitmentPower = createRecruitmentPowerUiElement({
+            className: RECRUITMENT_POWER_UI_ELEMENT
+        })
         const sprite = addBuildingSprite({
             scene,
             x,
             z,
             spriteConf
         })
+        div.element.appendChild(recruitmentPower.element)
         return {
             div,
             owners,
@@ -35,14 +40,21 @@ export default function createTileFactory({
             updateScaleDiv: zoom => {
                 const scale = (zoom * 100) / 20
                 const scaleReduced =
-                    Math.round(scale + (100 - scale) / ratioScaleDivWhenZoom) /
-                    100
+                    Math.round(
+                        scale + (100 - scale) / VISUAL.RATIO_SCALE_DIV_WHEN_ZOOM
+                    ) / 100
                 // Changing  ZOOM
                 div.scale(scaleReduced)
             },
+            changeRecruitmentPower: power => {
+                recruitmentPower.changePower(power)
+            },
             addOwner: id => {
                 const owner = createOwnerUiElement()
-                div.element.appendChild(owner.element)
+                div.element.insertBefore(
+                    owner.element,
+                    recruitmentPower.element
+                )
                 owners[id] = owner
                 return owner
             },

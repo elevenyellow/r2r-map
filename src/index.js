@@ -1,11 +1,12 @@
 import { createTerrain, createDecorativeSprite } from './three/scenario'
 import { createThreeWorld } from './three/'
 import createApi from './api'
-import OTHERS from './sprites/others'
+import OTHERS from './config/sprites/others'
+import { DOM } from './config/ui'
 
 // GETTING DOM
-const ui = document.getElementById('ui')
-const canvas = document.getElementById('canvas')
+const ui = document.getElementById(DOM.UI)
+const canvas = document.getElementById(DOM.CANVAS)
 
 // STATE
 const tiles = []
@@ -35,8 +36,7 @@ const API = createApi({
     tiles,
     ui,
     camera,
-    sceneSprites,
-    zoom
+    sceneSprites
 })
 window.API = API
 

@@ -62,3 +62,6 @@ body {
 .tileOwner.enemy > div:last-child {
     background-image: url('assets/units-background-2.png');
 }
+
+.recruitmentPower {
+}

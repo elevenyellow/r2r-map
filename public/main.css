@@ -71,7 +71,7 @@ body {
     display: inline-block;
     font-size: 22px;
     background: url(assets/power-icon.png) no-repeat left 4px / auto 18px;
-    padding-left: 17px;
+    padding-left: 15px;
     text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);
     letter-spacing: 1px;
 }

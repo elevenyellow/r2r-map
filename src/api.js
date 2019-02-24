@@ -74,6 +74,12 @@ function createTileMethods({ tile, idNeutral }) {
         },
         changeUnits: (id, units) => {
             tile.changeUnits(id, units)
+        },
+        startHighlight: () => {
+            tile.startHighlight()
+        },
+        stopHighlight: () => {
+            tile.stopHighlight()
         }
     }
 }

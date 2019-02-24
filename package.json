@@ -1,6 +1,7 @@
 {
     "name": "r2r-map",
     "dependencies": {
+        "@tweenjs/tween.js": "^17.3.0",
         "d3-dispatch": "^1.0.5",
         "d3-drag": "^1.2.3",
         "d3-selection": "^1.4.0",

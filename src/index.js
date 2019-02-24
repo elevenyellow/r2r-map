@@ -3,6 +3,7 @@ import { createThreeWorld } from './three/'
 import createApi from './api'
 import OTHERS from './config/sprites/others'
 import { DOM } from './config/ui'
+import TWEEN from '@tweenjs/tween.js'
 
 // GETTING DOM
 const ui = document.getElementById(DOM.UI)
@@ -45,7 +46,7 @@ function onChangeZoom(zoom) {
     tiles.forEach(tile => tile.updateScaleDiv(zoom))
 }
 
-function onAnimationFrame() {
+function onAnimationFrame(time) {
     // this.renderer.autoClear = true
     ;[sceneTerrain, sceneSprites].forEach(scene => {
         renderer.render(scene, camera)
@@ -62,6 +63,8 @@ function onAnimationFrame() {
             canvasHeight: window.innerHeight
         })
     )
+
+    TWEEN.update(time)
 }
 onAnimationFrame()
 

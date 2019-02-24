@@ -1,3 +1,6 @@
+import TWEEN from '@tweenjs/tween.js'
+import * as THREE from 'three'
+
 import {
     createSmartDiv,
     createOwnerUiElement,
@@ -10,6 +13,7 @@ import { RECRUITMENT_POWER_UI_ELEMENT } from '../config/ui'
 
 export default function createTileFactory({ ui, scene, camera }) {
     return ({ x, z, spriteConf }) => {
+        let tweenHighlight
         const owners = {}
         const div = createSmartDiv({ container: ui })
         const recruitmentPower = createRecruitmentPowerUiElement({
@@ -76,6 +80,31 @@ export default function createTileFactory({ ui, scene, camera }) {
             changeOwner: (id, className) => {
                 const owner = owners[id]
                 owner.changeOwner(className)
+            },
+            startHighlight: () => {
+                if (tweenHighlight === undefined) {
+                    const color = { inc: 1 }
+                    tweenHighlight = new TWEEN.Tween(color)
+                        .to({ inc: 2 }, 1000) // Move to 10 in 1 second.
+                        .easing(TWEEN.Easing.Quadratic.InOut)
+                        .repeat(Infinity)
+                        // .delay(1000)
+                        .onUpdate(() => {
+                            sprite.material.color = new THREE.Color(
+                                color.inc,
+                                color.inc,
+                                color.inc
+                            )
+                        })
+                        .start() // Start the tween immediately.
+                }
+            },
+            stopHighlight: () => {
+                if (tweenHighlight !== undefined) {
+                    tweenHighlight.stop()
+                    tweenHighlight = undefined
+                    sprite.material.color = new THREE.Color(1, 1, 1)
+                }
             }
         }
     }

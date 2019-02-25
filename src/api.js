@@ -6,7 +6,7 @@ import { TILE_OWNER_CLASSES } from './config/ui'
 import createTileFactory from './factories/createTileFactory'
 import createArmyFactory from './factories/createArmyFactory'
 
-export default function createApi({ tiles, ui, camera, sceneSprites }) {
+export default function createApi({ tiles, armys, ui, camera, sceneSprites }) {
     const createTile = createTileFactory({
         ui,
         camera,
@@ -37,11 +37,17 @@ export default function createApi({ tiles, ui, camera, sceneSprites }) {
             })
         },
         createArmy: ({ from, to, units, distance }) => {
-            return createArmy({
-                x: 0,
-                z: 0,
+            const army = createArmy({
+                x: 15,
+                z: 15,
                 spriteConf: ARMY.ARMY
             })
+            armys.push(army)
+            return {
+                changeUnits: units => {
+                    army.changeUnits(units)
+                }
+            }
         }
     }
 }

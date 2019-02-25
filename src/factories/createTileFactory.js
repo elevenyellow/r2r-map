@@ -16,14 +16,14 @@ export default function createTileFactory({ ui, scene, camera }) {
         let tweenHighlight
         const owners = {}
         const div = createSmartDiv({ container: ui })
-        const recruitmentPower = createRecruitmentPowerUiElement({
-            className: RECRUITMENT_POWER_UI_ELEMENT
-        })
         const sprite = createBuildingSprite({
             scene,
             x,
             z,
             spriteConf
+        })
+        const recruitmentPower = createRecruitmentPowerUiElement({
+            className: RECRUITMENT_POWER_UI_ELEMENT
         })
         div.element.appendChild(recruitmentPower.element)
         return {
@@ -32,9 +32,9 @@ export default function createTileFactory({ ui, scene, camera }) {
             sprite,
             updatePositionDiv: ({ canvasWidth, canvasHeight }) => {
                 const proj = position3dToScreen2d({
-                    x: sprite.position.x + spriteConf.offsetX,
+                    x: sprite.position.x + spriteConf.uiOffsetX,
                     y: sprite.position.y,
-                    z: sprite.position.z + spriteConf.offsetZ,
+                    z: sprite.position.z + spriteConf.uiOffsetZ,
                     camera,
                     canvasWidth,
                     canvasHeight

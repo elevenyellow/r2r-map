@@ -75,3 +75,11 @@ body {
     text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);
     letter-spacing: 1px;
 }
+.armyUnits {
+    width: 42px;
+    height: 42px;
+    background: url(assets/units-background-1.png) 0 0 / 100%;
+    line-height: 46px;
+    font-size: 18px;
+    text-align: center;
+}

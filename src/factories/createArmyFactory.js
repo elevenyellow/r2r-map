@@ -1,8 +1,8 @@
-import { createSmartDiv } from '../ui'
+import { createSmartDiv, createArmyUnitsUiElement } from '../ui'
 import { createArmySprite } from '../three/scenario'
 import { position3dToScreen2d } from '../three/utils'
 import { VISUAL } from '../config/parameters'
-import { RECRUITMENT_POWER_UI_ELEMENT } from '../config/ui'
+import { ARMY_UNITS_UI_ELEMENT } from '../config/ui'
 
 export default function createArmyFactory({ ui, scene, camera }) {
     return ({ x, z, spriteConf }) => {
@@ -13,14 +13,18 @@ export default function createArmyFactory({ ui, scene, camera }) {
             z,
             spriteConf
         })
+        const units = createArmyUnitsUiElement({
+            className: ARMY_UNITS_UI_ELEMENT
+        })
+        div.element.appendChild(units.element)
         return {
             div,
             sprite,
             updatePositionDiv: ({ canvasWidth, canvasHeight }) => {
                 const proj = position3dToScreen2d({
-                    x: sprite.position.x + spriteConf.offsetX,
+                    x: sprite.position.x + spriteConf.uiOffsetX,
                     y: sprite.position.y,
-                    z: sprite.position.z + spriteConf.offsetZ,
+                    z: sprite.position.z + spriteConf.uiOffsetZ,
                     camera,
                     canvasWidth,
                     canvasHeight
@@ -35,6 +39,9 @@ export default function createArmyFactory({ ui, scene, camera }) {
                     ) / 100
                 // Changing  ZOOM
                 div.scale(scaleReduced)
+            },
+            changeUnits: value => {
+                units.changeUnits(value)
             }
         }
     }

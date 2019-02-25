@@ -11,6 +11,7 @@ const canvas = document.getElementById(DOM.CANVAS)
 
 // STATE
 const tiles = []
+const armys = []
 
 // CREATING THREE WORLD
 const {
@@ -35,6 +36,7 @@ const terrain = createTerrain({
 // CREATING AND EXPOSING API
 const API = createApi({
     tiles,
+    armys,
     ui,
     camera,
     sceneSprites
@@ -44,6 +46,7 @@ window.API = API
 // RENDER FUNCTIONS
 function onChangeZoom(zoom) {
     tiles.forEach(tile => tile.updateScaleDiv(zoom))
+    armys.forEach(army => army.updateScaleDiv(zoom))
 }
 
 function onAnimationFrame(time) {
@@ -58,6 +61,13 @@ function onAnimationFrame(time) {
     // Updating UI
     tiles.forEach(tile =>
         tile.updatePositionDiv({
+            camera,
+            canvasWidth: window.innerWidth,
+            canvasHeight: window.innerHeight
+        })
+    )
+    armys.forEach(army =>
+        army.updatePositionDiv({
             camera,
             canvasWidth: window.innerWidth,
             canvasHeight: window.innerHeight
@@ -83,14 +93,14 @@ window.cottage1.changeRecruitmentPower(5)
 window.army1 = API.createArmy({
     from: { col: 0, row: 0 },
     to: { col: 20, row: 20 },
-    units: 20,
     distance: 50 //percentage
 })
+window.army1.changeUnits(200)
 // EXAMPLE USING API
 // EXAMPLE USING API
 
 // HELPERS
 // isoCamera.onChange = updateUi
-sceneSprites.add(new isoCamera.THREE.AxesHelper(10))
+// sceneSprites.add(new isoCamera.THREE.AxesHelper(10))
 // scene.add(new three.isoCamera.THREE.GridHelper(50, 100, 0xaaaaaa, 0x999999))
 // go({ scene })

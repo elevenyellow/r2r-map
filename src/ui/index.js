@@ -54,3 +54,16 @@ export function createRecruitmentPowerUiElement({ className }) {
         }
     }
 }
+
+export function createArmyUnitsUiElement({ className }) {
+    const element = document.createElement('div')
+    const textElement = document.createElement('div')
+    element.appendChild(textElement)
+    element.className = className
+    return {
+        element,
+        changeUnits: units => {
+            textElement.innerHTML = units
+        }
+    }
+}

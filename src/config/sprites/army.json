@@ -1,8 +1,8 @@
 {
     "ARMY": {
         "area": 5,
-        "offsetX": 5,
-        "offsetZ": 5,
+        "uiOffsetX": 2,
+        "uiOffsetZ": 2,
         "url": "assets/army.png",
         "scale": { "x": 3, "y": 3, "z": 3 }
     }

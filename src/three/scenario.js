@@ -23,7 +23,7 @@ export function createTerrain({ renderer, scene, url }) {
 }
 
 // https://gamedev.stackexchange.com/questions/167762/how-to-avoid-the-cutoff-of-a-sprite-when-overlapping-in-a-terrain?noredirect=1#comment298081_167762
-export function addBuildingSprite({ scene, spriteConf, x, z }) {
+export function createBuildingSprite({ scene, spriteConf, x, z }) {
     const textureLoaded = textureLoader.load(spriteConf.url)
     const material = new THREE.SpriteMaterial({
         map: textureLoaded
@@ -51,6 +51,19 @@ export function createDecorativeSprite({ scene, spriteConf, x, z }) {
     const sprite = new THREE.Sprite(material)
     sprite.scale.set(spriteConf.scale.x, spriteConf.scale.y, spriteConf.scale.z)
     sprite.position.y = spriteConf.scale.y / 2
+    sprite.position.x = x
+    sprite.position.z = z
+    scene.add(sprite)
+    return sprite
+}
+
+export function createArmySprite({ scene, spriteConf, x, z }) {
+    const textureLoaded = textureLoader.load(spriteConf.url)
+    const material = new THREE.SpriteMaterial({
+        map: textureLoaded
+    })
+    const sprite = new THREE.Sprite(material)
+    sprite.scale.set(spriteConf.scale.x, spriteConf.scale.y, spriteConf.scale.z)
     sprite.position.x = x
     sprite.position.z = z
     scene.add(sprite)

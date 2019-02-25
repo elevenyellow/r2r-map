@@ -17,8 +17,8 @@ const {
     renderer,
     camera,
     sceneTerrain,
-    sceneSprites
-    // isoCamera,
+    sceneSprites,
+    isoCamera
     // zoom
 } = createThreeWorld({
     canvas,
@@ -69,7 +69,7 @@ function onAnimationFrame(time) {
 onAnimationFrame()
 
 // EXAMPLE USING API
-
+// EXAMPLE USING API
 window.village1 = API.createVillage({ col: 0, row: 0 })
 window.village1.changeRecruitmentPower(25)
 window.village1.addOwnerAsPlayer('ID1', 'Enzo', 1000)
@@ -77,5 +77,20 @@ window.village1.addOwnerAsEnemy('ID2', 'Agus', 234)
 window.village1.addOwnerAsEnemy('ID3', 'Azaru', 312)
 window.village1.removeOwner('ID3')
 
-window.cottage1 = API.createCottage({ col: 15, row: 15 })
+window.cottage1 = API.createCottage({ col: 20, row: 0 })
 window.cottage1.changeRecruitmentPower(5)
+
+window.army1 = API.createArmy({
+    from: { col: 0, row: 0 },
+    to: { col: 20, row: 20 },
+    units: 20,
+    distance: 50 //percentage
+})
+// EXAMPLE USING API
+// EXAMPLE USING API
+
+// HELPERS
+// isoCamera.onChange = updateUi
+sceneSprites.add(new isoCamera.THREE.AxesHelper(10))
+// scene.add(new three.isoCamera.THREE.GridHelper(50, 100, 0xaaaaaa, 0x999999))
+// go({ scene })

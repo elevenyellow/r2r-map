@@ -1,11 +1,18 @@
 import { OWNER } from './const'
 import BUILDING from './config/sprites/building'
+import ARMY from './config/sprites/army'
 import DECORATIVE from './config/sprites/decorative'
 import { TILE_OWNER_CLASSES } from './config/ui'
 import createTileFactory from './factories/createTileFactory'
+import createArmyFactory from './factories/createArmyFactory'
 
 export default function createApi({ tiles, ui, camera, sceneSprites }) {
     const createTile = createTileFactory({
+        ui,
+        camera,
+        scene: sceneSprites
+    })
+    const createArmy = createArmyFactory({
         ui,
         camera,
         scene: sceneSprites
@@ -27,6 +34,13 @@ export default function createApi({ tiles, ui, camera, sceneSprites }) {
                 row,
                 spriteConf: BUILDING.COTTAGE,
                 tiles
+            })
+        },
+        createArmy: ({ from, to, units, distance }) => {
+            return createArmy({
+                x: 0,
+                z: 0,
+                spriteConf: ARMY.ARMY
             })
         }
     }
@@ -83,12 +97,6 @@ function createTileMethods({ tile, idNeutral }) {
         }
     }
 }
-
-// HELPERS
-// isoCamera.onChange = updateUi
-// sceneSprites.add(new isoCamera.THREE.AxesHelper(10))
-// scene.add(new three.isoCamera.THREE.GridHelper(50, 100, 0xaaaaaa, 0x999999))
-// go({ scene })
 
 // //
 // canvas.addEventListener('click', e => {

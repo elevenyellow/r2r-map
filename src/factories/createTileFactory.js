@@ -6,7 +6,7 @@ import {
     createOwnerUiElement,
     createRecruitmentPowerUiElement
 } from '../ui'
-import { addBuildingSprite } from '../three/scenario'
+import { createBuildingSprite } from '../three/scenario'
 import { position3dToScreen2d } from '../three/utils'
 import { VISUAL } from '../config/parameters'
 import { RECRUITMENT_POWER_UI_ELEMENT } from '../config/ui'
@@ -19,7 +19,7 @@ export default function createTileFactory({ ui, scene, camera }) {
         const recruitmentPower = createRecruitmentPowerUiElement({
             className: RECRUITMENT_POWER_UI_ELEMENT
         })
-        const sprite = addBuildingSprite({
+        const sprite = createBuildingSprite({
             scene,
             x,
             z,

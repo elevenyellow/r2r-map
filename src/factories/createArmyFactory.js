@@ -42,6 +42,10 @@ export default function createArmyFactory({ ui, scene, camera }) {
             },
             changeUnits: value => {
                 units.changeUnits(value)
+            },
+            changePosition: ({ x, z }) => {
+                sprite.position.x = x
+                sprite.position.z = z
             }
         }
     }

@@ -36,16 +36,25 @@ export default function createApi({ tiles, armys, ui, camera, sceneSprites }) {
                 tiles
             })
         },
-        createArmy: ({ from, to, units, distance }) => {
+        createArmy: ({ from, to }) => {
+            const fromX = from.col
+            const fromZ = from.row
+            const toX = to.col
+            const toZ = to.row
             const army = createArmy({
-                x: 15,
-                z: 15,
+                x: fromX,
+                z: fromZ,
                 spriteConf: ARMY.ARMY
             })
             armys.push(army)
             return {
                 changeUnits: units => {
                     army.changeUnits(units)
+                },
+                changeDistance: distance => {
+                    const x = (distance * (toX - fromX)) / 100
+                    const z = (distance * (toZ - fromZ)) / 100
+                    army.changePosition({ x: x + fromX, z: z + fromZ })
                 }
             }
         }

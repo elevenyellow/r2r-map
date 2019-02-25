@@ -69,8 +69,8 @@ function createGenericTile({ createTile, col, row, spriteConf, tiles }) {
         spriteConf
     })
     const idNeutral = Math.random()
-    tile.addOwner(idNeutral)
-    tile.changeOwner(idNeutral, TILE_OWNER_CLASSES[OWNER.NEUTRAL])
+    // tile.addOwner(idNeutral)
+    // tile.changeOwner(idNeutral, TILE_OWNER_CLASSES[OWNER.NEUTRAL])
     tiles.push(tile)
     return createTileMethods({ tile, idNeutral })
 }
@@ -81,14 +81,14 @@ function createTileMethods({ tile, idNeutral }) {
             tile.changeRecruitmentPower(power)
         },
         addOwnerAsPlayer: (id, name = '', units = 0) => {
-            tile.removeOwner(idNeutral)
+            // tile.removeOwner(idNeutral)
             tile.addOwner(id)
             tile.changeOwner(id, TILE_OWNER_CLASSES[OWNER.PLAYER])
             tile.changeName(id, name)
             tile.changeUnits(id, units)
         },
         addOwnerAsEnemy: (id, name = '', units = 0) => {
-            tile.removeOwner(idNeutral)
+            // tile.removeOwner(idNeutral)
             tile.addOwner(id)
             tile.changeOwner(id, TILE_OWNER_CLASSES[OWNER.ENEMY])
             tile.changeName(id, name)
@@ -96,10 +96,10 @@ function createTileMethods({ tile, idNeutral }) {
         },
         removeOwner: id => {
             tile.removeOwner(id)
-            if (Object.keys(tile.owners).length === 0) {
-                tile.addOwner(idNeutral)
-                tile.changeOwner(idNeutral, TILE_OWNER_CLASSES[OWNER.NEUTRAL])
-            }
+            // if (Object.keys(tile.owners).length === 0) {
+            // tile.addOwner(idNeutral)
+            // tile.changeOwner(idNeutral, TILE_OWNER_CLASSES[OWNER.NEUTRAL])
+            // }
         },
         changeUnits: (id, units) => {
             tile.changeUnits(id, units)

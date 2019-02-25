@@ -33,16 +33,6 @@ const terrain = createTerrain({
     url: OTHERS.TERRAIN.url
 })
 
-// CREATING AND EXPOSING API
-const API = createApi({
-    tiles,
-    armys,
-    ui,
-    camera,
-    sceneSprites
-})
-window.API = API
-
 // RENDER FUNCTIONS
 function onChangeZoom(zoom) {
     tiles.forEach(tile => tile.updateScaleDiv(zoom))
@@ -78,9 +68,21 @@ function onAnimationFrame(time) {
 }
 onAnimationFrame()
 
+// CREATING AND EXPOSING API
+const API = createApi({
+    tiles,
+    armys,
+    ui,
+    camera,
+    sceneSprites
+})
+if (typeof window != 'undefined') {
+    window.API = API
+}
+
 // EXAMPLE USING API
 // EXAMPLE USING API
-const from = { col: 20, row: 30 }
+const from = { col: 0, row: 0 }
 window.village1 = API.createVillage(from)
 window.village1.changeRecruitmentPower(25)
 window.village1.addOwnerAsPlayer('ID1', 'Enzo', 1000)
@@ -88,13 +90,13 @@ window.village1.addOwnerAsEnemy('ID2', 'Agus', 234)
 window.village1.addOwnerAsEnemy('ID3', 'Azaru', 312)
 window.village1.removeOwner('ID3')
 
-const to = { col: -20, row: -40 }
+const to = { col: 20, row: 40 }
 window.cottage1 = API.createCottage(to)
 window.cottage1.changeRecruitmentPower(5)
 
 window.army1 = API.createArmy({ from, to })
 window.army1.changeUnits(200)
-window.army1.changeDistance(50) //percentage
+window.army1.changeDistance(25) //percentage
 // EXAMPLE USING API
 // EXAMPLE USING API
 

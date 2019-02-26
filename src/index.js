@@ -85,12 +85,12 @@ if (typeof window != 'undefined') {
 const from = { col: 10, row: 5 }
 window.village1 = API.createVillage(from)
 window.village1.changeRecruitmentPower(25)
-window.village1.addOwnerAsPlayer('ID1', 'Enzo', 1000)
-window.village1.addOwnerAsEnemy('ID2', 'Agus', 234)
-window.village1.addOwnerAsEnemy('ID3', 'Azaru', 312)
-window.village1.removeOwner('ID3')
+// window.village1.addOwnerAsPlayer('ID1', 'Enzo', 1000)
+// window.village1.addOwnerAsEnemy('ID2', 'Agus', 234)
+// window.village1.addOwnerAsEnemy('ID3', 'Azaru', 312)
+// window.village1.removeOwner('ID3')
 
-const to = { col: -50, row: -20 }
+const to = { col: 50, row: 20 }
 window.cottage1 = API.createCottage(to)
 window.cottage1.changeRecruitmentPower(5)
 

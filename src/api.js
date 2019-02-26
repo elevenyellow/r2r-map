@@ -6,6 +6,8 @@ import { TILE_OWNER_CLASSES } from './config/ui'
 import createTileFactory from './factories/createTileFactory'
 import createArmyFactory from './factories/createArmyFactory'
 
+import * as THREE from 'three'
+
 export default function createApi({ tiles, armys, ui, camera, sceneSprites }) {
     const createTile = createTileFactory({
         ui,
@@ -52,9 +54,19 @@ export default function createApi({ tiles, armys, ui, camera, sceneSprites }) {
                     army.changeUnits(units)
                 },
                 changeDistance: distance => {
-                    const offset = 3
+                    const offset = 0
                     const diffX = toX - offset - (fromX + offset)
                     const diffZ = toZ - offset - (fromZ + offset)
+
+                    const helper = new THREE.AxesHelper(10)
+                    helper.position.x = toX - offset
+                    helper.position.z = toZ - offset
+                    sceneSprites.add(helper)
+
+                    const helper2 = new THREE.AxesHelper(10)
+                    helper2.position.x = fromX + offset
+                    helper2.position.z = fromZ + offset
+                    sceneSprites.add(helper2)
 
                     const x = (distance * diffX) / 100
                     const z = (distance * diffZ) / 100

@@ -82,7 +82,7 @@ if (typeof window != 'undefined') {
 
 // EXAMPLE USING API
 // EXAMPLE USING API
-const from = { col: 0, row: 0 }
+const from = { col: 10, row: 5 }
 window.village1 = API.createVillage(from)
 window.village1.changeRecruitmentPower(25)
 window.village1.addOwnerAsPlayer('ID1', 'Enzo', 1000)
@@ -90,18 +90,30 @@ window.village1.addOwnerAsEnemy('ID2', 'Agus', 234)
 window.village1.addOwnerAsEnemy('ID3', 'Azaru', 312)
 window.village1.removeOwner('ID3')
 
-const to = { col: 20, row: 40 }
+const to = { col: -50, row: -20 }
 window.cottage1 = API.createCottage(to)
 window.cottage1.changeRecruitmentPower(5)
 
 window.army1 = API.createArmy({ from, to })
 window.army1.changeUnits(200)
-window.army1.changeDistance(25) //percentage
+let percentage = 1
+const int = setInterval(() => {
+    percentage += 0.1
+    window.army1.changeDistance(percentage)
+    if (percentage >= 100) {
+        clearInterval(int)
+    }
+}, 10)
+// window.army1.changeDistance(1) //percentage
+// window.army1.changeDistance(25) //percentage
+// window.army1.changeDistance(50) //percentage
+// window.army1.changeDistance(75) //percentage
+// window.army1.changeDistance(99) //percentage
 // EXAMPLE USING API
 // EXAMPLE USING API
 
 // HELPERS
 // isoCamera.onChange = updateUi
 // sceneSprites.add(new isoCamera.THREE.AxesHelper(10))
-// scene.add(new three.isoCamera.THREE.GridHelper(50, 100, 0xaaaaaa, 0x999999))
+// sceneTerrain.add(new isoCamera.THREE.GridHelper(1000, 1000, 0xaaaaaa, 0x999999))
 // go({ scene })

@@ -52,9 +52,30 @@ export default function createApi({ tiles, armys, ui, camera, sceneSprites }) {
                     army.changeUnits(units)
                 },
                 changeDistance: distance => {
-                    const x = (distance * (toX - fromX)) / 100
-                    const z = (distance * (toZ - fromZ)) / 100
-                    army.changePosition({ x: x + fromX, z: z + fromZ })
+                    const offset = 3
+                    const diffX = toX - offset - (fromX + offset)
+                    const diffZ = toZ - offset - (fromZ + offset)
+
+                    const x = (distance * diffX) / 100
+                    const z = (distance * diffZ) / 100
+
+                    const newX = x + fromX + offset
+                    const newZ = z + fromZ + offset
+
+                    console.log({ distance, newX })
+
+                    army.changePosition({
+                        x: newX,
+                        z: newZ
+                    })
+
+                    // fromX = 10
+                    // toX = 100
+
+                    // diff = fromX - toX // 90
+
+                    // 100 - 90
+                    // 50 - 45
                 }
             }
         }

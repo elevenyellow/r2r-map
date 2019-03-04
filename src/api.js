@@ -19,8 +19,19 @@ export default function createApi({ tiles, armys, ui, camera, sceneSprites }) {
         scene: sceneSprites
     })
     return {
-        createVillage: ({ col, row }) => {
-            return createGenericTile({
+        createArmy: ({ id, fromTileId, toTileId }) => {
+            return createArmyObject({
+                createArmy,
+                armys,
+                tiles,
+                id,
+                fromTileId,
+                toTileId
+            })
+        },
+        createVillage: ({ id, col, row }) => {
+            return createTileObject({
+                id,
                 createTile,
                 col,
                 row,
@@ -28,8 +39,9 @@ export default function createApi({ tiles, armys, ui, camera, sceneSprites }) {
                 tiles
             })
         },
-        createCottage: ({ col, row }) => {
-            return createGenericTile({
+        createCottage: ({ id, col, row }) => {
+            return createTileObject({
+                id,
                 createTile,
                 col,
                 row,
@@ -37,120 +49,136 @@ export default function createApi({ tiles, armys, ui, camera, sceneSprites }) {
                 tiles
             })
         },
-        createArmy: ({ from, to }) => {
-            const fromX = from.col
-            const fromZ = from.row
-            const toX = to.col
-            const toZ = to.row
-            const army = createArmy({
-                x: fromX,
-                z: fromZ,
-                spriteConf: ARMY.ARMY
+        changeRecruitmentPower: (idTile, power) => {
+            const tile = getTileById({ tiles, idTile })
+            tile.changeRecruitmentPower(power)
+        },
+        addOwnerAsPlayer: (idTile, idOwner, name = '', units = 0) => {
+            const tile = getTileById({ tiles, idTile })
+            tile.addOwner(idOwner)
+            tile.changeOwner(idOwner, TILE_OWNER_CLASSES[OWNER.PLAYER])
+            tile.changeName(idOwner, name)
+            tile.changeUnits(idOwner, units)
+        },
+        addOwnerAsEnemy: (idTile, idOwner, name = '', units = 0) => {
+            const tile = getTileById({ tiles, idTile })
+            tile.addOwner(idOwner)
+            tile.changeOwner(idOwner, TILE_OWNER_CLASSES[OWNER.ENEMY])
+            tile.changeName(idOwner, name)
+            tile.changeUnits(idOwner, units)
+        },
+        removeOwner: (idTile, idOwner) => {
+            const tile = getTileById({ tiles, idTile })
+            tile.removeOwner(idOwner)
+        },
+        changeUnits: (idTile, idOwner, units) => {
+            const tile = getTileById({ tiles, idTile })
+            tile.changeUnits(idOwner, units)
+        },
+        startHighlight: idTile => {
+            const tile = getTileById({ tiles, idTile })
+            tile.startHighlight()
+        },
+        stopHighlight: idTile => {
+            const tile = getTileById({ tiles, idTile })
+            tile.stopHighlight()
+        },
+        changeUnits: (idArmy, units) => {
+            const army = getArmyById({ armys, idArmy })
+            army.changeUnits(units)
+        },
+        changeDistance: (idArmy, distance) => {
+            const army = getArmyById({ armys, idArmy })
+            const x = (distance * army.diffX) / 100
+            const z = (distance * army.diffZ) / 100
+            const newX = x + army.fromX
+            const newZ = z + army.fromZ
+            army.changePosition({
+                x: newX,
+                z: newZ
             })
-            armys.push(army)
-
-            const offset = 20
-            const fromVector = new THREE.Vector2(fromX, fromZ)
-            const toVector = new THREE.Vector2(toX, toZ)
-            const fromVectorReduced = fromVector
-                .clone()
-                .sub(toVector)
-                .normalize()
-                .multiplyScalar(-offset)
-                .add(fromVector)
-            const toVectorReduced = toVector
-                .clone()
-                .sub(fromVector)
-                .normalize()
-                .multiplyScalar(-offset)
-                .add(toVector)
-            const diffX = toVectorReduced.x - fromVectorReduced.x
-            const diffZ = toVectorReduced.y - fromVectorReduced.y
-
-            const helper = new THREE.AxesHelper(10)
-            helper.position.x = fromVectorReduced.x
-            helper.position.z = fromVectorReduced.y
-            sceneSprites.add(helper)
-
-            const helper2 = new THREE.AxesHelper(10)
-            helper2.position.x = toVectorReduced.x
-            helper2.position.z = toVectorReduced.y
-            sceneSprites.add(helper2)
-
-            const armyObject = {
-                army,
-                updatePositionDiv: army.updatePositionDiv,
-                changeUnits: units => {
-                    army.changeUnits(units)
-                },
-                changeDistance: distance => {
-                    const x = (distance * diffX) / 100
-                    const z = (distance * diffZ) / 100
-                    const newX = x + fromVectorReduced.x
-                    const newZ = z + fromVectorReduced.y
-                    army.changePosition({
-                        x: newX,
-                        z: newZ
-                    })
-                }
-            }
-
-            armys.push(armyObject)
-            return armyObject
         }
     }
 }
 
 // Private
-function createGenericTile({ createTile, col, row, spriteConf, tiles }) {
+function getTileById({ tiles, idTile }) {
+    return tiles.find(tile => tile.id === idTile)
+}
+
+function getArmyById({ armys, idArmy }) {
+    return armys.find(army => army.id === idArmy)
+}
+
+function createTileObject({ id, createTile, col, row, spriteConf, tiles }) {
     const tile = createTile({
         x: col,
         z: row,
         spriteConf
     })
-    const idNeutral = Math.random()
-    // tile.addOwner(idNeutral)
-    // tile.changeOwner(idNeutral, TILE_OWNER_CLASSES[OWNER.NEUTRAL])
-    const tileObject = {
-        tile,
-        area: spriteConf.area,
-        updatePositionDiv: tile.updatePositionDiv,
-        changeRecruitmentPower: power => {
-            tile.changeRecruitmentPower(power)
-        },
-        addOwnerAsPlayer: (id, name = '', units = 0) => {
-            // tile.removeOwner(idNeutral)
-            tile.addOwner(id)
-            tile.changeOwner(id, TILE_OWNER_CLASSES[OWNER.PLAYER])
-            tile.changeName(id, name)
-            tile.changeUnits(id, units)
-        },
-        addOwnerAsEnemy: (id, name = '', units = 0) => {
-            // tile.removeOwner(idNeutral)
-            tile.addOwner(id)
-            tile.changeOwner(id, TILE_OWNER_CLASSES[OWNER.ENEMY])
-            tile.changeName(id, name)
-            tile.changeUnits(id, units)
-        },
-        removeOwner: id => {
-            tile.removeOwner(id)
-            // if (Object.keys(tile.owners).length === 0) {
-            // tile.addOwner(idNeutral)
-            // tile.changeOwner(idNeutral, TILE_OWNER_CLASSES[OWNER.NEUTRAL])
-            // }
-        },
-        changeUnits: (id, units) => {
-            tile.changeUnits(id, units)
-        },
-        startHighlight: () => {
-            tile.startHighlight()
-        },
-        stopHighlight: () => {
-            tile.stopHighlight()
-        }
-    }
-    tiles.push(tileObject)
-    return tileObject
+    tile.id = id
+    tile.x = col
+    tile.z = row
+    tile.area = spriteConf.area
+    tiles.push(tile)
+    return tile
+}
+
+function createArmyObject({
+    createArmy,
+    armys,
+    tiles,
+    id,
+    fromTileId,
+    toTileId
+}) {
+    const from = getTileById({ tiles, idTile: fromTileId })
+    const to = getTileById({ tiles, idTile: toTileId })
+    const fromX = from.x
+    const fromZ = from.z
+    const toX = to.x
+    const toZ = to.z
+    const army = createArmy({
+        x: fromX,
+        z: fromZ,
+        spriteConf: ARMY.ARMY
+    })
+
+    const fromVector = new THREE.Vector2(fromX, fromZ)
+    const toVector = new THREE.Vector2(toX, toZ)
+    const fromVectorReduced = fromVector
+        .clone()
+        .sub(toVector)
+        .normalize()
+        .multiplyScalar(-from.area)
+        .add(fromVector)
+    const toVectorReduced = toVector
+        .clone()
+        .sub(fromVector)
+        .normalize()
+        .multiplyScalar(-to.area)
+        .add(toVector)
+    const diffX = toVectorReduced.x - fromVectorReduced.x
+    const diffZ = toVectorReduced.y - fromVectorReduced.y
+
+    // const helper = new THREE.AxesHelper(10)
+    // helper.position.x = fromVectorReduced.x
+    // helper.position.z = fromVectorReduced.y
+    // sceneSprites.add(helper)
+
+    // const helper2 = new THREE.AxesHelper(10)
+    // helper2.position.x = toVectorReduced.x
+    // helper2.position.z = toVectorReduced.y
+    // sceneSprites.add(helper2)
+
+    army.id = id
+    army.diffX = diffX
+    army.diffZ = diffZ
+    army.fromX = fromVectorReduced.x
+    army.fromZ = fromVectorReduced.y
+    armys.push(army)
+
+    return army
 }
 
 // //

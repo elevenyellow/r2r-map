@@ -82,24 +82,25 @@ if (typeof window != 'undefined') {
 
 // EXAMPLE USING API
 // EXAMPLE USING API
-const from = { col: 10, row: 5 }
-window.village1 = API.createVillage(from)
-window.village1.changeRecruitmentPower(25)
-// window.village1.addOwnerAsPlayer('ID1', 'Enzo', 1000)
-// window.village1.addOwnerAsEnemy('ID2', 'Agus', 234)
-// window.village1.addOwnerAsEnemy('ID3', 'Azaru', 312)
-// window.village1.removeOwner('ID3')
+const village1 = 'village1'
+API.createVillage({ id: village1, col: 10, row: 5 })
+API.changeRecruitmentPower(village1, 22)
+API.addOwnerAsPlayer(village1, 'ID1', 'Enzo', 1000)
+API.addOwnerAsEnemy(village1, 'ID2', 'Agus', 234)
+API.addOwnerAsEnemy(village1, 'ID3', 'Azaru', 312)
+API.removeOwner(village1, 'ID3')
 
-const to = { col: -50, row: -20 }
-window.cottage1 = API.createCottage(to)
-window.cottage1.changeRecruitmentPower(5)
+const cottage1 = 'cottage1'
+API.createCottage({ id: cottage1, col: 50, row: 20 })
+API.changeRecruitmentPower(cottage1, 5)
 
-window.army1 = API.createArmy({ from, to })
-window.army1.changeUnits(200)
+const army1 = 'army1'
+API.createArmy({ id: army1, fromTileId: village1, toTileId: cottage1 })
+API.changeUnits(army1, 200)
 let percentage = 0
 const int = setInterval(() => {
     percentage += 0.1
-    window.army1.changeDistance(percentage)
+    API.changeDistance(army1, percentage)
     if (percentage >= 100) {
         clearInterval(int)
     }

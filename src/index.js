@@ -90,13 +90,13 @@ window.village1.changeRecruitmentPower(25)
 // window.village1.addOwnerAsEnemy('ID3', 'Azaru', 312)
 // window.village1.removeOwner('ID3')
 
-const to = { col: 50, row: 20 }
+const to = { col: -50, row: -20 }
 window.cottage1 = API.createCottage(to)
 window.cottage1.changeRecruitmentPower(5)
 
 window.army1 = API.createArmy({ from, to })
 window.army1.changeUnits(200)
-let percentage = 1
+let percentage = 0
 const int = setInterval(() => {
     percentage += 0.1
     window.army1.changeDistance(percentage)
@@ -104,11 +104,6 @@ const int = setInterval(() => {
         clearInterval(int)
     }
 }, 10)
-// window.army1.changeDistance(1) //percentage
-// window.army1.changeDistance(25) //percentage
-// window.army1.changeDistance(50) //percentage
-// window.army1.changeDistance(75) //percentage
-// window.army1.changeDistance(99) //percentage
 // EXAMPLE USING API
 // EXAMPLE USING API
 

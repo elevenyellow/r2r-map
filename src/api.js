@@ -1,3 +1,4 @@
+import * as THREE from 'three'
 import { OWNER } from './const'
 import BUILDING from './config/sprites/building'
 import ARMY from './config/sprites/army'
@@ -5,8 +6,6 @@ import DECORATIVE from './config/sprites/decorative'
 import { TILE_OWNER_CLASSES } from './config/ui'
 import createTileFactory from './factories/createTileFactory'
 import createArmyFactory from './factories/createArmyFactory'
-
-import * as THREE from 'three'
 
 export default function createApi({ tiles, armys, ui, camera, sceneSprites }) {
     const createTile = createTileFactory({
@@ -49,47 +48,55 @@ export default function createApi({ tiles, armys, ui, camera, sceneSprites }) {
                 spriteConf: ARMY.ARMY
             })
             armys.push(army)
-            return {
+
+            const offset = 20
+            const fromVector = new THREE.Vector2(fromX, fromZ)
+            const toVector = new THREE.Vector2(toX, toZ)
+            const fromVectorReduced = fromVector
+                .clone()
+                .sub(toVector)
+                .normalize()
+                .multiplyScalar(-offset)
+                .add(fromVector)
+            const toVectorReduced = toVector
+                .clone()
+                .sub(fromVector)
+                .normalize()
+                .multiplyScalar(-offset)
+                .add(toVector)
+            const diffX = toVectorReduced.x - fromVectorReduced.x
+            const diffZ = toVectorReduced.y - fromVectorReduced.y
+
+            const helper = new THREE.AxesHelper(10)
+            helper.position.x = fromVectorReduced.x
+            helper.position.z = fromVectorReduced.y
+            sceneSprites.add(helper)
+
+            const helper2 = new THREE.AxesHelper(10)
+            helper2.position.x = toVectorReduced.x
+            helper2.position.z = toVectorReduced.y
+            sceneSprites.add(helper2)
+
+            const armyObject = {
+                army,
+                updatePositionDiv: army.updatePositionDiv,
                 changeUnits: units => {
                     army.changeUnits(units)
                 },
                 changeDistance: distance => {
-                    const offset = 0
-                    const diffX = toX - offset - (fromX + offset)
-                    const diffZ = toZ - offset - (fromZ + offset)
-
-                    const helper = new THREE.AxesHelper(10)
-                    helper.position.x = toX - offset
-                    helper.position.z = toZ - offset
-                    sceneSprites.add(helper)
-
-                    const helper2 = new THREE.AxesHelper(10)
-                    helper2.position.x = fromX + offset
-                    helper2.position.z = fromZ + offset
-                    sceneSprites.add(helper2)
-
                     const x = (distance * diffX) / 100
                     const z = (distance * diffZ) / 100
-
-                    const newX = x + fromX + offset
-                    const newZ = z + fromZ + offset
-
-                    console.log({ distance, newX })
-
+                    const newX = x + fromVectorReduced.x
+                    const newZ = z + fromVectorReduced.y
                     army.changePosition({
                         x: newX,
                         z: newZ
                     })
-
-                    // fromX = 10
-                    // toX = 100
-
-                    // diff = fromX - toX // 90
-
-                    // 100 - 90
-                    // 50 - 45
                 }
             }
+
+            armys.push(armyObject)
+            return armyObject
         }
     }
 }
@@ -104,12 +111,10 @@ function createGenericTile({ createTile, col, row, spriteConf, tiles }) {
     const idNeutral = Math.random()
     // tile.addOwner(idNeutral)
     // tile.changeOwner(idNeutral, TILE_OWNER_CLASSES[OWNER.NEUTRAL])
-    tiles.push(tile)
-    return createTileMethods({ tile, idNeutral })
-}
-
-function createTileMethods({ tile, idNeutral }) {
-    return {
+    const tileObject = {
+        tile,
+        area: spriteConf.area,
+        updatePositionDiv: tile.updatePositionDiv,
         changeRecruitmentPower: power => {
             tile.changeRecruitmentPower(power)
         },
@@ -144,6 +149,8 @@ function createTileMethods({ tile, idNeutral }) {
             tile.stopHighlight()
         }
     }
+    tiles.push(tileObject)
+    return tileObject
 }
 
 // //

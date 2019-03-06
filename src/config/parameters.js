@@ -1,3 +1,4 @@
-export const VISUAL = {
-    RATIO_SCALE_DIV_WHEN_ZOOM: 4
+export const GENERAL = {
+    RATIO_SCALE_DIV_WHEN_ZOOM: 8,
+    HEXAGON_SIZE: 15
 }

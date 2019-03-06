@@ -1,7 +1,7 @@
 import { createSmartDiv, createArmyUnitsUiElement } from '../ui'
 import { createArmySprite } from '../three/scenario'
 import { position3dToScreen2d } from '../three/utils'
-import { VISUAL } from '../config/parameters'
+import { GENERAL } from '../config/parameters'
 import { ARMY_UNITS_UI_ELEMENT } from '../config/ui'
 
 export default function createArmyFactory({ ui, scene, camera }) {
@@ -35,7 +35,8 @@ export default function createArmyFactory({ ui, scene, camera }) {
                 const scale = (zoom * 100) / 20
                 const scaleReduced =
                     Math.round(
-                        scale + (100 - scale) / VISUAL.RATIO_SCALE_DIV_WHEN_ZOOM
+                        scale +
+                            (100 - scale) / GENERAL.RATIO_SCALE_DIV_WHEN_ZOOM
                     ) / 100
                 // Changing  ZOOM
                 div.scale(scaleReduced)

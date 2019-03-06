@@ -6,8 +6,16 @@ import DECORATIVE from './config/sprites/decorative'
 import { TILE_OWNER_CLASSES } from './config/ui'
 import createTileFactory from './factories/createTileFactory'
 import createArmyFactory from './factories/createArmyFactory'
+import { getPositionByCordinate } from './utils/hexagons'
 
-export default function createApi({ tiles, armys, ui, camera, sceneSprites }) {
+export default function createApi({
+    tiles,
+    armys,
+    ui,
+    camera,
+    sceneSprites,
+    hexagonSize
+}) {
     const createTile = createTileFactory({
         ui,
         camera,
@@ -36,7 +44,8 @@ export default function createApi({ tiles, armys, ui, camera, sceneSprites }) {
                 col,
                 row,
                 spriteConf: BUILDING.VILLAGE,
-                tiles
+                tiles,
+                hexagonSize
             })
         },
         createCottage: ({ id, col, row }) => {
@@ -46,7 +55,8 @@ export default function createApi({ tiles, armys, ui, camera, sceneSprites }) {
                 col,
                 row,
                 spriteConf: BUILDING.COTTAGE,
-                tiles
+                tiles,
+                hexagonSize
             })
         },
         changeRecruitmentPower: (idTile, power) => {
@@ -110,15 +120,20 @@ function getArmyById({ armys, idArmy }) {
     return armys.find(army => army.id === idArmy)
 }
 
-function createTileObject({ id, createTile, col, row, spriteConf, tiles }) {
-    const tile = createTile({
-        x: col,
-        z: row,
-        spriteConf
-    })
+function createTileObject({
+    id,
+    createTile,
+    col,
+    row,
+    spriteConf,
+    tiles,
+    hexagonSize
+}) {
+    const [x, z] = getPositionByCordinate({ col, row, size: hexagonSize })
+    const tile = createTile({ x, z, spriteConf })
     tile.id = id
-    tile.x = col
-    tile.z = row
+    tile.x = x
+    tile.z = z
     tile.area = spriteConf.area
     tiles.push(tile)
     return tile
@@ -170,7 +185,6 @@ function createArmyObject({
     // helper2.position.x = toVectorReduced.x
     // helper2.position.z = toVectorReduced.y
     // sceneSprites.add(helper2)
-
     army.id = id
     army.diffX = diffX
     army.diffZ = diffZ

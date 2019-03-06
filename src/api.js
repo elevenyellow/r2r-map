@@ -9,13 +9,16 @@ import createArmyFactory from './factories/createArmyFactory'
 import { getPositionByCordinate } from './utils/hexagons'
 
 export default function createApi({
-    tiles,
-    armys,
     ui,
     camera,
     sceneSprites,
-    hexagonSize
+    hexagonSize,
+    initialZoom
 }) {
+    // STATE
+    let zoom = initialZoom
+    const tiles = []
+    const armys = []
     const createTile = createTileFactory({
         ui,
         camera,
@@ -27,18 +30,29 @@ export default function createApi({
         scene: sceneSprites
     })
     return {
-        createArmy: ({ id, fromTileId, toTileId }) => {
-            return createArmyObject({
-                createArmy,
-                armys,
-                tiles,
-                id,
-                fromTileId,
-                toTileId
-            })
+        updateZoom: newZoom => {
+            zoom = newZoom
+            tiles.forEach(tile => tile.updateScaleDiv(zoom))
+            armys.forEach(army => army.updateScaleDiv(zoom))
+        },
+        updatePan: ({ canvasWidth, canvasHeight }) => {
+            tiles.forEach(tile =>
+                tile.updatePositionDiv({
+                    camera,
+                    canvasWidth,
+                    canvasHeight
+                })
+            )
+            armys.forEach(army =>
+                army.updatePositionDiv({
+                    camera,
+                    canvasWidth,
+                    canvasHeight
+                })
+            )
         },
         createVillage: ({ id, col, row }) => {
-            return createTileObject({
+            const tile = createTileObject({
                 id,
                 createTile,
                 col,
@@ -47,9 +61,11 @@ export default function createApi({
                 tiles,
                 hexagonSize
             })
+            tile.updateScaleDiv(zoom)
+            return tile
         },
         createCottage: ({ id, col, row }) => {
-            return createTileObject({
+            const tile = createTileObject({
                 id,
                 createTile,
                 col,
@@ -58,6 +74,20 @@ export default function createApi({
                 tiles,
                 hexagonSize
             })
+            tile.updateScaleDiv(zoom)
+            return tile
+        },
+        createArmy: ({ id, fromTileId, toTileId }) => {
+            const army = createArmyObject({
+                createArmy,
+                armys,
+                tiles,
+                id,
+                fromTileId,
+                toTileId
+            })
+            army.updateScaleDiv(zoom)
+            return army
         },
         changeRecruitmentPower: (idTile, power) => {
             const tile = getTileById({ tiles, idTile })

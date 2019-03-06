@@ -5,15 +5,10 @@ import OTHERS from './config/sprites/others'
 import { GENERAL } from './config/parameters'
 import { DOM } from './config/ui'
 import TWEEN from '@tweenjs/tween.js'
-import {} from './utils/hexagons'
 
 // GETTING DOM
 const ui = document.getElementById(DOM.UI)
 const canvas = document.getElementById(DOM.CANVAS)
-
-// STATE
-const tiles = []
-const armys = []
 
 // CREATING THREE WORLD
 const {
@@ -21,8 +16,8 @@ const {
     camera,
     sceneTerrain,
     sceneSprites,
-    isoCamera
-    // zoom
+    isoCamera,
+    zoom
 } = createThreeWorld({
     canvas,
     onChangeZoom
@@ -35,10 +30,11 @@ const terrain = createTerrain({
     url: OTHERS.TERRAIN.url
 })
 
-// RENDER FUNCTIONS
+// EVENTS FUNCTIONS
 function onChangeZoom(zoom) {
-    tiles.forEach(tile => tile.updateScaleDiv(zoom))
-    armys.forEach(army => army.updateScaleDiv(zoom))
+    if (API !== undefined) {
+        API.updateZoom(zoom)
+    }
 }
 
 function onAnimationFrame(time) {
@@ -51,20 +47,12 @@ function onAnimationFrame(time) {
     requestAnimationFrame(onAnimationFrame)
 
     // Updating UI
-    tiles.forEach(tile =>
-        tile.updatePositionDiv({
-            camera,
+    if (API !== undefined) {
+        API.updatePan({
             canvasWidth: window.innerWidth,
             canvasHeight: window.innerHeight
         })
-    )
-    armys.forEach(army =>
-        army.updatePositionDiv({
-            camera,
-            canvasWidth: window.innerWidth,
-            canvasHeight: window.innerHeight
-        })
-    )
+    }
 
     TWEEN.update(time)
 }
@@ -72,17 +60,22 @@ onAnimationFrame()
 
 // CREATING AND EXPOSING API
 const API = createApi({
-    tiles,
-    armys,
     ui,
     camera,
     sceneSprites,
-    hexagonSize: GENERAL.HEXAGON_SIZE
+    hexagonSize: GENERAL.HEXAGON_SIZE,
+    initialZoom: zoom
 })
 if (typeof window != 'undefined') {
     window.API = API
 }
 
+// EXAMPLE USING API
+// EXAMPLE USING API
+// EXAMPLE USING API
+// EXAMPLE USING API
+// EXAMPLE USING API
+// EXAMPLE USING API
 // EXAMPLE USING API
 // EXAMPLE USING API
 const village1 = 'village1'
@@ -132,6 +125,10 @@ API.changeRecruitmentPower(cottagename, 5)
 cottagename = 'cottag631'
 API.createVillage({ id: cottagename, col: -1, row: 1 })
 API.changeRecruitmentPower(cottagename, 5)
+// EXAMPLE USING API
+// EXAMPLE USING API
+// EXAMPLE USING API
+// EXAMPLE USING API
 // EXAMPLE USING API
 // EXAMPLE USING API
 

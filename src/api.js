@@ -1,10 +1,9 @@
 import * as THREE from 'three'
 import { OWNER } from './const'
-import BUILDING from './config/sprites/building'
-import TROOPS from './config/sprites/troops'
+import { VILLAGE, COTTAGE, TROOPS } from './config/sprites/interactive'
 import DECORATIVE from './config/sprites/decorative'
-import { worldToScreen } from './three/utils'
 import { TILE_OWNER_CLASSES } from './config/ui'
+import { screenToWorld } from './three/utils'
 import createTileFactory from './factories/createTileFactory'
 import createTroopsFactory from './factories/createTroopsFactory'
 import { getPositionByCordinate } from './utils/hexagons'
@@ -58,7 +57,7 @@ export default function createApi({
                 createTile,
                 col,
                 row,
-                spriteConf: BUILDING.VILLAGE,
+                spriteConf: VILLAGE,
                 tiles,
                 hexagonSize
             })
@@ -71,7 +70,7 @@ export default function createApi({
                 createTile,
                 col,
                 row,
-                spriteConf: BUILDING.COTTAGE,
+                spriteConf: COTTAGE,
                 tiles,
                 hexagonSize
             })
@@ -84,6 +83,7 @@ export default function createApi({
                 troopss,
                 tiles,
                 id,
+                spriteConf: TROOPS,
                 fromTileId,
                 toTileId
             })
@@ -138,11 +138,60 @@ export default function createApi({
                 x: newX,
                 z: newZ
             })
+        },
+        getSpriteSelected: ({
+            mouseX,
+            mouseY,
+            camera,
+            canvasWidth,
+            canvasHeight,
+            objects
+        }) => {
+            const intersections = screenToWorld({
+                x: mouseX,
+                y: mouseY,
+                camera,
+                canvasWidth,
+                canvasHeight,
+                objects
+            })
+            const { x, z } = intersections[0].point
+            const vectorClick = new THREE.Vector2(x, z)
+            const mapper = troopOrTile => {
+                const vector = new THREE.Vector2(
+                    troopOrTile.sprite.position.x,
+                    troopOrTile.sprite.position.z
+                )
+                return {
+                    distance: vectorClick.distanceTo(vector),
+                    troopOrTile
+                }
+            }
+            const filterer = item => item.distance < item.troopOrTile.area
+            const sorter = (a, b) => a.distance - b.distance
+
+            // Finding troops
+            const troopsFound = troopss
+                .map(mapper)
+                .filter(filterer)
+                .sort(sorter)
+
+            // If we have at least one troops we return it
+            if (troopsFound.length > 0) return troopsFound[0]
+
+            // If not we find tiles
+            const tilesFound = tiles
+                .map(mapper)
+                .filter(filterer)
+                .sort(sorter)
+
+            if (tilesFound.length > 0) return tilesFound[0]
         }
     }
 }
 
 // Private
+
 function getTileById({ tiles, idTile }) {
     return tiles.find(tile => tile.id === idTile)
 }
@@ -175,6 +224,7 @@ function createTroopsObject({
     troopss,
     tiles,
     id,
+    spriteConf,
     fromTileId,
     toTileId
 }) {
@@ -187,7 +237,7 @@ function createTroopsObject({
     const troops = createTroops({
         x: fromX,
         z: fromZ,
-        spriteConf: TROOPS.TROOPS
+        spriteConf: TROOPS
     })
 
     const fromVector = new THREE.Vector2(fromX, fromZ)
@@ -221,6 +271,7 @@ function createTroopsObject({
     troops.diffZ = diffZ
     troops.fromX = fromVectorReduced.x
     troops.fromZ = fromVectorReduced.y
+    troops.area = spriteConf.area
     troopss.push(troops)
 
     return troops

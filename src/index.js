@@ -1,4 +1,4 @@
-import { createTerrain, createDecorativeSprite } from './three/scenario'
+import { createTerrain } from './three/scenario'
 import { createThreeWorld } from './three/'
 import createApi from './api'
 import OTHERS from './config/sprites/others'
@@ -70,21 +70,18 @@ if (typeof window != 'undefined') {
     window.API = API
 }
 
-// // Capturing when user select a tile or an troops
-// canvas.addEventListener('click', e => {
-//     const x = e.clientX
-//     const y = e.clientY
-//     canvasWidth, canvasHeight
-//     const intersections = screenToWorld({
-//         x,
-//         y,
-//         camera,
-//         canvasWidth: window.innerWidth,
-//         canvasHeight: window.innerHeight,
-//         objects: sceneTerrain.children
-//     })
-//     intersections.forEach(i => console.log(i.point))
-// })
+// Capturing when user select a tile or troops
+canvas.addEventListener('click', e => {
+    const sprite = API.getSpriteSelected({
+        mouseX: e.clientX,
+        mouseY: e.clientY,
+        camera,
+        canvasWidth: window.innerWidth,
+        canvasHeight: window.innerHeight,
+        objects: [terrain]
+    })
+    console.log(sprite.troopOrTile.id)
+})
 
 // EXAMPLE USING API
 // EXAMPLE USING API

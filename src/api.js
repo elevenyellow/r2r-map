@@ -171,21 +171,10 @@ export default function createApi({
             const sorter = (a, b) => a.distance - b.distance
 
             // Finding troops
-            const troopsFound = troopss
-                .map(mapper)
-                .filter(filterer)
-                .sort(sorter)
-
-            // If we have at least one troops we return it
-            if (troopsFound.length > 0) return troopsFound[0]
-
-            // If not we find tiles
-            const tilesFound = tiles
-                .map(mapper)
-                .filter(filterer)
-                .sort(sorter)
-
-            if (tilesFound.length > 0) return tilesFound[0]
+            const troopsFound = troopss.map(mapper).filter(filterer)
+            // Finding tiles
+            const tilesFound = tiles.map(mapper).filter(filterer)
+            return troopsFound.concat(tilesFound).sort(sorter)[0]
         }
     }
 }

@@ -1,59 +1,40 @@
 import * as THREE from 'three'
 import { OWNER } from './const'
 import BUILDING from './config/sprites/building'
-import ARMY from './config/sprites/army'
+import TROOPS from './config/sprites/troops'
 import DECORATIVE from './config/sprites/decorative'
-import { screenToWorld } from './three/utils'
+import { worldToScreen } from './three/utils'
 import { TILE_OWNER_CLASSES } from './config/ui'
 import createTileFactory from './factories/createTileFactory'
-import createArmyFactory from './factories/createArmyFactory'
+import createTroopsFactory from './factories/createTroopsFactory'
 import { getPositionByCordinate } from './utils/hexagons'
 
 export default function createApi({
-    canvas,
     ui,
     camera,
-    sceneTerrain,
     sceneSprites,
     hexagonSize,
     initialZoom
 }) {
-    console.log(sceneTerrain)
-
     // STATE
     let zoom = initialZoom
     const tiles = []
-    const armys = []
+    const troopss = []
     const createTile = createTileFactory({
         ui,
         camera,
         scene: sceneSprites
     })
-    const createArmy = createArmyFactory({
+    const createTroops = createTroopsFactory({
         ui,
         camera,
         scene: sceneSprites
-    })
-    console.log(sceneTerrain.children)
-    canvas.addEventListener('click', e => {
-        const x = e.clientX
-        const y = e.clientY
-        canvasWidth, canvasHeight
-        const intersections = screenToWorld({
-            x,
-            y,
-            camera,
-            canvasWidth: window.innerWidth,
-            canvasHeight: window.innerHeight,
-            objects: sceneTerrain.children
-        })
-        intersections.forEach(i => console.log(i.point))
     })
     return {
         updateZoom: newZoom => {
             zoom = newZoom
             tiles.forEach(tile => tile.updateScaleDiv(zoom))
-            armys.forEach(army => army.updateScaleDiv(zoom))
+            troopss.forEach(troops => troops.updateScaleDiv(zoom))
         },
         updatePan: ({ canvasWidth, canvasHeight }) => {
             tiles.forEach(tile =>
@@ -63,8 +44,8 @@ export default function createApi({
                     canvasHeight
                 })
             )
-            armys.forEach(army =>
-                army.updatePositionDiv({
+            troopss.forEach(troops =>
+                troops.updatePositionDiv({
                     camera,
                     canvasWidth,
                     canvasHeight
@@ -97,17 +78,17 @@ export default function createApi({
             tile.updateScaleDiv(zoom)
             return tile
         },
-        createArmy: ({ id, fromTileId, toTileId }) => {
-            const army = createArmyObject({
-                createArmy,
-                armys,
+        createTroops: ({ id, fromTileId, toTileId }) => {
+            const troops = createTroopsObject({
+                createTroops,
+                troopss,
                 tiles,
                 id,
                 fromTileId,
                 toTileId
             })
-            army.updateScaleDiv(zoom)
-            return army
+            troops.updateScaleDiv(zoom)
+            return troops
         },
         changeRecruitmentPower: (idTile, power) => {
             const tile = getTileById({ tiles, idTile })
@@ -143,17 +124,17 @@ export default function createApi({
             const tile = getTileById({ tiles, idTile })
             tile.stopHighlight()
         },
-        changeUnits: (idArmy, units) => {
-            const army = getArmyById({ armys, idArmy })
-            army.changeUnits(units)
+        changeUnits: (idTroops, units) => {
+            const troops = getTroopsById({ troopss, idTroops })
+            troops.changeUnits(units)
         },
-        changeDistance: (idArmy, distance) => {
-            const army = getArmyById({ armys, idArmy })
-            const x = (distance * army.diffX) / 100
-            const z = (distance * army.diffZ) / 100
-            const newX = x + army.fromX
-            const newZ = z + army.fromZ
-            army.changePosition({
+        changeDistance: (idTroops, distance) => {
+            const troops = getTroopsById({ troopss, idTroops })
+            const x = (distance * troops.diffX) / 100
+            const z = (distance * troops.diffZ) / 100
+            const newX = x + troops.fromX
+            const newZ = z + troops.fromZ
+            troops.changePosition({
                 x: newX,
                 z: newZ
             })
@@ -166,8 +147,8 @@ function getTileById({ tiles, idTile }) {
     return tiles.find(tile => tile.id === idTile)
 }
 
-function getArmyById({ armys, idArmy }) {
-    return armys.find(army => army.id === idArmy)
+function getTroopsById({ troopss, idTroops }) {
+    return troopss.find(troops => troops.id === idTroops)
 }
 
 function createTileObject({
@@ -189,9 +170,9 @@ function createTileObject({
     return tile
 }
 
-function createArmyObject({
-    createArmy,
-    armys,
+function createTroopsObject({
+    createTroops,
+    troopss,
     tiles,
     id,
     fromTileId,
@@ -203,10 +184,10 @@ function createArmyObject({
     const fromZ = from.z
     const toX = to.x
     const toZ = to.z
-    const army = createArmy({
+    const troops = createTroops({
         x: fromX,
         z: fromZ,
-        spriteConf: ARMY.ARMY
+        spriteConf: TROOPS.TROOPS
     })
 
     const fromVector = new THREE.Vector2(fromX, fromZ)
@@ -235,14 +216,14 @@ function createArmyObject({
     // helper2.position.x = toVectorReduced.x
     // helper2.position.z = toVectorReduced.y
     // sceneSprites.add(helper2)
-    army.id = id
-    army.diffX = diffX
-    army.diffZ = diffZ
-    army.fromX = fromVectorReduced.x
-    army.fromZ = fromVectorReduced.y
-    armys.push(army)
+    troops.id = id
+    troops.diffX = diffX
+    troops.diffZ = diffZ
+    troops.fromX = fromVectorReduced.x
+    troops.fromZ = fromVectorReduced.y
+    troopss.push(troops)
 
-    return army
+    return troops
 }
 
 // //

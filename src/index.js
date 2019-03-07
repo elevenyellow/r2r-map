@@ -61,16 +61,30 @@ onAnimationFrame()
 // CREATING AND EXPOSING API
 const API = createApi({
     ui,
-    canvas,
     camera,
     sceneSprites,
-    sceneTerrain,
     hexagonSize: GENERAL.HEXAGON_SIZE,
     initialZoom: zoom
 })
 if (typeof window != 'undefined') {
     window.API = API
 }
+
+// // Capturing when user select a tile or an troops
+// canvas.addEventListener('click', e => {
+//     const x = e.clientX
+//     const y = e.clientY
+//     canvasWidth, canvasHeight
+//     const intersections = screenToWorld({
+//         x,
+//         y,
+//         camera,
+//         canvasWidth: window.innerWidth,
+//         canvasHeight: window.innerHeight,
+//         objects: sceneTerrain.children
+//     })
+//     intersections.forEach(i => console.log(i.point))
+// })
 
 // EXAMPLE USING API
 // EXAMPLE USING API
@@ -116,13 +130,13 @@ cottagename = 'cottag631'
 API.createVillage({ id: cottagename, col: -1, row: 1 })
 API.changeRecruitmentPower(cottagename, 95)
 
-const army1 = 'army1'
-API.createArmy({ id: army1, fromTileId: 'cottage3', toTileId: 'village1' })
-API.changeUnits(army1, 200)
+const troops1 = 'troops1'
+API.createTroops({ id: troops1, fromTileId: 'cottage3', toTileId: 'village1' })
+API.changeUnits(troops1, 200)
 let percentage = 0
 const int = setInterval(() => {
     percentage += 0.1
-    API.changeDistance(army1, percentage)
+    API.changeDistance(troops1, percentage)
     if (percentage >= 100) {
         clearInterval(int)
     }

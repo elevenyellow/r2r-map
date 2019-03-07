@@ -12,4 +12,4 @@ export const TILE_OWNER_CLASSES = {
 }
 
 export const RECRUITMENT_POWER_UI_ELEMENT = 'recruitmentPower'
-export const ARMY_UNITS_UI_ELEMENT = 'armyUnits'
+export const TROOPS_UNITS_UI_ELEMENT = 'troopsUnits'

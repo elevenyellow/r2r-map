@@ -1,20 +1,20 @@
-import { createSmartDiv, createArmyUnitsUiElement } from '../ui'
-import { createArmySprite } from '../three/scenario'
+import { createSmartDiv, createTroopsUnitsUiElement } from '../ui'
+import { createTroopsSprite } from '../three/scenario'
 import { worldToScreen } from '../three/utils'
 import { GENERAL } from '../config/parameters'
-import { ARMY_UNITS_UI_ELEMENT } from '../config/ui'
+import { TROOPS_UNITS_UI_ELEMENT } from '../config/ui'
 
-export default function createArmyFactory({ ui, scene, camera }) {
+export default function createTroopsFactory({ ui, scene, camera }) {
     return ({ x, z, spriteConf }) => {
         const div = createSmartDiv({ container: ui })
-        const sprite = createArmySprite({
+        const sprite = createTroopsSprite({
             scene,
             x,
             z,
             spriteConf
         })
-        const units = createArmyUnitsUiElement({
-            className: ARMY_UNITS_UI_ELEMENT
+        const units = createTroopsUnitsUiElement({
+            className: TROOPS_UNITS_UI_ELEMENT
         })
         div.element.appendChild(units.element)
         return {

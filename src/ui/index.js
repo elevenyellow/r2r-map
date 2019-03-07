@@ -56,7 +56,7 @@ export function createRecruitmentPowerUiElement({ className }) {
     }
 }
 
-export function createArmyUnitsUiElement({ className }) {
+export function createTroopsUnitsUiElement({ className }) {
     const element = document.createElement('div')
     const textElement = document.createElement('div')
     element.appendChild(textElement)

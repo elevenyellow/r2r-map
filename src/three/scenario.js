@@ -57,7 +57,7 @@ export function createDecorativeSprite({ scene, spriteConf, x, z }) {
     return sprite
 }
 
-export function createArmySprite({ scene, spriteConf, x, z }) {
+export function createTroopsSprite({ scene, spriteConf, x, z }) {
     const textureLoaded = textureLoader.load(spriteConf.url)
     const material = new THREE.SpriteMaterial({
         map: textureLoaded

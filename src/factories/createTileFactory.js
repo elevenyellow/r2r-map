@@ -7,7 +7,7 @@ import {
     createRecruitmentPowerUiElement
 } from '../ui'
 import { createBuildingSprite } from '../three/scenario'
-import { position3dToScreen2d } from '../three/utils'
+import { worldToScreen } from '../three/utils'
 import { GENERAL } from '../config/parameters'
 import { RECRUITMENT_POWER_UI_ELEMENT } from '../config/ui'
 
@@ -31,7 +31,7 @@ export default function createTileFactory({ ui, scene, camera }) {
             owners,
             sprite,
             updatePositionDiv: ({ canvasWidth, canvasHeight }) => {
-                const proj = position3dToScreen2d({
+                const position = worldToScreen({
                     x: sprite.position.x + spriteConf.uiOffsetX,
                     y: sprite.position.y,
                     z: sprite.position.z + spriteConf.uiOffsetZ,
@@ -39,7 +39,7 @@ export default function createTileFactory({ ui, scene, camera }) {
                     canvasWidth,
                     canvasHeight
                 })
-                div.move(proj)
+                div.move(position)
             },
             updateScaleDiv: zoom => {
                 const scale = (zoom * 100) / 20

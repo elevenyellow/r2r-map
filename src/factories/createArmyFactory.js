@@ -1,6 +1,6 @@
 import { createSmartDiv, createArmyUnitsUiElement } from '../ui'
 import { createArmySprite } from '../three/scenario'
-import { position3dToScreen2d } from '../three/utils'
+import { worldToScreen } from '../three/utils'
 import { GENERAL } from '../config/parameters'
 import { ARMY_UNITS_UI_ELEMENT } from '../config/ui'
 
@@ -21,7 +21,7 @@ export default function createArmyFactory({ ui, scene, camera }) {
             div,
             sprite,
             updatePositionDiv: ({ canvasWidth, canvasHeight }) => {
-                const proj = position3dToScreen2d({
+                const position = worldToScreen({
                     x: sprite.position.x + spriteConf.uiOffsetX,
                     y: sprite.position.y,
                     z: sprite.position.z + spriteConf.uiOffsetZ,
@@ -29,7 +29,7 @@ export default function createArmyFactory({ ui, scene, camera }) {
                     canvasWidth,
                     canvasHeight
                 })
-                div.move(proj)
+                div.move(position)
             },
             updateScaleDiv: zoom => {
                 const scale = (zoom * 100) / 20

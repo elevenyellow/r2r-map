@@ -1,26 +1,38 @@
 import * as THREE from 'three'
 
 // https://stackoverflow.com/questions/27409074/converting-3d-position-to-2d-screen-position-r69
-export function position3dToScreen2d({
-    x,
-    y,
-    z,
-    camera,
-    canvasWidth,
-    canvasHeight
-}) {
+export function worldToScreen({ x, y, z, camera, canvasWidth, canvasHeight }) {
     const vector = new THREE.Vector3(x, y, z)
     const widthHalf = canvasWidth / 2
     const heightHalf = canvasHeight / 2
 
     vector.project(camera)
-    vector.x = vector.x * widthHalf + widthHalf
-    vector.y = -(vector.y * heightHalf) + heightHalf
+    const newX = vector.x * widthHalf + widthHalf
+    const newY = -(vector.y * heightHalf) + heightHalf
 
-    return {
-        x: Math.round(vector.x),
-        y: Math.round(vector.y)
-    }
+    return { x: newX, y: newY }
+}
+
+// https://stackoverflow.com/questions/34660063/threejs-converting-from-screen-2d-coordinate-to-world-3d-coordinate-on-the-cane
+export function screenToWorld({
+    x,
+    y,
+    camera,
+    canvasWidth,
+    canvasHeight,
+    objects
+}) {
+    const mouse = new THREE.Vector3(
+        (x / canvasWidth) * 2 - 1, //x
+        -(y / canvasHeight) * 2 + 1, //y
+        0.5
+    )
+
+    const raycaster = new THREE.Raycaster()
+    raycaster.setFromCamera(mouse, camera)
+    const intersects = raycaster.intersectObjects(objects)
+
+    return intersects
 }
 
 export function generateRandomDecorativeSprites({

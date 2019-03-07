@@ -61,8 +61,10 @@ onAnimationFrame()
 // CREATING AND EXPOSING API
 const API = createApi({
     ui,
+    canvas,
     camera,
     sceneSprites,
+    sceneTerrain,
     hexagonSize: GENERAL.HEXAGON_SIZE,
     initialZoom: zoom
 })
@@ -84,15 +86,38 @@ API.changeRecruitmentPower(village1, 22)
 API.addOwnerAsPlayer(village1, 'ID1', 'Enzo', 1000)
 API.addOwnerAsEnemy(village1, 'ID2', 'Agus', 234)
 API.addOwnerAsEnemy(village1, 'ID3', 'Azaru', 312)
-API.removeOwner(village1, 'ID3')
+// API.removeOwner(village1, 'ID3')
 
 const cottage1 = 'cottage1'
 API.createCottage({ id: cottage1, col: 0, row: 1 })
-API.changeRecruitmentPower(cottage1, 5)
+API.changeRecruitmentPower(cottage1, 1)
 API.addOwnerAsEnemy(cottage1, 'ID2', 'Agus', 234)
 
+let cottagename = 'cottage2'
+API.createCottage({ id: cottagename, col: 1, row: 0 })
+API.changeRecruitmentPower(cottagename, 7)
+API.addOwnerAsEnemy(cottagename, 'ID2', 'Agus', 234)
+cottagename = 'cottage3'
+API.createCottage({ id: cottagename, col: 1, row: 1 })
+API.changeRecruitmentPower(cottagename, 52)
+cottagename = 'cottag4'
+API.createCottage({ id: cottagename, col: 0, row: -1 })
+API.changeRecruitmentPower(cottagename, 4)
+cottagename = 'cottag5'
+API.createCottage({ id: cottagename, col: -1, row: 0 })
+API.changeRecruitmentPower(cottagename, 3)
+cottagename = 'cottag6'
+API.createVillage({ id: cottagename, col: -1, row: -1 })
+API.changeRecruitmentPower(cottagename, 2)
+cottagename = 'cottag61'
+API.createVillage({ id: cottagename, col: 1, row: -1 })
+API.changeRecruitmentPower(cottagename, 6)
+cottagename = 'cottag631'
+API.createVillage({ id: cottagename, col: -1, row: 1 })
+API.changeRecruitmentPower(cottagename, 95)
+
 const army1 = 'army1'
-API.createArmy({ id: army1, fromTileId: village1, toTileId: cottage1 })
+API.createArmy({ id: army1, fromTileId: 'cottage3', toTileId: 'village1' })
 API.changeUnits(army1, 200)
 let percentage = 0
 const int = setInterval(() => {
@@ -102,29 +127,6 @@ const int = setInterval(() => {
         clearInterval(int)
     }
 }, 10)
-
-let cottagename = 'cottage2'
-API.createCottage({ id: cottagename, col: 1, row: 0 })
-API.changeRecruitmentPower(cottagename, 5)
-API.addOwnerAsEnemy(cottagename, 'ID2', 'Agus', 234)
-cottagename = 'cottage3'
-API.createCottage({ id: cottagename, col: 1, row: 1 })
-API.changeRecruitmentPower(cottagename, 5)
-cottagename = 'cottag4'
-API.createCottage({ id: cottagename, col: 0, row: -1 })
-API.changeRecruitmentPower(cottagename, 5)
-cottagename = 'cottag5'
-API.createCottage({ id: cottagename, col: -1, row: 0 })
-API.changeRecruitmentPower(cottagename, 5)
-cottagename = 'cottag6'
-API.createVillage({ id: cottagename, col: -1, row: -1 })
-API.changeRecruitmentPower(cottagename, 5)
-cottagename = 'cottag61'
-API.createVillage({ id: cottagename, col: 1, row: -1 })
-API.changeRecruitmentPower(cottagename, 5)
-cottagename = 'cottag631'
-API.createVillage({ id: cottagename, col: -1, row: 1 })
-API.changeRecruitmentPower(cottagename, 5)
 // EXAMPLE USING API
 // EXAMPLE USING API
 // EXAMPLE USING API

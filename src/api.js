@@ -3,18 +3,23 @@ import { OWNER } from './const'
 import BUILDING from './config/sprites/building'
 import ARMY from './config/sprites/army'
 import DECORATIVE from './config/sprites/decorative'
+import { screenToWorld } from './three/utils'
 import { TILE_OWNER_CLASSES } from './config/ui'
 import createTileFactory from './factories/createTileFactory'
 import createArmyFactory from './factories/createArmyFactory'
 import { getPositionByCordinate } from './utils/hexagons'
 
 export default function createApi({
+    canvas,
     ui,
     camera,
+    sceneTerrain,
     sceneSprites,
     hexagonSize,
     initialZoom
 }) {
+    console.log(sceneTerrain)
+
     // STATE
     let zoom = initialZoom
     const tiles = []
@@ -28,6 +33,21 @@ export default function createApi({
         ui,
         camera,
         scene: sceneSprites
+    })
+    console.log(sceneTerrain.children)
+    canvas.addEventListener('click', e => {
+        const x = e.clientX
+        const y = e.clientY
+        canvasWidth, canvasHeight
+        const intersections = screenToWorld({
+            x,
+            y,
+            camera,
+            canvasWidth: window.innerWidth,
+            canvasHeight: window.innerHeight,
+            objects: sceneTerrain.children
+        })
+        intersections.forEach(i => console.log(i.point))
     })
     return {
         updateZoom: newZoom => {

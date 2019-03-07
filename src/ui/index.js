@@ -2,6 +2,7 @@ export function createSmartDiv({ container, offsetX = 0, offsetY = 0 }) {
     const element = document.createElement('div')
     const style = element.style
     style.position = 'absolute'
+    // style.pointerEvents = 'auto'
     container.appendChild(element)
     return {
         element,

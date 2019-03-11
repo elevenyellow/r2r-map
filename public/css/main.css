@@ -21,25 +21,26 @@ body {
 
 .tileOwner {
     background: url(../assets/ui/title-background-1.png) 0 0 / 100%;
-    min-width: 128px;
-    min-height: 36px;
+    min-width: 100px;
+    min-height: 28px;
     text-transform: uppercase;
     position: relative;
 }
 .tileOwner > div:first-child {
-    line-height: 36px;
-    font-size: 17px;
+    line-height: 28px;
+    font-size: 14px;
     text-align: center;
 }
 .tileOwner > div:last-child {
     position: absolute;
-    width: 42px;
-    height: 42px;
-    right: -21px;
-    top: -4px;
+    width: 32px;
+    height: 32px;
+    line-height: 35px;
+    font-size: 15px;
+    right: -17px;
+    top: -3px;
     background: url(../assets/ui/units-background-1.png) 0 0 / 100%;
-    line-height: 46px;
-    font-size: 18px;
+
     text-align: center;
 }
 .tileOwner.neutral {
@@ -76,10 +77,10 @@ body {
     letter-spacing: 1px;
 }
 .troopsUnits {
-    width: 42px;
-    height: 42px;
+    width: 32px;
+    height: 32px;
+    line-height: 35px;
+    font-size: 15px;
     background: url(../assets/ui/units-background-1.png) 0 0 / 100%;
-    line-height: 46px;
-    font-size: 18px;
     text-align: center;
 }

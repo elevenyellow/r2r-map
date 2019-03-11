@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import * as d3 from './d3'
 import ThreeIsoGameCamera from '/mnt/c/Users/enzo/drive/projects/three-iso-game-camera/'
 
-export function createThreeWorld({ canvas, onChangeZoom }) {
+export function createThreeWorld({ canvas, onChangeZoom, onChangePan }) {
     let zoom
     const canvasWidth = window.innerWidth
     const canvasHeight = window.innerHeight
@@ -35,8 +35,8 @@ export function createThreeWorld({ canvas, onChangeZoom }) {
         onChange: e => {
             if (typeof onChangeZoom == 'function' && e.transform.k !== zoom) {
                 zoom = e.transform.k
-                onChangeZoom(zoom)
-            }
+                onChangeZoom({ zoom, e })
+            } else onChangePan({ e })
             return true
         }
     })

@@ -21,7 +21,8 @@ const {
     zoom
 } = createThreeWorld({
     canvas,
-    onChangeZoom
+    onChangeZoom,
+    onChangePan
 })
 
 // ADDING TERRAIN
@@ -32,9 +33,16 @@ const terrain = createTerrain({
 })
 
 // EVENTS FUNCTIONS
-function onChangeZoom(zoom) {
+function onChangeZoom({ zoom }) {
     if (API !== undefined) {
         API.updateZoom(zoom)
+        onUnselect()
+    }
+}
+
+function onChangePan({ e }) {
+    if (API !== undefined) {
+        onUnselect()
     }
 }
 
@@ -81,8 +89,17 @@ canvas.addEventListener('click', e => {
         canvasHeight: window.innerHeight,
         objects: [terrain]
     })
-    log.innerHTML = sprite ? sprite.troopOrTile.id : ''
+
+    sprite ? onSelect(sprite.troopOrTile.id) : onUnselect()
 })
+
+function onSelect(id) {
+    log.innerHTML = id
+}
+
+function onUnselect() {
+    log.innerHTML = ''
+}
 
 // EXAMPLE USING API
 // EXAMPLE USING API

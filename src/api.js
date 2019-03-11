@@ -182,8 +182,8 @@ export default function createApi({
         },
         addDecorativeElements: () => {
             const ignoreAreas = tiles.map(tile => ({
-                x: tile.x,
-                z: tile.z,
+                x: Math.round(tile.x),
+                z: Math.round(tile.z),
                 radius: tile.area
             }))
             const options = Object.assign({}, { ignoreAreas }, DECORATIVE_ITEMS)

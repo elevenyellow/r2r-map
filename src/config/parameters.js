@@ -1,4 +1,0 @@
-export const GENERAL = {
-    RATIO_SCALE_DIV_WHEN_ZOOM: 16,
-    HEXAGON_SIZE: 15
-}

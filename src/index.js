@@ -5,6 +5,7 @@ import OTHERS from './config/sprites/others'
 import { GENERAL } from './config/parameters'
 import { DOM } from './config/ui'
 import TWEEN from '@tweenjs/tween.js'
+import * as THREE from 'three'
 
 // GETTING DOM
 const ui = document.getElementById(DOM.UI)
@@ -80,7 +81,7 @@ canvas.addEventListener('click', e => {
         canvasHeight: window.innerHeight,
         objects: [terrain]
     })
-    console.log(sprite.troopOrTile.id)
+    log.innerHTML = sprite ? sprite.troopOrTile.id : ''
 })
 
 // EXAMPLE USING API
@@ -91,6 +92,7 @@ canvas.addEventListener('click', e => {
 // EXAMPLE USING API
 // EXAMPLE USING API
 // EXAMPLE USING API
+
 const village1 = 'village1'
 API.createVillage({ id: village1, col: 0, row: 0 })
 API.changeRecruitmentPower(village1, 22)
@@ -138,6 +140,11 @@ const int = setInterval(() => {
         clearInterval(int)
     }
 }, 10)
+
+const log = document.createElement('div')
+log.style.position = 'absolute'
+log.style.fontSize = '100px'
+ui.appendChild(log)
 // EXAMPLE USING API
 // EXAMPLE USING API
 // EXAMPLE USING API
@@ -150,3 +157,17 @@ const int = setInterval(() => {
 // sceneSprites.add(new isoCamera.THREE.AxesHelper(10))
 // sceneTerrain.add(new isoCamera.THREE.GridHelper(1000, 1000, 0xaaaaaa, 0x999999))
 // go({ scene })
+
+var geometry = new THREE.Geometry()
+var material = new THREE.LineDashedMaterial({
+    color: 0xffffff,
+    linewidth: 10,
+    dashSize: 1.0,
+    gapSize: 0.5
+}) //new THREE.LineBasicMaterial({ color: 0xFFFFFF, linewidth: 10 });
+
+geometry.vertices.push(new THREE.Vector3(0, 0, 0), new THREE.Vector3(30, 0, 30))
+
+var line = new THREE.Line(geometry, material)
+line.computeLineDistances()
+sceneTerrain.add(line)

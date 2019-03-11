@@ -1,12 +1,15 @@
 import * as THREE from 'three'
 import { OWNER } from './const'
 import { VILLAGE, COTTAGE, TROOPS } from './config/sprites/interactive'
+import { DECORATIVE_ITEMS } from './config/parameters'
 import DECORATIVE from './config/sprites/decorative'
 import { TILE_OWNER_CLASSES } from './config/ui'
 import { screenToWorld } from './three/utils'
 import createTileFactory from './factories/createTileFactory'
 import createTroopsFactory from './factories/createTroopsFactory'
 import { getPositionByCordinate } from './utils/hexagons'
+import { createDecorativeSprite } from './three/scenario'
+import { generateRandomDecorativeSprites } from './three/utils'
 
 export default function createApi({
     ui,
@@ -29,6 +32,7 @@ export default function createApi({
         camera,
         scene: sceneSprites
     })
+
     return {
         updateZoom: newZoom => {
             zoom = newZoom
@@ -175,6 +179,23 @@ export default function createApi({
             // Finding tiles
             const tilesFound = tiles.map(mapper).filter(filterer)
             return troopsFound.concat(tilesFound).sort(sorter)[0]
+        },
+        addDecorativeElements: () => {
+            const ignoreAreas = tiles.map(tile => ({
+                x: tile.x,
+                z: tile.z,
+                radius: tile.area
+            }))
+            const options = Object.assign({}, { ignoreAreas }, DECORATIVE_ITEMS)
+            const sprites = generateRandomDecorativeSprites(options)
+            sprites.forEach(sprite => {
+                createDecorativeSprite({
+                    scene: sceneSprites,
+                    x: sprite.x,
+                    z: sprite.z,
+                    spriteConf: DECORATIVE[sprite.id]
+                })
+            })
         }
     }
 }
@@ -269,32 +290,4 @@ function createTroopsObject({
 // //
 // canvas.addEventListener('click', e => {
 //     console.log(e, tiles.map(tile => tile.div.element))
-// })
-
-// // Adding decorative sprites
-// const spriteList = [
-//     { id: 'tree1', frecuencyRatio: 8 },
-//     { id: 'tree2', frecuencyRatio: 8 },
-//     { id: 'tree3', frecuencyRatio: 40 },
-//     { id: 'tree4', frecuencyRatio: 8 },
-//     { id: 'bush1', frecuencyRatio: 5 },
-//     // { id: 'rock1', frecuencyRatio: 2 },
-//     { id: 'rock2', frecuencyRatio: 3 },
-//     { id: 'trunk1', frecuencyRatio: 10 },
-//     { id: 'trunk2', frecuencyRatio: 10 }
-// ]
-// const sprites = generateRandomDecorativeSprites({
-//     quantity: 500,
-//     sprites: spriteList,
-//     point1: { x: -100, z: -100 },
-//     point2: { x: 100, z: 100 },
-//     ignoreAreas: [{ x: 0, z: 0, radius: 5 }, { x: 10, z: 5, radius: 3 }]
-// })
-// sprites.forEach(sprite => {
-//     createDecorativeSprite({
-//         scene: sceneSprites,
-//         x: sprite.x,
-//         z: sprite.z,
-//         spriteConf: spritesConfig[sprite.id]
-//     })
 // })

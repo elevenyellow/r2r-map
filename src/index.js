@@ -129,6 +129,8 @@ cottagename = 'cottag631'
 API.createVillage({ id: cottagename, col: -1, row: 1 })
 API.changeRecruitmentPower(cottagename, 95)
 
+API.addDecorativeElements()
+
 const troops1 = 'troops1'
 API.createTroops({ id: troops1, fromTileId: 'cottage3', toTileId: 'village1' })
 API.changeUnits(troops1, 200)
@@ -158,16 +160,17 @@ ui.appendChild(log)
 // sceneTerrain.add(new isoCamera.THREE.GridHelper(1000, 1000, 0xaaaaaa, 0x999999))
 // go({ scene })
 
-var geometry = new THREE.Geometry()
-var material = new THREE.LineDashedMaterial({
-    color: 0xffffff,
-    linewidth: 10,
-    dashSize: 1.0,
-    gapSize: 0.5
-}) //new THREE.LineBasicMaterial({ color: 0xFFFFFF, linewidth: 10 });
+// // LINES
+// var geometry = new THREE.Geometry()
+// var material = new THREE.LineDashedMaterial({
+//     color: 0xffffff,
+//     linewidth: 10,
+//     dashSize: 1.0,
+//     gapSize: 0.5
+// }) //new THREE.LineBasicMaterial({ color: 0xFFFFFF, linewidth: 10 });
 
-geometry.vertices.push(new THREE.Vector3(0, 0, 0), new THREE.Vector3(30, 0, 30))
+// geometry.vertices.push(new THREE.Vector3(0, 0, 0), new THREE.Vector3(30, 0, 30))
 
-var line = new THREE.Line(geometry, material)
-line.computeLineDistances()
-sceneTerrain.add(line)
+// var line = new THREE.Line(geometry, material)
+// line.computeLineDistances()
+// sceneTerrain.add(line)

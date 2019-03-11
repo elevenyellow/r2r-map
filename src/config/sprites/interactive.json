@@ -8,8 +8,8 @@
     },
     "COTTAGE": {
         "area": 5,
-        "uiOffsetX": 4,
-        "uiOffsetZ": 4,
+        "uiOffsetX": 3,
+        "uiOffsetZ": 3,
         "url": "assets/entity/cottage.png",
         "scale": { "x": 4, "y": 4, "z": 4 }
     },

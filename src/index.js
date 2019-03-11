@@ -99,7 +99,7 @@ API.changeRecruitmentPower(village1, 22)
 API.addOwnerAsPlayer(village1, 'ID1', 'Enzo', 1000)
 API.addOwnerAsEnemy(village1, 'ID2', 'Agus', 234)
 API.addOwnerAsEnemy(village1, 'ID3', 'Azaru', 312)
-// API.removeOwner(village1, 'ID3')
+API.removeOwner(village1, 'ID3')
 
 const cottage1 = 'cottage1'
 API.createCottage({ id: cottage1, col: 0, row: 1 })

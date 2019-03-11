@@ -20,7 +20,7 @@ body {
 }
 
 .tileOwner {
-    background: url(assets/title-background-1.png) 0 0 / 100%;
+    background: url(../assets/ui/title-background-1.png) 0 0 / 100%;
     min-width: 128px;
     min-height: 36px;
     text-transform: uppercase;
@@ -37,30 +37,30 @@ body {
     height: 42px;
     right: -21px;
     top: -4px;
-    background: url(assets/units-background-1.png) 0 0 / 100%;
+    background: url(../assets/ui/units-background-1.png) 0 0 / 100%;
     line-height: 46px;
     font-size: 18px;
     text-align: center;
 }
 .tileOwner.neutral {
-    background-image: url(assets/title-background-0.png);
+    background-image: url(../assets/ui/title-background-0.png);
 }
 .tileOwner.neutral > div:last-child {
     display: none;
 }
 
 .tileOwner.player {
-    background-image: url(assets/title-background-1.png);
+    background-image: url(../assets/ui/title-background-1.png);
 }
 .tileOwner.player > div:last-child {
-    background-image: url(assets/units-background-1.png);
+    background-image: url(../assets/ui/units-background-1.png);
 }
 
 .tileOwner.enemy {
-    background-image: url(assets/title-background-2.png);
+    background-image: url(../assets/ui/title-background-2.png);
 }
 .tileOwner.enemy > div:last-child {
-    background-image: url(assets/units-background-2.png);
+    background-image: url(../assets/ui/units-background-2.png);
 }
 
 .recruitmentPower {
@@ -70,7 +70,7 @@ body {
 .recruitmentPower > div {
     display: inline-block;
     font-size: 26px;
-    background: url(assets/power-icon.png) no-repeat left 5px / auto 20px;
+    background: url(../assets/ui/power-icon.png) no-repeat left 5px / auto 20px;
     padding-left: 15px;
     text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);
     letter-spacing: 1px;
@@ -78,7 +78,7 @@ body {
 .troopsUnits {
     width: 42px;
     height: 42px;
-    background: url(assets/units-background-1.png) 0 0 / 100%;
+    background: url(../assets/ui/units-background-1.png) 0 0 / 100%;
     line-height: 46px;
     font-size: 18px;
     text-align: center;

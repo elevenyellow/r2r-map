@@ -1,38 +1,38 @@
 {
     "TREE1": {
-        "url": "assets/obj/tree1.png",
+        "url": "assets/decorative/tree1.png",
         "scale": { "x": 1, "y": 1, "z": 1 }
     },
     "TREE2": {
-        "url": "assets/obj/tree2.png",
+        "url": "assets/decorative/tree2.png",
         "scale": { "x": 1, "y": 1, "z": 1 }
     },
     "TREE3": {
-        "url": "assets/obj/tree3.png",
+        "url": "assets/decorative/tree3.png",
         "scale": { "x": 1.5, "y": 1.5, "z": 1.5 }
     },
     "TREE4": {
-        "url": "assets/obj/tree4.png",
+        "url": "assets/decorative/tree4.png",
         "scale": { "x": 1.25, "y": 1.25, "z": 1.25 }
     },
     "BUSH1": {
-        "url": "assets/obj/bush1.png",
+        "url": "assets/decorative/bush1.png",
         "scale": { "x": 0.5, "y": 0.5, "z": 0.5 }
     },
     "ROCK1": {
-        "url": "assets/obj/rock1.png",
+        "url": "assets/decorative/rock1.png",
         "scale": { "x": 1, "y": 1, "z": 1 }
     },
     "ROCK2": {
-        "url": "assets/obj/rock2.png",
+        "url": "assets/decorative/rock2.png",
         "scale": { "x": 1, "y": 1, "z": 1 }
     },
     "TRUNK1": {
-        "url": "assets/obj/trunk1.png",
+        "url": "assets/decorative/trunk1.png",
         "scale": { "x": 0.75, "y": 0.75, "z": 0.75 }
     },
     "TRUNK2": {
-        "url": "assets/obj/trunk2.png",
+        "url": "assets/decorative/trunk2.png",
         "scale": { "x": 0.5, "y": 0.5, "z": 0.5 }
     }
 }

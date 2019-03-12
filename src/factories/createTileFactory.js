@@ -41,15 +41,8 @@ export default function createTileFactory({ ui, scene, camera }) {
                 })
                 div.move(position)
             },
-            updateScaleDiv: zoom => {
-                const scale = (zoom * 100) / 20
-                const scaleReduced =
-                    Math.round(
-                        scale +
-                            (100 - scale) / GENERAL.RATIO_SCALE_DIV_WHEN_ZOOM
-                    ) / 100
-                // Changing  ZOOM
-                div.scale(scaleReduced)
+            updateScaleDiv: (zoom, initialZoom) => {
+                div.scale(zoom / GENERAL.ZOOM_ORIGINAL_K)
             },
             changeRecruitmentPower: power => {
                 recruitmentPower.changePower(power)

@@ -1,5 +1,6 @@
 export const GENERAL = {
-    RATIO_SCALE_DIV_WHEN_ZOOM: 16,
+    ZOOM_ORIGINAL_K: 18,
+    ZOOM_RATIO_SCALE_DIV: 1,
     HEXAGON_SIZE: 15
 }
 

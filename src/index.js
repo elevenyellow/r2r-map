@@ -116,6 +116,9 @@ API.changeRecruitmentPower(village1, 22)
 API.addOwnerAsPlayer(village1, 'ID1', 'Enzo', 1000)
 API.addOwnerAsEnemy(village1, 'ID2', 'Agus', 234)
 API.addOwnerAsEnemy(village1, 'ID3', 'Azaru', 312)
+// API.addOwnerAsEnemy(village1, 'ID4', 'Roly', 562)
+// API.addOwnerAsEnemy(village1, 'ID4', 'Selo', 315)
+// API.addOwnerAsEnemy(village1, 'ID4', 'Pei', 200)
 API.removeOwner(village1, 'ID3')
 
 const cottage1 = 'cottage1'
@@ -144,6 +147,7 @@ API.createVillage({ id: cottagename, col: 1, row: -1 })
 API.changeRecruitmentPower(cottagename, 6)
 cottagename = 'cottag631'
 API.createVillage({ id: cottagename, col: -1, row: 1 })
+API.addOwnerAsPlayer(cottagename, 'ID1', 'Enzo', 200)
 API.changeRecruitmentPower(cottagename, 95)
 
 API.addDecorativeElements()

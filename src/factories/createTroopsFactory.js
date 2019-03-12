@@ -31,15 +31,15 @@ export default function createTroopsFactory({ ui, scene, camera }) {
                 })
                 div.move(position)
             },
-            updateScaleDiv: zoom => {
-                const scale = (zoom * 100) / 20
-                const scaleReduced =
-                    Math.round(
-                        scale +
-                            (100 - scale) / GENERAL.RATIO_SCALE_DIV_WHEN_ZOOM
-                    ) / 100
-                // Changing  ZOOM
-                div.scale(scaleReduced)
+            updateScaleDiv: (zoom, initialZoomm) => {
+                // const scale = (zoom * 100) / GENERAL.ZOOM_ORIGINAL_K
+                // const scaleReduced =
+                //     Math.round(
+                //         scale + (100 - scale) / GENERAL.ZOOM_RATIO_SCALE_DIV
+                //     ) / 100
+                // // Changing  ZOOM
+                // div.scale(scaleReduced)
+                div.scale(zoom / GENERAL.ZOOM_ORIGINAL_K)
             },
             changeUnits: value => {
                 units.changeUnits(value)

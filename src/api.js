@@ -36,8 +36,8 @@ export default function createApi({
     return {
         updateZoom: newZoom => {
             zoom = newZoom
-            tiles.forEach(tile => tile.updateScaleDiv(zoom))
-            troopss.forEach(troops => troops.updateScaleDiv(zoom))
+            tiles.forEach(tile => tile.updateScaleDiv(zoom, initialZoom))
+            troopss.forEach(troops => troops.updateScaleDiv(zoom, initialZoom))
         },
         updatePan: ({ canvasWidth, canvasHeight }) => {
             tiles.forEach(tile =>
@@ -65,7 +65,7 @@ export default function createApi({
                 tiles,
                 hexagonSize
             })
-            tile.updateScaleDiv(zoom)
+            tile.updateScaleDiv(zoom, initialZoom)
             return tile
         },
         createCottage: ({ id, col, row }) => {
@@ -78,7 +78,7 @@ export default function createApi({
                 tiles,
                 hexagonSize
             })
-            tile.updateScaleDiv(zoom)
+            tile.updateScaleDiv(zoom, initialZoom)
             return tile
         },
         createTroops: ({ id, fromTileId, toTileId }) => {
@@ -91,7 +91,7 @@ export default function createApi({
                 fromTileId,
                 toTileId
             })
-            troops.updateScaleDiv(zoom)
+            troops.updateScaleDiv(zoom, initialZoom)
             return troops
         },
         changeRecruitmentPower: (idTile, power) => {

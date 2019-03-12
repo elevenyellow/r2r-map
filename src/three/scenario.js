@@ -17,7 +17,7 @@ export function createTerrain({ renderer, scene, url }) {
     textureLoaded.anisotropy = maxAnisotropy
     textureLoaded.wrapS = textureLoaded.wrapT = THREE.RepeatWrapping
     textureLoaded.repeat.set(512, 512)
-    // mesh.position.y -= 0.2
+    mesh.position.y -= 0.1
     mesh.rotation.x = -Math.PI / 2
     mesh.scale.set(200, 200, 200)
     scene.add(mesh)
@@ -35,7 +35,7 @@ export function createBuildingSprite({ scene, spriteConf, x, z }) {
     sprite.scale.set(spriteConf.scale.x, spriteConf.scale.y, spriteConf.scale.z)
     sprite.position.x = x
     sprite.position.z = z
-    // scene.add(sprite)
+    scene.add(sprite)
 
     // const helper = new THREE.AxesHelper(10)
     // helper.position.x = x
@@ -59,29 +59,28 @@ export function createDecorativeSprite({ scene, spriteConf, x, z }) {
     return sprite
 }
 
-export function createTroopsSprite({ scene, spriteConf, x, z }) {
+export function createTroopsSprite({ scene, spriteConf, fromX, fromZ }) {
     const textureLoaded = textureLoader.load(spriteConf.url)
     const material = new THREE.SpriteMaterial({
         map: textureLoaded
     })
     const sprite = new THREE.Sprite(material)
     sprite.scale.set(spriteConf.scale.x, spriteConf.scale.y, spriteConf.scale.z)
-    sprite.position.x = x
-    sprite.position.z = z
+    sprite.position.x = fromX
+    sprite.position.z = fromZ
     scene.add(sprite)
     return sprite
 }
 
-export function createDirectionLine({ scene, arrowConf }) {
-    console.log(arrowConf)
-    svgloader.load(arrowConf.url, paths => {
-        const group = new THREE.Group()
-        group.scale.set(arrowConf.scale.x, arrowConf.scale.y, arrowConf.scale.z)
-        // group.position.y = 5
-        group.position.x += arrowConf.offsetX
-        group.position.z += arrowConf.offsetZ
+export function createArrowLine({ scene, arrowConf, fromX, fromZ, toX, toZ }) {
+    const arrows = new THREE.Group()
 
-        console.log(group.position.x)
+    svgloader.load(arrowConf.url, paths => {
+        const arrow = new THREE.Group()
+        arrow.scale.set(arrowConf.scale.x, arrowConf.scale.y, arrowConf.scale.z)
+        // arrow.position.y = 0.1
+        arrow.position.x += arrowConf.offsetX
+        arrow.position.z += arrowConf.offsetZ
 
         for (let i = 0; i < paths.length; i++) {
             const path = paths[i]
@@ -100,14 +99,37 @@ export function createDirectionLine({ scene, arrowConf }) {
                 const geometry = new THREE.ShapeBufferGeometry(shape)
                 const mesh = new THREE.Mesh(geometry, material)
 
-                group.add(mesh)
+                arrow.add(mesh)
             }
         }
 
-        // console.log(group.computeBoundingBox().boundingBox.vectorsWorld)
-        group.rotation.x = -Math.PI / 2
-        scene.add(group)
+        arrow.rotation.x = -Math.PI / 2
+        arrow.position.x += arrowConf.separation * 2
+        arrows.add(arrow)
+        const b = arrow.clone()
+        b.position.x += arrowConf.separation * 1
+        arrows.add(b)
+        const c = arrow.clone()
+        c.position.x += arrowConf.separation * 2
+        arrows.add(c)
+        const d = arrow.clone()
+        d.position.x += arrowConf.separation * 3
+        arrows.add(d)
+        scene.add(arrows)
+
+        console.log(fromX - toX, fromZ - toZ)
+        const f1 = Math.atan2(fromZ - toZ, fromX - toX)
+        const f2 = Math.atan2(toZ - fromZ, toX - fromX)
+        const f3 = Math.atan2(fromX - toX, fromZ - toZ)
+        const f4 = Math.atan2(fromZ - toZ, fromX - toX)
+
+        //
+        arrows.rotation.y = f4
+        arrows.position.x = fromX
+        arrows.position.z = fromZ
     })
+
+    return arrows
 }
 
 // export function addUiSprite({ scene, element, x, z }) {

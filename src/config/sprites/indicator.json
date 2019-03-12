@@ -1,8 +1,9 @@
 {
     "ARROW": {
-        "offsetX": -0.5,
-        "offsetZ": 0.5,
+        "offsetX": 0,
+        "offsetZ": 0.6,
         "url": "assets/arrow.svg",
-        "scale": { "x": 0.05, "y": 0.05, "z": 0.05 }
+        "scale": { "x": 0.05, "y": 0.05, "z": 0.05 },
+        "separation": 0.5
     }
 }

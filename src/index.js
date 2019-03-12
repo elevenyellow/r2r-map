@@ -154,7 +154,7 @@ API.changeRecruitmentPower(cottagename, 95)
 API.addDecorativeElements()
 
 const troops1 = 'troops1'
-API.createTroops({ id: troops1, fromTileId: 'cottage3', toTileId: 'village1' })
+API.createTroops({ id: troops1, fromTileId: 'cottag4', toTileId: 'cottag5' })
 API.changeUnits(troops1, 200)
 let percentage = 0
 const int = setInterval(() => {
@@ -178,7 +178,10 @@ ui.appendChild(log)
 
 // HELPERS
 // isoCamera.onChange = updateUi
-sceneSprites.add(new isoCamera.THREE.AxesHelper(10))
+// const axes = new isoCamera.THREE.AxesHelper(10)
+// axes.position.x = 0
+// axes.position.z = 0
+// sceneSprites.add(axes)
 // sceneTerrain.add(new isoCamera.THREE.GridHelper(1000, 1000, 0xaaaaaa, 0x999999))
 // go({ scene })
 

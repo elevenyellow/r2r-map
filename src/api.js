@@ -248,8 +248,10 @@ function createTroopsObject({
     const toX = to.x
     const toZ = to.z
     const troops = createTroops({
-        x: fromX,
-        z: fromZ,
+        fromX,
+        fromZ,
+        toX,
+        toZ,
         spriteConf: TROOPS,
         arrowConf: ARROW
     })

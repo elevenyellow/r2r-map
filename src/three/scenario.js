@@ -1,6 +1,8 @@
 import * as THREE from 'three'
+import SVGLoader from './SVGLoader'
 
 const textureLoader = new THREE.TextureLoader()
+const svgloader = new SVGLoader()
 
 export function createTerrain({ renderer, scene, url }) {
     const geometry = new THREE.PlaneBufferGeometry(100, 100)
@@ -33,7 +35,7 @@ export function createBuildingSprite({ scene, spriteConf, x, z }) {
     sprite.scale.set(spriteConf.scale.x, spriteConf.scale.y, spriteConf.scale.z)
     sprite.position.x = x
     sprite.position.z = z
-    scene.add(sprite)
+    // scene.add(sprite)
 
     // const helper = new THREE.AxesHelper(10)
     // helper.position.x = x
@@ -68,6 +70,44 @@ export function createTroopsSprite({ scene, spriteConf, x, z }) {
     sprite.position.z = z
     scene.add(sprite)
     return sprite
+}
+
+export function createDirectionLine({ scene, arrowConf }) {
+    console.log(arrowConf)
+    svgloader.load(arrowConf.url, paths => {
+        const group = new THREE.Group()
+        group.scale.set(arrowConf.scale.x, arrowConf.scale.y, arrowConf.scale.z)
+        // group.position.y = 5
+        group.position.x += arrowConf.offsetX
+        group.position.z += arrowConf.offsetZ
+
+        console.log(group.position.x)
+
+        for (let i = 0; i < paths.length; i++) {
+            const path = paths[i]
+
+            const material = new THREE.MeshBasicMaterial({
+                color: path.color,
+                side: THREE.DoubleSide,
+                depthWrite: false
+            })
+
+            const shapes = path.toShapes(true)
+
+            for (let j = 0; j < shapes.length; j++) {
+                const shape = shapes[j]
+
+                const geometry = new THREE.ShapeBufferGeometry(shape)
+                const mesh = new THREE.Mesh(geometry, material)
+
+                group.add(mesh)
+            }
+        }
+
+        // console.log(group.computeBoundingBox().boundingBox.vectorsWorld)
+        group.rotation.x = -Math.PI / 2
+        scene.add(group)
+    })
 }
 
 // export function addUiSprite({ scene, element, x, z }) {

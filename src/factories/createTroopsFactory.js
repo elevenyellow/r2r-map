@@ -1,17 +1,26 @@
 import { createSmartDiv, createTroopsUnitsUiElement } from '../ui'
-import { createTroopsSprite } from '../three/scenario'
+import { createTroopsSprite, createDirectionLine } from '../three/scenario'
 import { worldToScreen } from '../three/utils'
 import { GENERAL } from '../config/parameters'
 import { TROOPS_UNITS_UI_ELEMENT } from '../config/ui'
 
-export default function createTroopsFactory({ ui, scene, camera }) {
-    return ({ x, z, spriteConf }) => {
+export default function createTroopsFactory({
+    ui,
+    sceneSprites,
+    sceneTerrain,
+    camera
+}) {
+    return ({ x, z, spriteConf, arrowConf }) => {
         const div = createSmartDiv({ container: ui })
         const sprite = createTroopsSprite({
-            scene,
+            scene: sceneSprites,
             x,
             z,
             spriteConf
+        })
+        const direction = createDirectionLine({
+            scene: sceneTerrain,
+            arrowConf
         })
         const units = createTroopsUnitsUiElement({
             className: TROOPS_UNITS_UI_ELEMENT

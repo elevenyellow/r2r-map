@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { OWNER } from './const'
 import { VILLAGE, COTTAGE, TROOPS } from './config/sprites/interactive'
+import { ARROW } from './config/sprites/indicator'
 import { DECORATIVE_ITEMS } from './config/parameters'
 import DECORATIVE from './config/sprites/decorative'
 import { TILE_OWNER_CLASSES } from './config/ui'
@@ -15,6 +16,7 @@ export default function createApi({
     ui,
     camera,
     sceneSprites,
+    sceneTerrain,
     hexagonSize,
     initialZoom
 }) {
@@ -30,7 +32,8 @@ export default function createApi({
     const createTroops = createTroopsFactory({
         ui,
         camera,
-        scene: sceneSprites
+        sceneSprites,
+        sceneTerrain
     })
 
     return {
@@ -247,7 +250,8 @@ function createTroopsObject({
     const troops = createTroops({
         x: fromX,
         z: fromZ,
-        spriteConf: TROOPS
+        spriteConf: TROOPS,
+        arrowConf: ARROW
     })
 
     const fromVector = new THREE.Vector2(fromX, fromZ)

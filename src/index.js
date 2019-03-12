@@ -72,6 +72,7 @@ const API = createApi({
     ui,
     camera,
     sceneSprites,
+    sceneTerrain,
     hexagonSize: GENERAL.HEXAGON_SIZE,
     initialZoom: zoom
 })
@@ -177,7 +178,7 @@ ui.appendChild(log)
 
 // HELPERS
 // isoCamera.onChange = updateUi
-// sceneSprites.add(new isoCamera.THREE.AxesHelper(10))
+sceneSprites.add(new isoCamera.THREE.AxesHelper(10))
 // sceneTerrain.add(new isoCamera.THREE.GridHelper(1000, 1000, 0xaaaaaa, 0x999999))
 // go({ scene })
 

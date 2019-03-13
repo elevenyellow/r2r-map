@@ -110,14 +110,14 @@ export function createArrowLine({ scene, arrowConf }) {
             const destiny = origin + arrowConf.separation * arrowConf.quantity
             const time = 5000
             const delay = time / arrowConf.quantity
+            arr.children[0].material = arrow.children[0].material.clone()
             arr.position.x = origin
             arrows.add(arr)
 
-            console.log(delay * i)
             const tween = new TWEEN.Tween({ x: origin, opacity: 1 })
                 .to({ x: destiny, opacity: 0 }, time)
                 // .easing(TWEEN.Easing.Quadratic.InOut)
-                // .repeat(Infinity)
+                .repeat(Infinity)
                 .delay(delay * i)
                 .onUpdate(o => {
                     arr.position.x = o.x

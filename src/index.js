@@ -189,18 +189,18 @@ API.createTroops({ id: troops, fromTileId: 'cottage4', toTileId: 'cottage5' })
 API.changeTroopsUnits({ idTroops: troops, units: 200 })
 API.changeTroopsDistance({ idTroops: 'troops', distance: 50 })
 
-// troops = 'troops2'
-// API.createTroops({ id: troops, fromTileId: 'village1', toTileId: 'cottage2' })
-// API.changeTroopsUnits({ idTroops: troops, units: 99 })
-// API.changeTroopsDistance({ idTroops: troops, distance: 50 })
-// let percentage = 0
-// const int = setInterval(() => {
-//     percentage += 0.1
-//     API.changeTroopsDistance({ idTroops: troops, distance: percentage })
-//     if (percentage >= 100) {
-//         clearInterval(int)
-//     }
-// }, 10)
+troops = 'troops2'
+API.createTroops({ id: troops, fromTileId: 'village1', toTileId: 'cottage2' })
+API.changeTroopsUnits({ idTroops: troops, units: 99 })
+API.changeTroopsDistance({ idTroops: troops, distance: 50 })
+let percentage = 0
+const int = setInterval(() => {
+    percentage += 0.1
+    API.changeTroopsDistance({ idTroops: troops, distance: percentage })
+    if (percentage >= 100) {
+        clearInterval(int)
+    }
+}, 10)
 
 const log = document.createElement('div')
 log.style.position = 'absolute'

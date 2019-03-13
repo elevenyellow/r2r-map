@@ -21,7 +21,7 @@ export default function createApi({
     initialZoom
 }) {
     // STATE
-    let zoom = initialZoom
+    let currentZoom = initialZoom
     const tiles = []
     const troopss = []
     const createTile = createTileFactory({
@@ -37,8 +37,8 @@ export default function createApi({
     })
 
     return {
-        updateZoom: newZoom => {
-            zoom = newZoom
+        updateZoom: ({ zoom }) => {
+            currentZoom = zoom
             tiles.forEach(tile => tile.updateScaleDiv(zoom, initialZoom))
             troopss.forEach(troops => troops.updateScaleDiv(zoom, initialZoom))
         },
@@ -68,7 +68,7 @@ export default function createApi({
                 tiles,
                 hexagonSize
             })
-            tile.updateScaleDiv(zoom, initialZoom)
+            tile.updateScaleDiv(currentZoom, initialZoom)
             return tile
         },
         createCottage: ({ id, col, row }) => {
@@ -81,7 +81,7 @@ export default function createApi({
                 tiles,
                 hexagonSize
             })
-            tile.updateScaleDiv(zoom, initialZoom)
+            tile.updateScaleDiv(currentZoom, initialZoom)
             return tile
         },
         createTroops: ({ id, fromTileId, toTileId }) => {
@@ -94,48 +94,49 @@ export default function createApi({
                 fromTileId,
                 toTileId
             })
-            troops.updateScaleDiv(zoom, initialZoom)
+            troops.updateScaleDiv(currentZoom, initialZoom)
+            troops.updateScaleDiv(currentZoom, initialZoom)
             return troops
         },
-        changeRecruitmentPower: (idTile, power) => {
+        changeRecruitmentPower: ({ idTile, power }) => {
             const tile = getTileById({ tiles, idTile })
             tile.changeRecruitmentPower(power)
         },
-        addOwnerAsPlayer: (idTile, idOwner, name = '', units = 0) => {
+        addOwnerAsPlayer: ({ idTile, idOwner, name = '', units = 0 }) => {
             const tile = getTileById({ tiles, idTile })
             tile.addOwner(idOwner)
             tile.changeOwner(idOwner, TILE_OWNER_CLASSES[OWNER.PLAYER])
             tile.changeName(idOwner, name)
             tile.changeUnits(idOwner, units)
         },
-        addOwnerAsEnemy: (idTile, idOwner, name = '', units = 0) => {
+        addOwnerAsEnemy: ({ idTile, idOwner, name = '', units = 0 }) => {
             const tile = getTileById({ tiles, idTile })
             tile.addOwner(idOwner)
             tile.changeOwner(idOwner, TILE_OWNER_CLASSES[OWNER.ENEMY])
             tile.changeName(idOwner, name)
             tile.changeUnits(idOwner, units)
         },
-        removeOwner: (idTile, idOwner) => {
+        removeOwner: ({ idTile, idOwner }) => {
             const tile = getTileById({ tiles, idTile })
             tile.removeOwner(idOwner)
         },
-        changeUnits: (idTile, idOwner, units) => {
+        changeUnits: ({ idTile, idOwner, units }) => {
             const tile = getTileById({ tiles, idTile })
             tile.changeUnits(idOwner, units)
         },
-        startHighlight: idTile => {
+        startHighlight: ({ idTile }) => {
             const tile = getTileById({ tiles, idTile })
             tile.startHighlight()
         },
-        stopHighlight: idTile => {
+        stopHighlight: ({ idTile }) => {
             const tile = getTileById({ tiles, idTile })
             tile.stopHighlight()
         },
-        changeUnits: (idTroops, units) => {
+        changeTroopsUnits: ({ idTroops, units }) => {
             const troops = getTroopsById({ troopss, idTroops })
             troops.changeUnits(units)
         },
-        changeDistance: (idTroops, distance) => {
+        changeTroopsDistance: ({ idTroops, distance }) => {
             const troops = getTroopsById({ troopss, idTroops })
             const x = (distance * troops.diffX) / 100
             const z = (distance * troops.diffZ) / 100
@@ -146,7 +147,7 @@ export default function createApi({
                 z: newZ
             })
         },
-        getSpriteSelected: ({
+        selectSprite: ({
             mouseX,
             mouseY,
             camera,

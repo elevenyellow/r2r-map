@@ -74,7 +74,6 @@ export function createTroopsSprite({ scene, spriteConf, fromX, fromZ }) {
 
 export function createArrowLine({ scene, arrowConf, fromX, fromZ, toX, toZ }) {
     const arrows = new THREE.Group()
-
     svgloader.load(arrowConf.url, paths => {
         const arrow = new THREE.Group()
         arrow.scale.set(arrowConf.scale.x, arrowConf.scale.y, arrowConf.scale.z)
@@ -84,21 +83,16 @@ export function createArrowLine({ scene, arrowConf, fromX, fromZ, toX, toZ }) {
 
         for (let i = 0; i < paths.length; i++) {
             const path = paths[i]
-
             const material = new THREE.MeshBasicMaterial({
                 color: path.color,
                 side: THREE.DoubleSide,
                 depthWrite: false
             })
-
             const shapes = path.toShapes(true)
-
             for (let j = 0; j < shapes.length; j++) {
                 const shape = shapes[j]
-
                 const geometry = new THREE.ShapeBufferGeometry(shape)
                 const mesh = new THREE.Mesh(geometry, material)
-
                 arrow.add(mesh)
             }
         }

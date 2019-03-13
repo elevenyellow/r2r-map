@@ -35,7 +35,7 @@ const terrain = createTerrain({
 // EVENTS FUNCTIONS
 function onChangeZoom({ zoom }) {
     if (API !== undefined) {
-        API.updateZoom(zoom)
+        API.updateZoom({ zoom })
         onUnselect()
     }
 }
@@ -187,7 +187,8 @@ API.addDecorativeElements()
 let troops = 'troops'
 API.createTroops({ id: troops, fromTileId: 'cottag4', toTileId: 'cottag5' })
 API.changeTroopsUnits({ idTroops: troops, units: 200 })
-API.changeTroopsDistance({ idTroops: troops, distance: 50 })
+API.changeTroopsDistance({ idTroops: 'troops', distance: 50 })
+
 troops = 'troops2'
 API.createTroops({ id: troops, fromTileId: 'village1', toTileId: 'cottag61' })
 API.changeTroopsUnits({ idTroops: troops, units: 99 })

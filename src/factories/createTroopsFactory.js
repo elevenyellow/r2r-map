@@ -20,17 +20,14 @@ export default function createTroopsFactory({
         })
         const arrows = createArrowLine({
             scene: sceneTerrain,
-            arrowConf,
-            fromX,
-            fromZ,
-            toX,
-            toZ
+            arrowConf
         })
         const units = createTroopsUnitsUiElement({
             className: TROOPS_UNITS_UI_ELEMENT
         })
         div.element.appendChild(units.element)
-        return {
+
+        const troops = {
             div,
             sprite,
             updatePositionDiv: ({ canvasWidth, canvasHeight }) => {
@@ -62,7 +59,22 @@ export default function createTroopsFactory({
                 sprite.position.z = z
                 arrows.position.x = x
                 arrows.position.z = z
+            },
+            changeArrowDirection: ({ fromX, fromZ, toX, toZ }) => {
+                const f1 = Math.atan2(fromZ - toZ, fromX - toX)
+                const f2 = Math.atan2(toZ - fromZ, toX - fromX)
+                const f3 = Math.atan2(fromX - toX, fromZ - toZ)
+                const f4 = Math.atan2(fromZ - toZ, fromX - toX)
+
+                //
+                arrows.rotation.y = f4
+                // console.log({ fromX, fromZ })
+                // arrows.position.x = fromX
+                // arrows.position.z = fromZ
             }
         }
+
+        // troops.changeArrowDirection({ fromX, fromZ, toX, toZ })
+        return troops
     }
 }

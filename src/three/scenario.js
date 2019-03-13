@@ -72,7 +72,7 @@ export function createTroopsSprite({ scene, spriteConf, fromX, fromZ }) {
     return sprite
 }
 
-export function createArrowLine({ scene, arrowConf, fromX, fromZ, toX, toZ }) {
+export function createArrowLine({ scene, arrowConf }) {
     const arrows = new THREE.Group()
     svgloader.load(arrowConf.url, paths => {
         const arrow = new THREE.Group()
@@ -110,17 +110,6 @@ export function createArrowLine({ scene, arrowConf, fromX, fromZ, toX, toZ }) {
         d.position.x += arrowConf.separation * 3
         arrows.add(d)
         scene.add(arrows)
-
-        console.log(fromX - toX, fromZ - toZ)
-        const f1 = Math.atan2(fromZ - toZ, fromX - toX)
-        const f2 = Math.atan2(toZ - fromZ, toX - fromX)
-        const f3 = Math.atan2(fromX - toX, fromZ - toZ)
-        const f4 = Math.atan2(fromZ - toZ, fromX - toX)
-
-        //
-        arrows.rotation.y = f4
-        arrows.position.x = fromX
-        arrows.position.z = fromZ
     })
 
     return arrows

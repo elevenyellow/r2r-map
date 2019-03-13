@@ -4,6 +4,7 @@
         "offsetZ": 0.6,
         "url": "assets/arrow.svg",
         "scale": { "x": 0.05, "y": 0.05, "z": 0.05 },
-        "separation": 0.5
+        "separation": 0.5,
+        "quantity": 10
     }
 }

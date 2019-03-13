@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import TWEEN from '@tweenjs/tween.js'
 import SVGLoader from './SVGLoader'
 
 const textureLoader = new THREE.TextureLoader()
@@ -74,19 +75,25 @@ export function createTroopsSprite({ scene, spriteConf, fromX, fromZ }) {
 
 export function createArrowLine({ scene, arrowConf }) {
     const arrows = new THREE.Group()
+    scene.add(arrows)
+
     svgloader.load(arrowConf.url, paths => {
         const arrow = new THREE.Group()
         arrow.scale.set(arrowConf.scale.x, arrowConf.scale.y, arrowConf.scale.z)
         // arrow.position.y = 0.1
         arrow.position.x += arrowConf.offsetX
         arrow.position.z += arrowConf.offsetZ
+        arrow.rotation.x = -Math.PI / 2
+        // arrow.position.x += arrowConf.separation * 2
+        // arrows.add(arrow)
 
         for (let i = 0; i < paths.length; i++) {
             const path = paths[i]
             const material = new THREE.MeshBasicMaterial({
                 color: path.color,
                 side: THREE.DoubleSide,
-                depthWrite: false
+                depthWrite: false,
+                transparent: true
             })
             const shapes = path.toShapes(true)
             for (let j = 0; j < shapes.length; j++) {
@@ -97,19 +104,27 @@ export function createArrowLine({ scene, arrowConf }) {
             }
         }
 
-        arrow.rotation.x = -Math.PI / 2
-        arrow.position.x += arrowConf.separation * 2
-        arrows.add(arrow)
-        const b = arrow.clone()
-        b.position.x += arrowConf.separation * 1
-        arrows.add(b)
-        const c = arrow.clone()
-        c.position.x += arrowConf.separation * 2
-        arrows.add(c)
-        const d = arrow.clone()
-        d.position.x += arrowConf.separation * 3
-        arrows.add(d)
-        scene.add(arrows)
+        for (let i = 0; i < arrowConf.quantity; i++) {
+            const arr = arrow.clone()
+            const origin = arr.position.x
+            const destiny = origin + arrowConf.separation * arrowConf.quantity
+            const time = 5000
+            const delay = time / arrowConf.quantity
+            arr.position.x = origin
+            arrows.add(arr)
+
+            console.log(delay * i)
+            const tween = new TWEEN.Tween({ x: origin, opacity: 1 })
+                .to({ x: destiny, opacity: 0 }, time)
+                // .easing(TWEEN.Easing.Quadratic.InOut)
+                // .repeat(Infinity)
+                .delay(delay * i)
+                .onUpdate(o => {
+                    arr.position.x = o.x
+                    arr.children[0].material.opacity = o.opacity
+                })
+                .start() // Start the tween immediately.
+        }
     })
 
     return arrows

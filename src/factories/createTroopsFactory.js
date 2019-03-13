@@ -1,3 +1,4 @@
+import * as THREE from 'three'
 import { createSmartDiv, createTroopsUnitsUiElement } from '../ui'
 import { createTroopsSprite, createArrowLine } from '../three/scenario'
 import { worldToScreen } from '../three/utils'
@@ -61,20 +62,11 @@ export default function createTroopsFactory({
                 arrows.position.z = z
             },
             changeArrowDirection: ({ fromX, fromZ, toX, toZ }) => {
-                const f1 = Math.atan2(fromZ - toZ, fromX - toX)
-                const f2 = Math.atan2(toZ - fromZ, toX - fromX)
-                const f3 = Math.atan2(fromX - toX, fromZ - toZ)
-                const f4 = Math.atan2(fromZ - toZ, fromX - toX)
-
-                //
-                arrows.rotation.y = f4
-                // console.log({ fromX, fromZ })
-                // arrows.position.x = fromX
-                // arrows.position.z = fromZ
+                arrows.rotation.y = -Math.atan2(toZ - fromZ, toX - fromX)
             }
         }
 
-        // troops.changeArrowDirection({ fromX, fromZ, toX, toZ })
+        troops.changeArrowDirection({ fromX, fromZ, toX, toZ })
         return troops
     }
 }

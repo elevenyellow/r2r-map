@@ -160,19 +160,19 @@ API.changeUnits({ idTile: cottagename, idOwner: 'ID2', units: 48 })
 cottagename = 'cottage3'
 API.createCottage({ id: cottagename, col: 1, row: 1 })
 API.changeRecruitmentPower({ idTile: cottagename, power: 52 })
-cottagename = 'cottag4'
+cottagename = 'cottage4'
 API.createCottage({ id: cottagename, col: 0, row: -1 })
 API.changeRecruitmentPower({ idTile: cottagename, power: 4 })
-cottagename = 'cottag5'
+cottagename = 'cottage5'
 API.createCottage({ id: cottagename, col: -1, row: 0 })
 API.changeRecruitmentPower({ idTile: cottagename, power: 3 })
-cottagename = 'cottag6'
+cottagename = 'cottage6'
 API.createVillage({ id: cottagename, col: -1, row: -1 })
 API.changeRecruitmentPower({ idTile: cottagename, power: 2 })
-cottagename = 'cottag61'
+cottagename = 'cottage61'
 API.createVillage({ id: cottagename, col: 1, row: -1 })
 API.changeRecruitmentPower({ idTile: cottagename, power: 6 })
-cottagename = 'cottag631'
+cottagename = 'cottage631'
 API.createVillage({ id: cottagename, col: -1, row: 1 })
 API.addOwnerAsPlayer({
     idTile: cottagename,
@@ -185,22 +185,22 @@ API.changeRecruitmentPower({ idTile: cottagename, power: 95 })
 API.addDecorativeElements()
 
 let troops = 'troops'
-API.createTroops({ id: troops, fromTileId: 'cottag4', toTileId: 'cottag5' })
+API.createTroops({ id: troops, fromTileId: 'cottage4', toTileId: 'cottage5' })
 API.changeTroopsUnits({ idTroops: troops, units: 200 })
 API.changeTroopsDistance({ idTroops: 'troops', distance: 50 })
 
-troops = 'troops2'
-API.createTroops({ id: troops, fromTileId: 'village1', toTileId: 'cottag61' })
-API.changeTroopsUnits({ idTroops: troops, units: 99 })
-API.changeTroopsDistance({ idTroops: troops, distance: 50 })
-let percentage = 0
-const int = setInterval(() => {
-    percentage += 0.1
-    API.changeTroopsDistance({ idTroops: troops, distance: percentage })
-    if (percentage >= 100) {
-        clearInterval(int)
-    }
-}, 10)
+// troops = 'troops2'
+// API.createTroops({ id: troops, fromTileId: 'village1', toTileId: 'cottage2' })
+// API.changeTroopsUnits({ idTroops: troops, units: 99 })
+// API.changeTroopsDistance({ idTroops: troops, distance: 50 })
+// let percentage = 0
+// const int = setInterval(() => {
+//     percentage += 0.1
+//     API.changeTroopsDistance({ idTroops: troops, distance: percentage })
+//     if (percentage >= 100) {
+//         clearInterval(int)
+//     }
+// }, 10)
 
 const log = document.createElement('div')
 log.style.position = 'absolute'

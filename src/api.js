@@ -132,6 +132,10 @@ export default function createApi({
             const tile = getTileById({ tiles, idTile })
             tile.stopHighlight()
         },
+        removeTroops: ({ idTroops }) => {
+            const troops = getTroopsById({ troopss, idTroops })
+            troops.destroy()
+        },
         changeTroopsUnits: ({ idTroops, units }) => {
             const troops = getTroopsById({ troopss, idTroops })
             troops.changeUnits(units)

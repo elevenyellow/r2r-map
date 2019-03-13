@@ -75,6 +75,7 @@ export function createTroopsSprite({ scene, spriteConf, fromX, fromZ }) {
 
 export function createArrowLine({ scene, arrowConf }) {
     const arrows = new THREE.Group()
+    const tweens = []
     scene.add(arrows)
 
     svgloader.load(arrowConf.url, paths => {
@@ -126,10 +127,12 @@ export function createArrowLine({ scene, arrowConf }) {
                     arr.children[0].material.opacity = o.opacity
                 })
                 .start() // Start the tween immediately.
+
+            tweens.push(tween)
         }
     })
 
-    return arrows
+    return { arrows, tweens }
 }
 
 // export function addUiSprite({ scene, element, x, z }) {

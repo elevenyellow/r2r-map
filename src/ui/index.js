@@ -14,6 +14,9 @@ export function createSmartDiv({ container, offsetX = 0, offsetY = 0 }) {
         },
         scale: value => {
             style.transform = `scale(${value})`
+        },
+        destroy: () => {
+            container.removeChild(element)
         }
     }
 }

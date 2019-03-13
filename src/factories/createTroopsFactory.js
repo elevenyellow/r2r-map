@@ -19,7 +19,7 @@ export default function createTroopsFactory({
             fromZ,
             spriteConf
         })
-        const arrows = createArrowLine({
+        const { arrows, tweens } = createArrowLine({
             scene: sceneTerrain,
             arrowConf
         })
@@ -63,6 +63,12 @@ export default function createTroopsFactory({
             },
             changeArrowDirection: ({ fromX, fromZ, toX, toZ }) => {
                 arrows.rotation.y = -Math.atan2(toZ - fromZ, toX - fromX)
+            },
+            destroy: () => {
+                tweens.forEach(tween => tween.stop())
+                sceneTerrain.remove(arrows)
+                sceneSprites.remove(sprite)
+                div.destroy()
             }
         }
 

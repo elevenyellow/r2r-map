@@ -18,12 +18,17 @@ const {
     sceneTerrain,
     sceneSprites,
     isoCamera,
-    zoom
+    state
 } = createThreeWorld({
     canvas,
+    onStart,
     onChangeZoom,
-    onChangePan
+    onChangePan,
+    onEnd
 })
+
+// DISABLING ZOOM WHEN DOUBLE CLICK
+isoCamera.view.on('dblclick.zoom', null)
 
 // ADDING TERRAIN
 const terrain = createTerrain({
@@ -33,17 +38,59 @@ const terrain = createTerrain({
 })
 
 // EVENTS FUNCTIONS
-function onChangeZoom({ zoom }) {
-    if (API !== undefined) {
-        API.updateZoom({ zoom })
-        onUnselect()
+function onStart(e) {
+    const event = e.sourceEvent
+    if (API !== undefined && event) {
+        let mouseX
+        let mouseY
+
+        // Desktop
+        if (typeof event.clientX == 'number') {
+            mouseX = event.clientX
+            mouseY = event.clientY
+        }
+
+        // Mobile
+        else if (
+            event.targetTouches !== undefined &&
+            event.targetTouches.length === 1
+        ) {
+            mouseX = event.targetTouches[0].clientX
+            mouseY = event.targetTouches[0].clientY
+        }
+
+        const sprite = API.selectSprite({
+            mouseX,
+            mouseY,
+            camera,
+            canvasWidth: window.innerWidth,
+            canvasHeight: window.innerHeight,
+            objects: [terrain]
+        })
+        if (sprite) {
+            state.tileSelected = sprite
+            console.log('onStart', sprite.troopOrTile.id, mouseX, mouseY)
+        }
     }
 }
 
-function onChangePan({ e }) {
+function onEnd(e) {
+    if (state) delete state.tileSelected
+    // console.log('onEnd')
+}
+
+function onChangePan(e) {
     if (API !== undefined) {
         onUnselect()
     }
+    return state.tileSelected === undefined
+}
+
+function onChangeZoom(e, zoom) {
+    if (API !== undefined) {
+        API.updateZoom({ zoom })
+    }
+    return true
 }
 
 function onAnimationFrame(time) {
@@ -74,7 +121,7 @@ const API = createApi({
     sceneSprites,
     sceneTerrain,
     hexagonSize: GENERAL.HEXAGON_SIZE,
-    initialZoom: zoom
+    initialZoom: state.zoom
 })
 if (typeof window != 'undefined') {
     window.API = API
@@ -90,16 +137,15 @@ canvas.addEventListener('click', e => {
         canvasHeight: window.innerHeight,
         objects: [terrain]
     })
-
     sprite ? onSelect(sprite.troopOrTile.id) : onUnselect()
 })
 
 function onSelect(id) {
-    log.innerHTML = id
+    log.innerHTML = id // REMOVE THIS
 }
 
 function onUnselect() {
-    log.innerHTML = ''
+    log.innerHTML = '' // REMOVE THIS
 }
 
 // EXAMPLE USING API

@@ -71,6 +71,7 @@ export default function createApi({
                 hexagonSize
             })
             tile.updateScaleDiv(currentZoom, initialZoom)
+            tiles.push(tile)
             return tile
         },
         createCottage: ({ id, col, row }) => {
@@ -84,6 +85,7 @@ export default function createApi({
                 hexagonSize
             })
             tile.updateScaleDiv(currentZoom, initialZoom)
+            tiles.push(tile)
             return tile
         },
         createTroops: ({ id, fromTileId, toTileId }) => {
@@ -98,6 +100,8 @@ export default function createApi({
             })
             troops.updateScaleDiv(currentZoom, initialZoom)
             troops.updateScaleDiv(currentZoom, initialZoom)
+            troopss.push(troops)
+
             return troops
         },
         changeRecruitmentPower: ({ idTile, power }) => {

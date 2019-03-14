@@ -13,7 +13,7 @@ import { RECRUITMENT_POWER_UI_ELEMENT } from '../config/ui'
 import { ELEMENT_TYPE } from '../const'
 
 export default function createTileFactory({ ui, scene, camera }) {
-    return ({ x, z, spriteConf }) => {
+    return ({ id, area, x, z, spriteConf }) => {
         let tweenHighlight
         const owners = {}
         const div = createSmartDiv({ container: ui })
@@ -28,6 +28,10 @@ export default function createTileFactory({ ui, scene, camera }) {
         })
         div.element.appendChild(recruitmentPower.element)
         return {
+            id,
+            x,
+            z,
+            area,
             type: ELEMENT_TYPE.TILE,
             div,
             owners,

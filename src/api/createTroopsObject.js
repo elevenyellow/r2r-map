@@ -5,7 +5,6 @@ import { getTileById } from './getters'
 
 export default function createTroopsObject({
     createTroops,
-    troopss,
     tiles,
     id,
     spriteConf,
@@ -19,6 +18,7 @@ export default function createTroopsObject({
     const toX = to.x
     const toZ = to.z
     const troops = createTroops({
+        id,
         fromX,
         fromZ,
         toX,
@@ -53,13 +53,11 @@ export default function createTroopsObject({
     // helper2.position.x = toVectorReduced.x
     // helper2.position.z = toVectorReduced.y
     // sceneSprites.add(helper2)
-    troops.id = id
     troops.diffX = diffX
     troops.diffZ = diffZ
     troops.fromX = fromVectorReduced.x
     troops.fromZ = fromVectorReduced.y
     troops.area = spriteConf.area
-    troopss.push(troops)
 
     return troops
 }

@@ -12,7 +12,7 @@ export default function createTroopsFactory({
     sceneTerrain,
     camera
 }) {
-    return ({ fromX, fromZ, toX, toZ, spriteConf, arrowConf }) => {
+    return ({ id, fromX, fromZ, toX, toZ, spriteConf, arrowConf }) => {
         const div = createSmartDiv({ container: ui })
         const sprite = createTroopsSprite({
             scene: sceneSprites,
@@ -30,6 +30,7 @@ export default function createTroopsFactory({
         div.element.appendChild(units.element)
 
         const troops = {
+            id,
             type: ELEMENT_TYPE.TROOPS,
             div,
             sprite,

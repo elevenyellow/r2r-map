@@ -6,6 +6,7 @@ import { GENERAL } from './config/parameters'
 import { DOM } from './config/ui'
 import TWEEN from '@tweenjs/tween.js'
 import * as THREE from 'three'
+import { ELEMENT_TYPE } from './const'
 
 // GETTING DOM
 const ui = document.getElementById(DOM.UI)
@@ -59,23 +60,31 @@ function onStart(e) {
             mouseY = event.targetTouches[0].clientY
         }
 
-        const sprite = API.selectSprite({
-            mouseX,
-            mouseY,
-            camera,
-            canvasWidth: window.innerWidth,
-            canvasHeight: window.innerHeight,
-            objects: [terrain]
-        })
-        if (sprite) {
-            state.tileSelected = sprite
-            console.log('onStart', sprite.troopOrTile.id, mouseX, mouseY)
+        if (mouseX !== undefined) {
+            const sprite = API.selectSprite({
+                mouseX,
+                mouseY,
+                camera,
+                canvasWidth: window.innerWidth,
+                canvasHeight: window.innerHeight,
+                objects: [terrain]
+            })
+            if (sprite && sprite.type === ELEMENT_TYPE.TILE) {
+                state.tileFrom = sprite
+                // console.log(
+                //     'onStart',
+                //     sprite.troopOrTile.id,
+                //     sprite.type,
+                //     mouseX,
+                //     mouseY
+                // )
+            }
         }
     }
 }
 
 function onEnd(e) {
-    if (state) delete state.tileSelected
+    if (state) delete state.tileFrom
     // console.log('onEnd')
 }
 
@@ -83,7 +92,7 @@ function onChangePan(e) {
     if (API !== undefined) {
         onUnselect()
     }
-    return state.tileSelected === undefined
+    return state.tileFrom === undefined
 }
 
 function onChangeZoom(e, zoom) {

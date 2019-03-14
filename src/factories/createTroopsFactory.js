@@ -4,6 +4,7 @@ import { createTroopsSprite, createArrowLine } from '../three/scenario'
 import { worldToScreen } from '../three/utils'
 import { GENERAL } from '../config/parameters'
 import { TROOPS_UNITS_UI_ELEMENT } from '../config/ui'
+import { ELEMENT_TYPE } from '../const'
 
 export default function createTroopsFactory({
     ui,
@@ -29,6 +30,7 @@ export default function createTroopsFactory({
         div.element.appendChild(units.element)
 
         const troops = {
+            type: ELEMENT_TYPE.TROOPS,
             div,
             sprite,
             updatePositionDiv: ({ canvasWidth, canvasHeight }) => {

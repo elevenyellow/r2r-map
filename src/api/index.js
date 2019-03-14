@@ -1,16 +1,18 @@
 import * as THREE from 'three'
-import { OWNER } from './const'
-import { VILLAGE, COTTAGE, TROOPS } from './config/sprites/interactive'
-import { ARROW } from './config/sprites/indicator'
-import { DECORATIVE_ITEMS } from './config/parameters'
-import DECORATIVE from './config/sprites/decorative'
-import { TILE_OWNER_CLASSES } from './config/ui'
-import { screenToWorld } from './three/utils'
-import createTileFactory from './factories/createTileFactory'
-import createTroopsFactory from './factories/createTroopsFactory'
-import { getPositionByCordinate } from './utils/hexagons'
-import { createDecorativeSprite } from './three/scenario'
-import { generateRandomDecorativeSprites } from './three/utils'
+import { OWNER } from '../const'
+import { VILLAGE, COTTAGE, TROOPS } from '../config/sprites/interactive'
+// import { ARROW } from '../config/sprites/indicator'
+import { DECORATIVE_ITEMS } from '../config/parameters'
+import DECORATIVE from '../config/sprites/decorative'
+import { TILE_OWNER_CLASSES } from '../config/ui'
+import { screenToWorld } from '../three/utils'
+import createTileFactory from '../factories/createTileFactory'
+import createTroopsFactory from '../factories/createTroopsFactory'
+import { createDecorativeSprite } from '../three/scenario'
+import { generateRandomDecorativeSprites } from '../three/utils'
+import createTileObject from './createTileObject'
+import createTroopsObject from './createTroopsObject'
+import { getTileById, getTroopsById } from './getters'
 
 export default function createApi({
     ui,
@@ -175,6 +177,7 @@ export default function createApi({
                     troopOrTile.sprite.position.z
                 )
                 return {
+                    type: troopOrTile.type,
                     distance: vectorClick.distanceTo(vector),
                     troopOrTile
                 }
@@ -207,98 +210,3 @@ export default function createApi({
         }
     }
 }
-
-// Private
-
-function getTileById({ tiles, idTile }) {
-    return tiles.find(tile => tile.id === idTile)
-}
-
-function getTroopsById({ troopss, idTroops }) {
-    return troopss.find(troops => troops.id === idTroops)
-}
-
-function createTileObject({
-    id,
-    createTile,
-    col,
-    row,
-    spriteConf,
-    tiles,
-    hexagonSize
-}) {
-    const [x, z] = getPositionByCordinate({ col, row, size: hexagonSize })
-    const tile = createTile({ x, z, spriteConf })
-    tile.id = id
-    tile.x = x
-    tile.z = z
-    tile.area = spriteConf.area
-    tiles.push(tile)
-    return tile
-}
-
-function createTroopsObject({
-    createTroops,
-    troopss,
-    tiles,
-    id,
-    spriteConf,
-    fromTileId,
-    toTileId
-}) {
-    const from = getTileById({ tiles, idTile: fromTileId })
-    const to = getTileById({ tiles, idTile: toTileId })
-    const fromX = from.x
-    const fromZ = from.z
-    const toX = to.x
-    const toZ = to.z
-    const troops = createTroops({
-        fromX,
-        fromZ,
-        toX,
-        toZ,
-        spriteConf: TROOPS,
-        arrowConf: ARROW
-    })
-
-    const fromVector = new THREE.Vector2(fromX, fromZ)
-    const toVector = new THREE.Vector2(toX, toZ)
-    const fromVectorReduced = fromVector
-        .clone()
-        .sub(toVector)
-        .normalize()
-        .multiplyScalar(-from.area)
-        .add(fromVector)
-    const toVectorReduced = toVector
-        .clone()
-        .sub(fromVector)
-        .normalize()
-        .multiplyScalar(-to.area)
-        .add(toVector)
-    const diffX = toVectorReduced.x - fromVectorReduced.x
-    const diffZ = toVectorReduced.y - fromVectorReduced.y
-
-    // const helper = new THREE.AxesHelper(10)
-    // helper.position.x = fromVectorReduced.x
-    // helper.position.z = fromVectorReduced.y
-    // sceneSprites.add(helper)
-
-    // const helper2 = new THREE.AxesHelper(10)
-    // helper2.position.x = toVectorReduced.x
-    // helper2.position.z = toVectorReduced.y
-    // sceneSprites.add(helper2)
-    troops.id = id
-    troops.diffX = diffX
-    troops.diffZ = diffZ
-    troops.fromX = fromVectorReduced.x
-    troops.fromZ = fromVectorReduced.y
-    troops.area = spriteConf.area
-    troopss.push(troops)
-
-    return troops
-}
-
-// //
-// canvas.addEventListener('click', e => {
-//     console.log(e, tiles.map(tile => tile.div.element))
-// })

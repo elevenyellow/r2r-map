@@ -10,6 +10,7 @@ import { createBuildingSprite } from '../three/scenario'
 import { worldToScreen } from '../three/utils'
 import { GENERAL } from '../config/parameters'
 import { RECRUITMENT_POWER_UI_ELEMENT } from '../config/ui'
+import { ELEMENT_TYPE } from '../const'
 
 export default function createTileFactory({ ui, scene, camera }) {
     return ({ x, z, spriteConf }) => {
@@ -27,6 +28,7 @@ export default function createTileFactory({ ui, scene, camera }) {
         })
         div.element.appendChild(recruitmentPower.element)
         return {
+            type: ELEMENT_TYPE.TILE,
             div,
             owners,
             sprite,

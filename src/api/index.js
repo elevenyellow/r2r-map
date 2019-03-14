@@ -8,6 +8,7 @@ import { TILE_OWNER_CLASSES } from '../config/ui'
 import { screenToWorld } from '../three/utils'
 import createTileFactory from '../factories/createTileFactory'
 import createTroopsFactory from '../factories/createTroopsFactory'
+import createArrowFactory from '../factories/createArrowFactory'
 import { createDecorativeSprite } from '../three/scenario'
 import { generateRandomDecorativeSprites } from '../three/utils'
 import createTileObject from './createTileObject'
@@ -26,6 +27,7 @@ export default function createApi({
     let currentZoom = initialZoom
     const tiles = []
     const troopss = []
+    const arrows = []
     const createTile = createTileFactory({
         ui,
         camera,
@@ -36,6 +38,11 @@ export default function createApi({
         camera,
         sceneSprites,
         sceneTerrain
+    })
+    const createArrow = createArrowFactory({
+        ui,
+        camera,
+        scene: sceneTerrain
     })
 
     return {
@@ -99,10 +106,18 @@ export default function createApi({
                 toTileId
             })
             troops.updateScaleDiv(currentZoom, initialZoom)
-            troops.updateScaleDiv(currentZoom, initialZoom)
             troopss.push(troops)
-
             return troops
+        },
+        createArrow: ({ id, idTileFrom }) => {
+            const tile = getTileById({ tiles, idTile: idTileFrom })
+            const arrow = createArrow({
+                id,
+                fromX: tile.x,
+                fromZ: tile.z
+            })
+            arrows.push(arrow)
+            return arrow
         },
         changeRecruitmentPower: ({ idTile, power }) => {
             const tile = getTileById({ tiles, idTile })

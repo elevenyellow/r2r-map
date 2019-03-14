@@ -1,6 +1,5 @@
 import * as THREE from 'three'
 import { TROOPS } from '../config/sprites/interactive'
-import { ARROW } from '../config/sprites/indicator'
 import { getTileById } from './getters'
 
 export default function createTroopsObject({
@@ -23,8 +22,7 @@ export default function createTroopsObject({
         fromZ,
         toX,
         toZ,
-        spriteConf: TROOPS,
-        arrowConf: ARROW
+        spriteConf: TROOPS
     })
 
     const fromVector = new THREE.Vector2(fromX, fromZ)

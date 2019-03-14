@@ -36,12 +36,12 @@ export function createBuildingSprite({ scene, spriteConf, x, z }) {
     sprite.scale.set(spriteConf.scale.x, spriteConf.scale.y, spriteConf.scale.z)
     sprite.position.x = x
     sprite.position.z = z
-    scene.add(sprite)
+    // scene.add(sprite)
 
-    // const helper = new THREE.AxesHelper(10)
-    // helper.position.x = x
-    // helper.position.z = z
-    // scene.add(helper)
+    const helper = new THREE.AxesHelper(10)
+    helper.position.x = x
+    helper.position.z = z
+    scene.add(helper)
 
     return sprite
 }

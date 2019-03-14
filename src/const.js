@@ -6,5 +6,6 @@ export const OWNER = {
 
 export const ELEMENT_TYPE = {
     TILE: 'TILE',
-    TROOPS: 'TROOPS'
+    TROOPS: 'TROOPS',
+    ARROW: 'ARROW'
 }

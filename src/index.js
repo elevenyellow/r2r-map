@@ -7,6 +7,7 @@ import { DOM } from './config/ui'
 import TWEEN from '@tweenjs/tween.js'
 import * as THREE from 'three'
 import { ELEMENT_TYPE } from './const'
+import { getMousePositionFromD3Event } from './utils'
 
 // GETTING DOM
 const ui = document.getElementById(DOM.UI)
@@ -38,61 +39,71 @@ const terrain = createTerrain({
     url: OTHERS.TERRAIN.url
 })
 
+function getInteractiveElementByMouseEvent({ mouseX, mouseY }) {
+    const { x, z } = API.getWorldPositionFromMouse({
+        mouseX,
+        mouseY,
+        camera,
+        canvasWidth: window.innerWidth,
+        canvasHeight: window.innerHeight,
+        objects: [terrain]
+    })
+    const element = API.selectInteractiveSprite({
+        x,
+        z
+    })
+    return { element, x, z }
+}
+
 // EVENTS FUNCTIONS
 function onStart(e) {
     const event = e.sourceEvent
     if (API !== undefined && event) {
-        let mouseX
-        let mouseY
-
-        // Desktop
-        if (typeof event.clientX == 'number') {
-            mouseX = event.clientX
-            mouseY = event.clientY
-        }
-
-        // Mobile
-        else if (
-            event.targetTouches !== undefined &&
-            event.targetTouches.length === 1
-        ) {
-            mouseX = event.targetTouches[0].clientX
-            mouseY = event.targetTouches[0].clientY
-        }
-
+        const { mouseX, mouseY } = getMousePositionFromD3Event(event)
         if (mouseX !== undefined) {
-            const sprite = API.selectSprite({
+            const { element } = getInteractiveElementByMouseEvent({
                 mouseX,
-                mouseY,
-                camera,
-                canvasWidth: window.innerWidth,
-                canvasHeight: window.innerHeight,
-                objects: [terrain]
+                mouseY
             })
-            if (sprite && sprite.type === ELEMENT_TYPE.TILE) {
-                state.tileFrom = sprite
-                // console.log(
-                //     'onStart',
-                //     sprite.troopOrTile.id,
-                //     sprite.type,
-                //     mouseX,
-                //     mouseY
-                // )
+            if (element && element.type === ELEMENT_TYPE.TILE) {
+                state.arrowAttack = 'ARROWATTACK'
+                API.createArrow({
+                    id: state.arrowAttack,
+                    idTileFrom: element.troopOrTile.id
+                })
             }
         }
     }
 }
 
 function onEnd(e) {
-    if (state) delete state.tileFrom
+    if (state && state.arrowAttack) {
+        API.removeArrow({ idArrow: state.arrowAttack })
+        delete state.arrowAttack
+    }
     // console.log('onEnd')
 }
 
 function onChangePan(e) {
+    const idArrow = state.arrowAttack
     if (API !== undefined) {
         onUnselect()
+        if (idArrow) {
+            const { mouseX, mouseY } = getMousePositionFromD3Event(event)
+            const { element, x, z } = getInteractiveElementByMouseEvent({
+                mouseX,
+                mouseY
+            })
+            if (element && element.type === ELEMENT_TYPE.TILE)
+                API.changeArrowDirection({
+                    idArrow,
+                    x: element.troopOrTile.x,
+                    z: element.troopOrTile.z
+                })
+            else API.changeArrowDirection({ idArrow, x, z })
+        }
     }
-    return state.tileFrom === undefined
+    return idArrow === undefined
 }
 
 function onChangeZoom(e, zoom) {
@@ -138,15 +149,11 @@ if (typeof window != 'undefined') {
 
 // Capturing when user select a tile or troops
 canvas.addEventListener('click', e => {
-    const sprite = API.selectSprite({
+    const { element } = getInteractiveElementByMouseEvent({
         mouseX: e.clientX,
-        mouseY: e.clientY,
-        camera,
-        canvasWidth: window.innerWidth,
-        canvasHeight: window.innerHeight,
-        objects: [terrain]
+        mouseY: e.clientY
     })
-    sprite ? onSelect(sprite.troopOrTile.id) : onUnselect()
+    element ? onSelect(element.troopOrTile.id) : onUnselect()
 })
 
 function onSelect(id) {

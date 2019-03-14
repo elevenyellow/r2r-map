@@ -36,12 +36,12 @@ export function createBuildingSprite({ scene, spriteConf, x, z }) {
     sprite.scale.set(spriteConf.scale.x, spriteConf.scale.y, spriteConf.scale.z)
     sprite.position.x = x
     sprite.position.z = z
-    // scene.add(sprite)
+    scene.add(sprite)
 
-    const helper = new THREE.AxesHelper(10)
-    helper.position.x = x
-    helper.position.z = z
-    scene.add(helper)
+    // const helper = new THREE.AxesHelper(10)
+    // helper.position.x = x
+    // helper.position.z = z
+    // scene.add(helper)
 
     return sprite
 }
@@ -112,23 +112,23 @@ export function createArrowLine({ scene, arrowConf }) {
             const time = arrowConf.time
             const delay = time / arrowConf.quantity
             arr.children[0].material = arrow.children[0].material.clone()
-            arr.position.x = origin
-            // arr.position.x = arrowConf.separation * i
+            // arr.position.x = origin
+            arr.position.x = arrowConf.separation * i
             arrows.add(arr)
 
-            const tween = new TWEEN.Tween({ x: origin, opacity: 1 })
-                .to({ x: destiny, opacity: 0.2 }, time)
-                // .easing(TWEEN.Easing.Quadratic.InOut)
-                .repeat(Infinity)
-                .delay(delay * i)
-                .repeatDelay(0)
-                .onUpdate(o => {
-                    arr.position.x = o.x
-                    arr.children[0].material.opacity = o.opacity
-                })
-                .start() // Start the tween immediately.
+            // const tween = new TWEEN.Tween({ x: origin, opacity: 1 })
+            //     .to({ x: destiny, opacity: 0.2 }, time)
+            //     // .easing(TWEEN.Easing.Quadratic.InOut)
+            //     .repeat(Infinity)
+            //     .delay(delay * i)
+            //     .repeatDelay(0)
+            //     .onUpdate(o => {
+            //         arr.position.x = o.x
+            //         arr.children[0].material.opacity = o.opacity
+            //     })
+            //     .start() // Start the tween immediately.
 
-            tweens.push(tween)
+            // tweens.push(tween)
         }
     })
 

@@ -8,12 +8,12 @@ export default function createArrowFactory({ ui, scene, camera }) {
             scene,
             arrowConf: ARROW
         })
+        arrows.position.x = fromX
+        arrows.position.z = fromZ
         return {
             id,
             type: ELEMENT_TYPE.ARROW,
-            changePosition: ({ toX, toZ }) => {
-                arrows.position.x = x
-                arrows.position.z = z
+            changeDirection: ({ toX, toZ }) => {
                 arrows.rotation.y = -Math.atan2(toZ - fromZ, toX - fromX)
             },
             destroy: () => {

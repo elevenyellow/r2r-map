@@ -13,7 +13,7 @@ import { createDecorativeSprite } from '../three/scenario'
 import { generateRandomDecorativeSprites } from '../three/utils'
 import createTileObject from './createTileObject'
 import createTroopsObject from './createTroopsObject'
-import { getTileById, getTroopsById } from './getters'
+import { getTileById, getTroopsById, getArrowById } from './getters'
 
 export default function createApi({
     ui,
@@ -119,6 +119,16 @@ export default function createApi({
             arrows.push(arrow)
             return arrow
         },
+        changeArrowDirection: ({ idArrow, x, z }) => {
+            const arrow = getArrowById({ arrows, idArrow })
+            arrow.changeDirection({ toX: x, toZ: z })
+        },
+        removeArrow: ({ idArrow }) => {
+            const arrow = getArrowById({ arrows, idArrow })
+            const index = arrows.indexOf(arrow)
+            arrows.splice(index, 1)
+            arrow.destroy()
+        },
         changeRecruitmentPower: ({ idTile, power }) => {
             const tile = getTileById({ tiles, idTile })
             tile.changeRecruitmentPower(power)
@@ -155,6 +165,8 @@ export default function createApi({
         },
         removeTroops: ({ idTroops }) => {
             const troops = getTroopsById({ troopss, idTroops })
+            const index = troopss.indexOf(troops)
+            troopss.splice(index, 1)
             troops.destroy()
         },
         changeTroopsUnits: ({ idTroops, units }) => {
@@ -172,7 +184,7 @@ export default function createApi({
                 z: newZ
             })
         },
-        selectSprite: ({
+        getWorldPositionFromMouse: ({
             mouseX,
             mouseY,
             camera,
@@ -188,7 +200,9 @@ export default function createApi({
                 canvasHeight,
                 objects
             })
-            const { x, z } = intersections[0].point
+            return intersections[0].point
+        },
+        selectInteractiveSprite: ({ x, z }) => {
             const vectorClick = new THREE.Vector2(x, z)
             const mapper = troopOrTile => {
                 const vector = new THREE.Vector2(

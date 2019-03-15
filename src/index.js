@@ -107,10 +107,13 @@ function onChangePan(e) {
 }
 
 function onChangeZoom(e, zoom) {
-    if (API !== undefined) {
-        API.updateZoom({ zoom })
+    if (typeof state == 'undefined' || state.arrowAttack === undefined) {
+        if (API !== undefined) {
+            API.updateZoom({ zoom })
+        }
+        return true
     }
-    return true
+    return false
 }
 
 function onAnimationFrame(time) {

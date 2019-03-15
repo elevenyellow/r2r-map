@@ -18,7 +18,7 @@ export function createTerrain({ renderer, scene, url }) {
     textureLoaded.anisotropy = maxAnisotropy
     textureLoaded.wrapS = textureLoaded.wrapT = THREE.RepeatWrapping
     textureLoaded.repeat.set(512, 512)
-    mesh.position.y -= 0.1
+    mesh.position.y -= 0.5
     mesh.rotation.x = -Math.PI / 2
     mesh.scale.set(200, 200, 200)
     scene.add(mesh)

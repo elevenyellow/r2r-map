@@ -5,10 +5,8 @@ import { svgLoader } from '../utils'
 
 export default function createArrowFactory({ ui, scene, camera }) {
     return ({ id, fromX, fromZ }) => {
-        const { arrows, tweens } = createArrowLine({
-            scene,
-            arrowConf: ARROW
-        })
+        const fromVector = new THREE.Vector2(fromX, fromZ)
+        const { arrows, arrow, tweens } = createArrowLine()
         arrows.position.x = fromX
         arrows.position.z = fromZ
         scene.add(arrows)
@@ -17,8 +15,15 @@ export default function createArrowFactory({ ui, scene, camera }) {
             id,
             type: ELEMENT_TYPE.ARROW,
             changeDirection: ({ toX, toZ }) => {
+                const toVector = new THREE.Vector2(toX, toZ)
+                const distance = fromVector.distanceTo(toVector)
                 arrows.rotation.y = -Math.atan2(toZ - fromZ, toX - fromX)
-                console.log(arrows)
+                arrows.children = []
+                for (let i = 0; ARROW.separation * i < distance; i++) {
+                    const arr = arrow.clone()
+                    arr.position.x = ARROW.separation * i
+                    arrows.add(arr)
+                }
             },
             destroy: () => {
                 tweens.forEach(tween => tween.stop())
@@ -28,18 +33,18 @@ export default function createArrowFactory({ ui, scene, camera }) {
     }
 }
 
-export function createArrowLine({ arrowConf }) {
+function createArrowLine() {
     const arrows = new THREE.Group()
     const arrow = new THREE.Group()
     const tweens = []
 
-    svgLoader.load(arrowConf.url, paths => {
-        arrow.scale.set(arrowConf.scale.x, arrowConf.scale.y, arrowConf.scale.z)
+    svgLoader.load(ARROW.url, paths => {
+        arrow.scale.set(ARROW.scale.x, ARROW.scale.y, ARROW.scale.z)
         // arrow.position.y = 0.1
-        arrow.position.x += arrowConf.offsetX
-        arrow.position.z += arrowConf.offsetZ
+        arrow.position.x += ARROW.offsetX
+        arrow.position.z += ARROW.offsetZ
         arrow.rotation.x = -Math.PI / 2
-        // arrow.position.x += arrowConf.separation * 2
+        // arrow.position.x += ARROW.separation * 2
         // arrows.add(arrow)
 
         for (let i = 0; i < paths.length; i++) {
@@ -63,12 +68,12 @@ export function createArrowLine({ arrowConf }) {
         // for (let i = 0; i < quantity; i++) {
         //     const arr = arrow.clone()
         //     const origin = arr.position.x
-        //     const destiny = origin + arrowConf.separation * quantity
-        //     const time = arrowConf.time
+        //     const destiny = origin + ARROW.separation * quantity
+        //     const time = ARROW.time
         //     const delay = time / quantity
         //     arr.children[0].material = arrow.children[0].material.clone()
         //     // arr.position.x = origin
-        //     arr.position.x = arrowConf.separation * i
+        //     arr.position.x = ARROW.separation * i
         //     arrows.add(arr)
 
         //     // const tween = new TWEEN.Tween({ x: origin, opacity: 1 })

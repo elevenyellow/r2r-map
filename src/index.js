@@ -5,7 +5,7 @@ import { GENERAL } from './config/parameters'
 import { DOM } from './config/ui'
 import TWEEN from '@tweenjs/tween.js'
 import * as THREE from 'three'
-import { ELEMENT_TYPE, ARROW_ATTACK } from './const'
+import { ELEMENT_TYPE, ARROW_ATTACK_ID, ARROW_STATUS } from './const'
 import { getMousePositionFromD3Event } from './utils'
 
 // GETTING DOM
@@ -70,10 +70,16 @@ function onStart(e) {
                 mouseX,
                 mouseY
             })
-            if (element && element.type === ELEMENT_TYPE.TILE) {
+            if (
+                element &&
+                shallWeStartAttack({
+                    id: element.troopOrTile.id,
+                    type: element.type
+                })
+            ) {
                 state.preparingAttack = true
                 API.createArrow({
-                    id: ARROW_ATTACK,
+                    id: ARROW_ATTACK_ID,
                     idTileFrom: element.troopOrTile.id
                 })
             }
@@ -83,7 +89,7 @@ function onStart(e) {
 
 function onEnd(e) {
     if (state && state.preparingAttack) {
-        API.removeArrow({ idArrow: ARROW_ATTACK })
+        API.removeArrow({ idArrow: ARROW_ATTACK_ID })
         state.preparingAttack = false
     }
     // console.log('onEnd')
@@ -98,13 +104,26 @@ function onChangePan(e) {
                 mouseX,
                 mouseY
             })
-            if (element && element.type === ELEMENT_TYPE.TILE)
-                API.changeArrowDirection({
-                    idArrow: ARROW_ATTACK,
-                    x: element.troopOrTile.x,
-                    z: element.troopOrTile.z
+            if (
+                element &&
+                shallWeAttack({
+                    id: element.troopOrTile.id,
+                    type: element.type
                 })
-            else API.changeArrowDirection({ idArrow: ARROW_ATTACK, x, z })
+            ) {
+                API.changeArrowDirection({
+                    idArrow: ARROW_ATTACK_ID,
+                    x: element.troopOrTile.x,
+                    z: element.troopOrTile.z,
+                    status: ARROW_STATUS.COMPLETED
+                })
+            } else
+                API.changeArrowDirection({
+                    idArrow: ARROW_ATTACK_ID,
+                    x,
+                    z,
+                    status: ARROW_STATUS.INCORRECT
+                })
         }
     }
     return state.preparingAttack === false
@@ -113,7 +132,7 @@ function onChangePan(e) {
 function onChangeZoom(e, zoom, oldZoom) {
     // console.log(state, zoom, oldZoom)
     if (
-        // zoom !== oldZoom ||
+        zoom !== oldZoom ||
         typeof state == 'undefined' ||
         state.preparingAttack === false
     ) {
@@ -147,12 +166,16 @@ function onAnimationFrame(time) {
 onAnimationFrame()
 
 // EXTERNAL API CALLS (DOP)
-function onStartDrag() {}
-
+function shallWeStartAttack({ id, type }) {
+    console.log(state)
+    return type === ELEMENT_TYPE.VILLAGE
+}
+function shallWeAttack({ id, type }) {
+    return type === ELEMENT_TYPE.COTTAGE
+}
 function onSelect(id) {
     log.innerHTML = id // REMOVE THIS
 }
-
 function onUnselect() {
     log.innerHTML = '' // REMOVE THIS
 }

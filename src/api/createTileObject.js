@@ -6,9 +6,17 @@ export default function createTileObject({
     col,
     row,
     spriteConf,
-    hexagonSize
+    hexagonSize,
+    type
 }) {
     const [x, z] = getPositionByCordinate({ col, row, size: hexagonSize })
-    const tile = createTile({ id, x, z, area: spriteConf.area, spriteConf })
+    const tile = createTile({
+        id,
+        x,
+        z,
+        area: spriteConf.area,
+        spriteConf,
+        type
+    })
     return tile
 }

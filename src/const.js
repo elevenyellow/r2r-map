@@ -5,9 +5,15 @@ export const OWNER = {
 }
 
 export const ELEMENT_TYPE = {
-    TILE: 'TILE',
+    VILLAGE: 'VILLAGE',
+    COTTAGE: 'COTTAGE',
     TROOPS: 'TROOPS',
     ARROW: 'ARROW'
 }
 
-export const ARROW_ATTACK = 'ARROW_ATTACK'
+export const ARROW_ATTACK_ID = 'ARROW_ATTACK_ID'
+
+export const ARROW_STATUS = {
+    NORMAL: 'NORMAL',
+    INCORRECT: 'INCORRECT'
+}

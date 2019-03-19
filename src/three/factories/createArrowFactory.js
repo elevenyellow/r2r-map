@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { ELEMENT_TYPE } from '../../const'
+import { ELEMENT_TYPE, ARROW_STATUS } from '../../const'
 import { ARROW } from '../../config/sprites/indicator'
 import { svgLoader } from '../utils'
 
@@ -14,11 +14,18 @@ export default function createArrowFactory({ ui, scene, camera }) {
         return {
             id,
             type: ELEMENT_TYPE.ARROW,
-            changeDirection: ({ toX, toZ }) => {
+            changeDirection: ({ toX, toZ, status }) => {
                 const toVector = new THREE.Vector2(toX, toZ)
                 const distance = fromVector.distanceTo(toVector)
                 arrows.rotation.y = -Math.atan2(toZ - fromZ, toX - fromX)
                 arrows.children = []
+                if (status === ARROW_STATUS.INCORRECT) {
+                    arrow.children[0].material.color = new THREE.Color(0xffffff)
+                    arrow.children[0].material.opacity = 0.7
+                } else {
+                    arrow.children[0].material.color = new THREE.Color(0x22a8d6)
+                    arrow.children[0].material.opacity = 1
+                }
                 for (let i = 0; ARROW.separation * i < distance; i++) {
                     const arr = arrow.clone()
                     arr.position.x = ARROW.separation * i
@@ -51,8 +58,8 @@ function createArrowLine() {
             const path = paths[i]
             const material = new THREE.MeshBasicMaterial({
                 color: path.color,
-                side: THREE.DoubleSide,
-                depthWrite: false,
+                // side: THREE.DoubleSide
+                // depthWrite: false,
                 transparent: true
             })
             const shapes = path.toShapes(true)

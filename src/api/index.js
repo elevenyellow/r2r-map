@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { OWNER } from '../const'
+import { OWNER, ELEMENT_TYPE } from '../const'
 import { VILLAGE, COTTAGE, TROOPS } from '../config/sprites/interactive'
 // import { ARROW } from '../config/sprites/indicator'
 import { DECORATIVE_ITEMS } from '../config/parameters'
@@ -74,6 +74,7 @@ export default function createApi({
                 col,
                 row,
                 spriteConf: VILLAGE,
+                type: ELEMENT_TYPE.VILLAGE,
                 tiles,
                 hexagonSize
             })
@@ -88,6 +89,7 @@ export default function createApi({
                 col,
                 row,
                 spriteConf: COTTAGE,
+                type: ELEMENT_TYPE.COTTAGE,
                 tiles,
                 hexagonSize
             })
@@ -119,9 +121,9 @@ export default function createApi({
             arrows.push(arrow)
             return arrow
         },
-        changeArrowDirection: ({ idArrow, x, z }) => {
+        changeArrowDirection: ({ idArrow, x, z, status }) => {
             const arrow = getArrowById({ arrows, idArrow })
-            arrow.changeDirection({ toX: x, toZ: z })
+            arrow.changeDirection({ toX: x, toZ: z, status })
         },
         removeArrow: ({ idArrow }) => {
             const arrow = getArrowById({ arrows, idArrow })

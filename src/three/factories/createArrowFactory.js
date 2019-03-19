@@ -19,11 +19,19 @@ export default function createArrowFactory({ ui, scene, camera }) {
                 const distance = fromVector.distanceTo(toVector)
                 arrows.rotation.y = -Math.atan2(toZ - fromZ, toX - fromX)
                 arrows.children = []
+
+                // const material1 = arrow.children[0].material
+                // const material2 = material1.clone()
+                // material2.color = new THREE.Color(0x22a8d6)
+                // const material3 = material1.clone()
+                // material3.color = new THREE.Color(0xffffff)
+                // material3.opacity = new THREE.Color(0.7)
+
                 if (status === ARROW_STATUS.INCORRECT) {
-                    arrow.children[0].material.color = new THREE.Color(0xffffff)
-                    arrow.children[0].material.opacity = 0.7
+                    // arrow.children[0].material.color = new THREE.Color(0xffffff)
+                    arrow.children[0].material.opacity = 0.5
                 } else {
-                    arrow.children[0].material.color = new THREE.Color(0x22a8d6)
+                    // arrow.children[0].material.color = new THREE.Color(0x22a8d6)
                     arrow.children[0].material.opacity = 1
                 }
                 for (let i = 0; ARROW.separation * i < distance; i++) {
@@ -82,18 +90,6 @@ function createArrowLine() {
         //     // arr.position.x = origin
         //     arr.position.x = ARROW.separation * i
         //     arrows.add(arr)
-
-        //     // const tween = new TWEEN.Tween({ x: origin, opacity: 1 })
-        //     //     .to({ x: destiny, opacity: 0.2 }, time)
-        //     //     // .easing(TWEEN.Easing.Quadratic.InOut)
-        //     //     .repeat(Infinity)
-        //     //     .delay(delay * i)
-        //     //     .repeatDelay(0)
-        //     //     .onUpdate(o => {
-        //     //         arr.position.x = o.x
-        //     //         arr.children[0].material.opacity = o.opacity
-        //     //     })
-        //     //     .start() // Start the tween immediately.
 
         //     // tweens.push(tween)
         // }

@@ -70,18 +70,16 @@ function onStart(e) {
                 mouseX,
                 mouseY
             })
-            if (
-                element &&
-                shallWeStartAttack({
-                    id: element.troopOrTile.id,
-                    type: element.type
-                })
-            ) {
-                state.preparingAttack = true
-                API.createArrow({
-                    id: ARROW_ATTACK_ID,
-                    idTileFrom: element.troopOrTile.id
-                })
+            if (element !== undefined) {
+                const idFrom = element.troopOrTile.id
+                if (shallWeStartAttack({ idFrom, type: element.type })) {
+                    state.preparingAttack = true
+                    state.idAttackFrom = element.troopOrTile.id
+                    API.createArrow({
+                        id: ARROW_ATTACK_ID,
+                        idTileFrom: element.troopOrTile.id
+                    })
+                }
             }
         }
     }
@@ -90,7 +88,14 @@ function onStart(e) {
 function onEnd(e) {
     if (state && state.preparingAttack) {
         API.removeArrow({ idArrow: ARROW_ATTACK_ID })
+        const idFrom = state.idAttackFrom
+        const idTo = state.idAttackTo
+        state.idAttackFrom = undefined
+        state.idAttackTo = undefined
         state.preparingAttack = false
+        if (idFrom !== undefined && idTo !== undefined) {
+            onAttack({ idFrom, idTo })
+        }
     }
     // console.log('onEnd')
 }
@@ -104,26 +109,30 @@ function onChangePan(e) {
                 mouseX,
                 mouseY
             })
+            const idFrom = state.idAttackFrom
             if (
-                element &&
+                element !== undefined &&
                 shallWeAttack({
-                    id: element.troopOrTile.id,
+                    idFrom,
+                    idTo: element.troopOrTile.id,
                     type: element.type
                 })
             ) {
+                state.idAttackTo = element.troopOrTile.id
                 API.changeArrowDirection({
                     idArrow: ARROW_ATTACK_ID,
                     x: element.troopOrTile.x,
                     z: element.troopOrTile.z,
-                    status: ARROW_STATUS.COMPLETED
+                    status: ARROW_STATUS.NORMAL
                 })
-            } else
+            } else {
                 API.changeArrowDirection({
                     idArrow: ARROW_ATTACK_ID,
                     x,
                     z,
                     status: ARROW_STATUS.INCORRECT
                 })
+            }
         }
     }
     return state.preparingAttack === false
@@ -166,12 +175,20 @@ function onAnimationFrame(time) {
 onAnimationFrame()
 
 // EXTERNAL API CALLS (DOP)
-function shallWeStartAttack({ id, type }) {
-    console.log(state)
+function shallWeStartAttack({ idFrom, type }) {
+    // console.log('shallWeStartAttack', { idFrom }, type === ELEMENT_TYPE.VILLAGE)
     return type === ELEMENT_TYPE.VILLAGE
 }
-function shallWeAttack({ id, type }) {
-    return type === ELEMENT_TYPE.COTTAGE
+function shallWeAttack({ idFrom, idTo, type }) {
+    // console.log(
+    //     'shallWeAttack',
+    //     { idFrom, idTo },
+    //     type === ELEMENT_TYPE.COTTAGE
+    // )
+    return type === ELEMENT_TYPE.COTTAGE // && idFrom !== idTo
+}
+function onAttack({ idFrom, idTo }) {
+    console.log({ idFrom, idTo })
 }
 function onSelect(id) {
     log.innerHTML = id // REMOVE THIS

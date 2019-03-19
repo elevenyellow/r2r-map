@@ -6,7 +6,7 @@ import {
     createOwnerUiElement,
     createRecruitmentPowerUiElement
 } from '../ui'
-import { createBuildingSprite } from '../three/scenario'
+import { createBuildingSprite } from '../three/'
 import { worldToScreen } from '../three/utils'
 import { GENERAL } from '../config/parameters'
 import { RECRUITMENT_POWER_UI_ELEMENT } from '../config/ui'

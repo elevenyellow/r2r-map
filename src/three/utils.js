@@ -1,5 +1,10 @@
 import * as THREE from 'three'
 import { randomInt } from '../utils/index'
+import TWEEN from '@tweenjs/tween.js'
+import SVGLoader from './SVGLoader'
+
+export const textureLoader = new THREE.TextureLoader()
+export const svgLoader = new SVGLoader()
 
 // https://stackoverflow.com/questions/27409074/converting-3d-position-to-2d-screen-position-r69
 export function worldToScreen({ x, y, z, camera, canvasWidth, canvasHeight }) {

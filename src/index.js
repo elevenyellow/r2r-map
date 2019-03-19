@@ -1,5 +1,4 @@
-import { createTerrain } from './three/scenario'
-import { createThreeWorld } from './three/'
+import { createThreeWorld, createTerrain } from './three/'
 import createApi from './api'
 import OTHERS from './config/sprites/others'
 import { GENERAL } from './config/parameters'
@@ -106,8 +105,13 @@ function onChangePan(e) {
     return idArrow === undefined
 }
 
-function onChangeZoom(e, zoom) {
-    if (typeof state == 'undefined' || state.arrowAttack === undefined) {
+function onChangeZoom(e, zoom, oldZoom) {
+    // console.log(state, zoom, oldZoom)
+    if (
+        // zoom !== oldZoom ||
+        typeof state == 'undefined' ||
+        state.arrowAttack === undefined
+    ) {
         if (API !== undefined) {
             API.updateZoom({ zoom })
         }

@@ -1,7 +1,6 @@
 import * as THREE from 'three'
 import { createSmartDiv, createTroopsUnitsUiElement } from '../ui'
-import { createTroopsSprite } from '../three/scenario'
-import { worldToScreen } from '../three/utils'
+import { worldToScreen, textureLoader } from '../three/utils'
 import { GENERAL } from '../config/parameters'
 import { TROOPS_UNITS_UI_ELEMENT } from '../config/ui'
 import { ELEMENT_TYPE } from '../const'
@@ -62,4 +61,17 @@ export default function createTroopsFactory({ ui, sceneSprites, camera }) {
 
         return troops
     }
+}
+
+export function createTroopsSprite({ scene, spriteConf, fromX, fromZ }) {
+    const textureLoaded = textureLoader.load(spriteConf.url)
+    const material = new THREE.SpriteMaterial({
+        map: textureLoaded
+    })
+    const sprite = new THREE.Sprite(material)
+    sprite.scale.set(spriteConf.scale.x, spriteConf.scale.y, spriteConf.scale.z)
+    sprite.position.x = fromX
+    sprite.position.z = fromZ
+    scene.add(sprite)
+    return sprite
 }

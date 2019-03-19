@@ -5,7 +5,7 @@ import { GENERAL } from './config/parameters'
 import { DOM } from './config/ui'
 import TWEEN from '@tweenjs/tween.js'
 import * as THREE from 'three'
-import { ELEMENT_TYPE } from './const'
+import { ELEMENT_TYPE, ARROW_ATTACK } from './const'
 import { getMousePositionFromD3Event } from './utils'
 
 // GETTING DOM
@@ -38,21 +38,27 @@ const terrain = createTerrain({
     url: OTHERS.TERRAIN.url
 })
 
-function getInteractiveElementByMouseEvent({ mouseX, mouseY }) {
-    const { x, z } = API.getWorldPositionFromMouse({
-        mouseX,
-        mouseY,
-        camera,
-        canvasWidth: window.innerWidth,
-        canvasHeight: window.innerHeight,
-        objects: [terrain]
-    })
-    const element = API.selectInteractiveSprite({
-        x,
-        z
-    })
-    return { element, x, z }
+// CREATING AND EXPOSING API
+const API = createApi({
+    ui,
+    camera,
+    sceneSprites,
+    sceneTerrain,
+    hexagonSize: GENERAL.HEXAGON_SIZE,
+    initialZoom: state.zoom
+})
+if (typeof window != 'undefined') {
+    window.API = API
 }
+
+// Capturing when user select a tile or troops
+canvas.addEventListener('click', e => {
+    const { element } = getInteractiveElementByMouseEvent({
+        mouseX: e.clientX,
+        mouseY: e.clientY
+    })
+    element ? onSelect(element.troopOrTile.id) : onUnselect()
+})
 
 // EVENTS FUNCTIONS
 function onStart(e) {
@@ -65,9 +71,9 @@ function onStart(e) {
                 mouseY
             })
             if (element && element.type === ELEMENT_TYPE.TILE) {
-                state.arrowAttack = 'ARROWATTACK'
+                state.preparingAttack = true
                 API.createArrow({
-                    id: state.arrowAttack,
+                    id: ARROW_ATTACK,
                     idTileFrom: element.troopOrTile.id
                 })
             }
@@ -76,18 +82,17 @@ function onStart(e) {
 }
 
 function onEnd(e) {
-    if (state && state.arrowAttack) {
-        API.removeArrow({ idArrow: state.arrowAttack })
-        delete state.arrowAttack
+    if (state && state.preparingAttack) {
+        API.removeArrow({ idArrow: ARROW_ATTACK })
+        state.preparingAttack = false
     }
     // console.log('onEnd')
 }
 
 function onChangePan(e) {
-    const idArrow = state.arrowAttack
     if (API !== undefined) {
         onUnselect()
-        if (idArrow) {
+        if (state.preparingAttack) {
             const { mouseX, mouseY } = getMousePositionFromD3Event(event)
             const { element, x, z } = getInteractiveElementByMouseEvent({
                 mouseX,
@@ -95,14 +100,14 @@ function onChangePan(e) {
             })
             if (element && element.type === ELEMENT_TYPE.TILE)
                 API.changeArrowDirection({
-                    idArrow,
+                    idArrow: ARROW_ATTACK,
                     x: element.troopOrTile.x,
                     z: element.troopOrTile.z
                 })
-            else API.changeArrowDirection({ idArrow, x, z })
+            else API.changeArrowDirection({ idArrow: ARROW_ATTACK, x, z })
         }
     }
-    return idArrow === undefined
+    return state.preparingAttack === false
 }
 
 function onChangeZoom(e, zoom, oldZoom) {
@@ -110,7 +115,7 @@ function onChangeZoom(e, zoom, oldZoom) {
     if (
         // zoom !== oldZoom ||
         typeof state == 'undefined' ||
-        state.arrowAttack === undefined
+        state.preparingAttack === false
     ) {
         if (API !== undefined) {
             API.updateZoom({ zoom })
@@ -141,27 +146,8 @@ function onAnimationFrame(time) {
 }
 onAnimationFrame()
 
-// CREATING AND EXPOSING API
-const API = createApi({
-    ui,
-    camera,
-    sceneSprites,
-    sceneTerrain,
-    hexagonSize: GENERAL.HEXAGON_SIZE,
-    initialZoom: state.zoom
-})
-if (typeof window != 'undefined') {
-    window.API = API
-}
-
-// Capturing when user select a tile or troops
-canvas.addEventListener('click', e => {
-    const { element } = getInteractiveElementByMouseEvent({
-        mouseX: e.clientX,
-        mouseY: e.clientY
-    })
-    element ? onSelect(element.troopOrTile.id) : onUnselect()
-})
+// EXTERNAL API CALLS (DOP)
+function onStartDrag() {}
 
 function onSelect(id) {
     log.innerHTML = id // REMOVE THIS
@@ -169,6 +155,23 @@ function onSelect(id) {
 
 function onUnselect() {
     log.innerHTML = '' // REMOVE THIS
+}
+
+// UTILS
+function getInteractiveElementByMouseEvent({ mouseX, mouseY }) {
+    const { x, z } = API.getWorldPositionFromMouse({
+        mouseX,
+        mouseY,
+        camera,
+        canvasWidth: window.innerWidth,
+        canvasHeight: window.innerHeight,
+        objects: [terrain]
+    })
+    const element = API.selectInteractiveSprite({
+        x,
+        z
+    })
+    return { element, x, z }
 }
 
 // EXAMPLE USING API

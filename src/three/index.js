@@ -10,7 +10,7 @@ export function createThreeWorld({
     onChangePan,
     onEnd
 }) {
-    const state = {}
+    const state = { preparingAttack: false }
     const canvasWidth = window.innerWidth
     const canvasHeight = window.innerHeight
     const sceneTerrain = new THREE.Scene()

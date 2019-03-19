@@ -9,3 +9,5 @@ export const ELEMENT_TYPE = {
     TROOPS: 'TROOPS',
     ARROW: 'ARROW'
 }
+
+export const ARROW_ATTACK = 'ARROW_ATTACK'

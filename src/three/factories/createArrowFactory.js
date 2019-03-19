@@ -27,7 +27,10 @@ export default function createArrowFactory({ ui, scene, camera }) {
                 // material3.color = new THREE.Color(0xffffff)
                 // material3.opacity = new THREE.Color(0.7)
 
-                if (status === ARROW_STATUS.INCORRECT) {
+                if (
+                    arrow.children.length > 0 &&
+                    status === ARROW_STATUS.INCORRECT
+                ) {
                     // arrow.children[0].material.color = new THREE.Color(0xffffff)
                     arrow.children[0].material.opacity = 0.5
                 } else {

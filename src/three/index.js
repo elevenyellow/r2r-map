@@ -85,7 +85,6 @@ export function createThreeWorld({
 
 export function createTerrain({ renderer, scene, url }) {
     const geometry = new THREE.PlaneBufferGeometry(100, 100)
-    const maxAnisotropy = renderer.capabilities.getMaxAnisotropy()
     const textureLoaded = textureLoader.load(url)
     const material = new THREE.MeshBasicMaterial({
         color: 0xffffff,
@@ -93,7 +92,7 @@ export function createTerrain({ renderer, scene, url }) {
     })
     const mesh = new THREE.Mesh(geometry, material)
 
-    textureLoaded.anisotropy = maxAnisotropy
+    textureLoaded.anisotropy = renderer.capabilities.getMaxAnisotropy()
     textureLoaded.wrapS = textureLoaded.wrapT = THREE.RepeatWrapping
     textureLoaded.repeat.set(512, 512)
     mesh.position.y -= 0.5
@@ -108,9 +107,12 @@ export function createBuildingSprite({ scene, spriteConf, x, z }) {
     const textureLoaded = textureLoader.load(spriteConf.url)
     const material = new THREE.SpriteMaterial({
         map: textureLoaded
+        // sizeAttenuation: false
         // depthTest: false
     })
     const sprite = new THREE.Sprite(material)
+    material.map.minFilter = THREE.LinearFilter //THREE.LinearMipMapNearestFilter
+    // textureLoaded.anisotropy = window.renderer.capabilities.getMaxAnisotropy()
     sprite.scale.set(spriteConf.scale.x, spriteConf.scale.y, spriteConf.scale.z)
     sprite.position.x = x
     sprite.position.z = z
@@ -130,6 +132,7 @@ export function createDecorativeSprite({ scene, spriteConf, x, z }) {
         map: textureLoaded
     })
     const sprite = new THREE.Sprite(material)
+    material.map.minFilter = THREE.LinearMipMapLinearFilter
     sprite.scale.set(spriteConf.scale.x, spriteConf.scale.y, spriteConf.scale.z)
     sprite.position.y = spriteConf.scale.y / 2
     sprite.position.x = x

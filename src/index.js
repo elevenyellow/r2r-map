@@ -28,6 +28,8 @@ const {
     onEnd
 })
 
+// window.renderer = renderer
+
 // DISABLING ZOOM WHEN DOUBLE CLICK
 isoCamera.view.on('dblclick.zoom', null)
 
@@ -294,8 +296,6 @@ API.addOwnerAsPlayer({
 })
 API.changeRecruitmentPower({ idTile: cottagename, power: 95 })
 
-API.addDecorativeElements()
-
 let troops = 'troops'
 API.createTroops({ id: troops, fromTileId: 'cottage4', toTileId: 'cottage5' })
 API.changeTroopsUnits({ idTroops: troops, units: 200 })
@@ -318,6 +318,9 @@ const log = document.createElement('div')
 log.style.position = 'absolute'
 log.style.fontSize = '100px'
 ui.appendChild(log)
+
+API.addDecorativeElements()
+
 // EXAMPLE USING API
 // EXAMPLE USING API
 // EXAMPLE USING API

@@ -1,15 +1,15 @@
 {
     "VILLAGE": {
         "area": 6,
-        "uiOffsetX": 5,
-        "uiOffsetZ": 5,
+        "uiOffsetX": 6,
+        "uiOffsetZ": 6,
         "url": "assets/interactive/village.png",
         "scale": { "x": 8, "y": 8, "z": 8 }
     },
     "COTTAGE": {
         "area": 3,
-        "uiOffsetX": 3,
-        "uiOffsetZ": 3,
+        "uiOffsetX": 3.5,
+        "uiOffsetZ": 3.5,
         "url": "assets/interactive/cottage.png",
         "scale": { "x": 4, "y": 4, "z": 4 }
     },

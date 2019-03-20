@@ -54,14 +54,12 @@ export default function createApi({
         updatePan: ({ canvasWidth, canvasHeight }) => {
             tiles.forEach(tile =>
                 tile.updatePositionDiv({
-                    camera,
                     canvasWidth,
                     canvasHeight
                 })
             )
             troopss.forEach(troops =>
                 troops.updatePositionDiv({
-                    camera,
                     canvasWidth,
                     canvasHeight
                 })

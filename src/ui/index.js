@@ -3,10 +3,12 @@ export function createSmartDiv({ container, offsetX = 0, offsetY = 0 }) {
     const style = element.style
     style.position = 'absolute'
     // style.pointerEvents = 'auto'
+    // style.background = 'red'
     container.appendChild(element)
     return {
         element,
         move: ({ x, y }) => {
+            // console.log(element.offsetHeight, element.style.transform)
             const X = x - element.offsetWidth / 2 + offsetX
             const Y = y - element.offsetHeight / 2 + offsetY
             style.left = `${X}px`

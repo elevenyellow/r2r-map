@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { TROOPS } from '../config/sprites/interactive'
 import { getTileById } from './getters'
+import { GENERAL } from '../config/parameters'
 
 export default function createTroopsObject({
     createTroops,
@@ -31,13 +32,13 @@ export default function createTroopsObject({
         .clone()
         .sub(toVector)
         .normalize()
-        .multiplyScalar(-from.area)
+        .multiplyScalar(-from.area - GENERAL.OFFSET_BETWEEN_TROOPS_TILES)
         .add(fromVector)
     const toVectorReduced = toVector
         .clone()
         .sub(fromVector)
         .normalize()
-        .multiplyScalar(-to.area)
+        .multiplyScalar(-to.area - GENERAL.OFFSET_BETWEEN_TROOPS_TILES)
         .add(toVector)
     const diffX = toVectorReduced.x - fromVectorReduced.x
     const diffZ = toVectorReduced.y - fromVectorReduced.y

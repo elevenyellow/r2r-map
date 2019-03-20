@@ -249,7 +249,7 @@ API.addOwnerAsEnemy({
 // API.addOwnerAsEnemy({idTile:village1, idOwner:'ID4', name:'Roly', units:562})
 // API.addOwnerAsEnemy({idTile:village1, idOwner:'ID4', name:'Selo', units:315})
 // API.addOwnerAsEnemy({idTile:village1, idOwner:'ID4', name:'Pei', units:200})
-API.removeOwner({ idTile: village1, idOwner: 'ID3' })
+// API.removeOwner({ idTile: village1, idOwner: 'ID3' })
 
 const cottage1 = 'cottage1'
 API.createCottage({ id: cottage1, col: 0, row: 1 })

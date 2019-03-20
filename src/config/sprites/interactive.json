@@ -1,23 +1,23 @@
 {
     "VILLAGE": {
-        "area": 8,
+        "area": 6,
         "uiOffsetX": 5,
         "uiOffsetZ": 5,
         "url": "assets/interactive/village.png",
         "scale": { "x": 8, "y": 8, "z": 8 }
     },
     "COTTAGE": {
-        "area": 5,
+        "area": 3,
         "uiOffsetX": 3,
         "uiOffsetZ": 3,
         "url": "assets/interactive/cottage.png",
-        "scale": { "x": 1.5, "y": 1.5, "z": 1.5 }
+        "scale": { "x": 4, "y": 4, "z": 4 }
     },
     "TROOPS": {
         "area": 4,
         "uiOffsetX": 2,
         "uiOffsetZ": 2,
         "url": "assets/interactive/troops.png",
-        "scale": { "x": 1, "y": 1, "z": 1 }
+        "scale": { "x": 2, "y": 2, "z": 2 }
     }
 }

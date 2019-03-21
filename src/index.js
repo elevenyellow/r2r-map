@@ -28,8 +28,6 @@ const {
     onEnd
 })
 
-// window.renderer = renderer
-
 // DISABLING ZOOM WHEN DOUBLE CLICK
 isoCamera.view.on('dblclick.zoom', null)
 
@@ -128,6 +126,7 @@ function onChangePan(e) {
                     status: ARROW_STATUS.NORMAL
                 })
             } else {
+                state.idAttackTo = undefined
                 API.changeArrowDirection({
                     idArrow: ARROW_ATTACK_ID,
                     x,

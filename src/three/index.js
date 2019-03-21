@@ -83,6 +83,7 @@ export function createThreeWorld({
     }
 }
 
+// https://gamedev.stackexchange.com/questions/167762/how-to-avoid-the-cutoff-of-a-sprite-when-overlapping-in-a-terrain?noredirect=1#comment298081_167762
 export function createTerrain({ renderer, scene, url }) {
     const geometry = new THREE.PlaneBufferGeometry(100, 100)
     const textureLoaded = textureLoader.load(url)
@@ -102,17 +103,24 @@ export function createTerrain({ renderer, scene, url }) {
     return mesh
 }
 
-// https://gamedev.stackexchange.com/questions/167762/how-to-avoid-the-cutoff-of-a-sprite-when-overlapping-in-a-terrain?noredirect=1#comment298081_167762
 export function createBuildingSprite({ scene, spriteConf, x, z }) {
-    const textureLoaded = textureLoader.load(spriteConf.url)
+    // Loading body
     const material = new THREE.SpriteMaterial({
-        map: textureLoaded
-        // sizeAttenuation: false
-        // depthTest: false
+        map: textureLoader.load(spriteConf.url)
     })
-    const sprite = new THREE.Sprite(material)
+    const body = new THREE.Sprite(material)
     material.map.minFilter = THREE.LinearFilter //THREE.LinearMipMapNearestFilter
     // textureLoaded.anisotropy = window.renderer.capabilities.getMaxAnisotropy()
+
+    // Loading border
+    const materialBorder = new THREE.SpriteMaterial({
+        map: textureLoader.load(spriteConf.urlBorder)
+    })
+    const border = new THREE.Sprite(materialBorder)
+
+    const sprite = new THREE.Group()
+    sprite.add(body)
+    sprite.add(border)
     sprite.scale.set(spriteConf.scale.x, spriteConf.scale.y, spriteConf.scale.z)
     sprite.position.x = x
     sprite.position.z = z
@@ -123,13 +131,15 @@ export function createBuildingSprite({ scene, spriteConf, x, z }) {
     // helper.position.z = z
     // scene.add(helper)
 
-    return sprite
+    return { sprite, body, border }
 }
 
 export function createDecorativeSprite({ scene, spriteConf, x, z }) {
     const textureLoaded = textureLoader.load(spriteConf.url)
     const material = new THREE.SpriteMaterial({
         map: textureLoaded
+        // sizeAttenuation: false
+        // depthTest: false
     })
     const sprite = new THREE.Sprite(material)
     material.map.minFilter = THREE.LinearMipMapLinearFilter

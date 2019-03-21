@@ -11,6 +11,10 @@
         "url": "assets/decorative/tree3.png",
         "scale": { "x": 1.5, "y": 1.5, "z": 1.5 }
     },
+    "TREE3b": {
+        "url": "assets/decorative/tree3.png",
+        "scale": { "x": 1, "y": 1, "z": 1 }
+    },
     "TREE4": {
         "url": "assets/decorative/tree4.png",
         "scale": { "x": 1.25, "y": 1.25, "z": 1.25 }

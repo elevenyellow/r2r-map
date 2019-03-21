@@ -4,6 +4,7 @@
         "uiOffsetX": 5,
         "uiOffsetZ": 5,
         "url": "assets/interactive/village.png",
+        "urlBorder": "assets/interactive/village-border.png",
         "scale": { "x": 8, "y": 8, "z": 8 }
     },
     "COTTAGE": {
@@ -11,6 +12,7 @@
         "uiOffsetX": 3,
         "uiOffsetZ": 3,
         "url": "assets/interactive/cottage.png",
+        "urlBorder": "assets/interactive/cottage-border.png",
         "scale": { "x": 4, "y": 4, "z": 4 }
     },
     "TROOPS": {

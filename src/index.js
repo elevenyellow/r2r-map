@@ -8,6 +8,9 @@ import * as THREE from 'three'
 import { ELEMENT_TYPE, ARROW_ATTACK_ID, ARROW_STATUS } from './const'
 import { getMousePositionFromD3Event } from './utils'
 
+// STATE
+const state = { preparingAttack: false }
+
 // GETTING DOM
 const ui = document.getElementById(DOM.UI)
 const canvas = document.getElementById(DOM.CANVAS)
@@ -18,13 +21,11 @@ const {
     camera,
     sceneTerrain,
     sceneSprites,
-    isoCamera,
-    state
+    isoCamera
 } = createThreeWorld({
     canvas,
     onStart,
-    onChangeZoom,
-    onChangePan,
+    onChange,
     onEnd
 })
 
@@ -72,32 +73,31 @@ function onStart(e) {
             })
             if (element !== undefined) {
                 const idFrom = element.troopOrTile.id
-                if (shallWeStartAttack({ idFrom, type: element.type })) {
+                if (shallWeStartAttack({ idFrom })) {
+                    state.tilesHighLighting = getTilesToAttack({ idFrom })
                     state.preparingAttack = true
                     state.idAttackFrom = element.troopOrTile.id
                     API.createArrow({
                         id: ARROW_ATTACK_ID,
                         idTileFrom: element.troopOrTile.id
                     })
+                    state.tilesHighLighting.forEach(idTile =>
+                        API.startHighlight({ idTile })
+                    )
                 }
             }
         }
     }
 }
 
-function onEnd(e) {
-    if (state && state.preparingAttack) {
-        API.removeArrow({ idArrow: ARROW_ATTACK_ID })
-        const idFrom = state.idAttackFrom
-        const idTo = state.idAttackTo
-        state.idAttackFrom = undefined
-        state.idAttackTo = undefined
-        state.preparingAttack = false
-        if (idFrom !== undefined && idTo !== undefined) {
-            onAttack({ idFrom, idTo })
-        }
+function onChange(e) {
+    if (typeof onChangeZoom == 'function' && e.transform.k !== state.zoom) {
+        const oldZoom = state.zoom
+        state.zoom = e.transform.k
+        return onChangeZoom(e, state.zoom, oldZoom)
+    } else {
+        return onChangePan(e)
     }
-    // console.log('onEnd')
 }
 
 function onChangePan(e) {
@@ -114,8 +114,7 @@ function onChangePan(e) {
                 element !== undefined &&
                 shallWeAttack({
                     idFrom,
-                    idTo: element.troopOrTile.id,
-                    type: element.type
+                    idTo: element.troopOrTile.id
                 })
             ) {
                 state.idAttackTo = element.troopOrTile.id
@@ -154,6 +153,23 @@ function onChangeZoom(e, zoom, oldZoom) {
     return false
 }
 
+function onEnd(e) {
+    if (state && state.preparingAttack) {
+        API.removeArrow({ idArrow: ARROW_ATTACK_ID })
+        const idFrom = state.idAttackFrom
+        const idTo = state.idAttackTo
+        state.tilesHighLighting.forEach(idTile => API.stopHighlight({ idTile }))
+        state.tilesHighLighting = []
+        state.idAttackFrom = undefined
+        state.idAttackTo = undefined
+        state.preparingAttack = false
+        if (idFrom !== undefined && idTo !== undefined) {
+            onAttack({ idFrom, idTo })
+        }
+    }
+    // console.log('onEnd')
+}
+
 function onAnimationFrame(time) {
     // this.renderer.autoClear = true
     ;[sceneTerrain, sceneSprites].forEach(scene => {
@@ -176,17 +192,18 @@ function onAnimationFrame(time) {
 onAnimationFrame()
 
 // EXTERNAL API CALLS (DOP)
-function shallWeStartAttack({ idFrom, type }) {
-    // console.log('shallWeStartAttack', { idFrom }, type === ELEMENT_TYPE.VILLAGE)
-    return type === ELEMENT_TYPE.VILLAGE
+function shallWeStartAttack({ idFrom }) {
+    const found = API.getTiles().find(tile => tile.id === idFrom)
+    return found !== undefined && found.type === ELEMENT_TYPE.VILLAGE
 }
-function shallWeAttack({ idFrom, idTo, type }) {
-    // console.log(
-    //     'shallWeAttack',
-    //     { idFrom, idTo },
-    //     type === ELEMENT_TYPE.COTTAGE
-    // )
-    return type === ELEMENT_TYPE.COTTAGE // && idFrom !== idTo
+function shallWeAttack({ idFrom, idTo }) {
+    const found = API.getTiles().find(tile => tile.id === idTo)
+    return found !== undefined && found.type === ELEMENT_TYPE.COTTAGE
+}
+function getTilesToAttack({ idFrom }) {
+    return API.getTiles()
+        .filter(tile => tile.type === ELEMENT_TYPE.COTTAGE)
+        .map(tile => tile.id)
 }
 function onAttack({ idFrom, idTo }) {
     console.log({ idFrom, idTo })

@@ -3,14 +3,7 @@ import * as d3 from './d3'
 import ThreeIsoGameCamera from '/mnt/c/Users/enzo/drive/projects/three-iso-game-camera/'
 import { textureLoader } from './utils'
 
-export function createThreeWorld({
-    canvas,
-    onStart,
-    onChangeZoom,
-    onChangePan,
-    onEnd
-}) {
-    const state = { preparingAttack: false }
+export function createThreeWorld({ canvas, onStart, onChange, onEnd }) {
     const canvasWidth = window.innerWidth
     const canvasHeight = window.innerHeight
     const sceneTerrain = new THREE.Scene()
@@ -41,18 +34,7 @@ export function createThreeWorld({
         d3,
         onStart,
         onEnd,
-        onChange: e => {
-            if (
-                typeof onChangeZoom == 'function' &&
-                e.transform.k !== state.zoom
-            ) {
-                const oldZoom = state.zoom
-                state.zoom = e.transform.k
-                return onChangeZoom(e, state.zoom, oldZoom)
-            } else {
-                return onChangePan(e)
-            }
-        }
+        onChange
     })
 
     renderer.setPixelRatio(window.devicePixelRatio)
@@ -78,8 +60,7 @@ export function createThreeWorld({
         sceneTerrain,
         sceneSprites,
         camera,
-        isoCamera,
-        state
+        isoCamera
     }
 }
 

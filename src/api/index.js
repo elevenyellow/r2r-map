@@ -46,6 +46,9 @@ export default function createApi({
     })
 
     return {
+        getTiles: () => {
+            return tiles
+        },
         updateZoom: ({ zoom }) => {
             currentZoom = zoom
             tiles.forEach(tile => tile.updateScaleDiv(zoom, initialZoom))

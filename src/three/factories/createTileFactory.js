@@ -93,18 +93,20 @@ export default function createTileFactory({ ui, scene, camera }) {
             },
             startHighlight: () => {
                 if (tweenHighlight === undefined) {
-                    const color = { inc: 1 }
-                    tweenHighlight = new TWEEN.Tween(color)
-                        .to({ inc: 2 }, 1000) // Move to 10 in 1 second.
+                    border.visible = true
+                    tweenHighlight = new TWEEN.Tween({ opacity: 0.7 })
+                        .to({ opacity: 1 }, 500)
                         .easing(TWEEN.Easing.Quadratic.InOut)
                         .repeat(Infinity)
-                        // .delay(1000)
-                        .onUpdate(() => {
-                            sprite.material.color = new THREE.Color(
-                                color.inc,
-                                color.inc,
-                                color.inc
-                            )
+                        .yoyo(true)
+                        // .delay(500)
+                        .onUpdate(o => {
+                            border.material.opacity = o.opacity
+                            // body.material.color = new THREE.Color(
+                            //     o.opacity + 0.5,
+                            //     o.opacity + 0.5,
+                            //     o.opacity + 0.5
+                            // )
                         })
                         .start() // Start the tween immediately.
                 }
@@ -113,7 +115,8 @@ export default function createTileFactory({ ui, scene, camera }) {
                 if (tweenHighlight !== undefined) {
                     tweenHighlight.stop()
                     tweenHighlight = undefined
-                    sprite.material.color = new THREE.Color(1, 1, 1)
+                    border.visible = false
+                    // body.material.color = new THREE.Color(1, 1, 1)
                 }
             }
         }

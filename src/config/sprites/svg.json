@@ -2,14 +2,14 @@
     "ARROW": {
         "offsetX": 0,
         "offsetZ": 0.6,
-        "url": "assets/arrow.svg",
+        "url": "assets/svg/arrow.svg",
         "scale": { "x": 0.05, "y": 0.05, "z": 0.05 },
         "separation": 0.5
     },
     "CIRCLE": {
         "offsetX": -5.5,
         "offsetZ": 2.5,
-        "url": "assets/circle.svg",
+        "url": "assets/svg/circle.svg",
         "scale": { "x": 0.03, "y": 0.03, "z": 0.03 },
         "separation": 0.5
     }

@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { TROOPS } from '../config/sprites/interactive'
+import { TROOPS } from '../config/sprites/animated'
 import { getTileById } from './getters'
 import { GENERAL } from '../config/parameters'
 

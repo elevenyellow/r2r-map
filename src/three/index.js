@@ -97,6 +97,7 @@ export function createBuildingSprite({ scene, spriteConf, x, z }) {
     const materialBorder = new THREE.SpriteMaterial({
         map: textureLoader.load(spriteConf.urlBorder)
     })
+    materialBorder.map.minFilter = THREE.LinearFilter //THREE.LinearMipMapNearestFilter
     const border = new THREE.Sprite(materialBorder)
 
     const sprite = new THREE.Group()

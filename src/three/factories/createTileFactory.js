@@ -1,7 +1,6 @@
 import TWEEN from '@tweenjs/tween.js'
 import * as THREE from 'three'
-import { CIRCLE } from '../../config/sprites/indicator'
-
+// import { CIRCLE } from '../../config/sprites/svg'
 import {
     createSmartDiv,
     createOwnerUiElement,
@@ -15,7 +14,7 @@ import { svgLoader } from '../utils'
 
 export default function createTileFactory({ ui, scene, camera }) {
     return ({ id, area, x, z, spriteConf, type }) => {
-        let tweenHighlight
+        let tweenBorder
         const owners = {}
         const div = createSmartDiv({ container: ui })
         const { sprite, body, border } = createBuildingSprite({
@@ -92,10 +91,12 @@ export default function createTileFactory({ ui, scene, camera }) {
                 owner.changeOwner(className)
             },
             startHighlight: () => {
-                if (tweenHighlight === undefined) {
+                if (tweenBorder === undefined) {
                     border.visible = true
-                    tweenHighlight = new TWEEN.Tween({ opacity: 0.7 })
-                        .to({ opacity: 1 }, 500)
+                    tweenBorder = new TWEEN.Tween({
+                        opacity: GENERAL.BORDER_TILE_MINIMUN_OPACITY
+                    })
+                        .to({ opacity: 1 }, GENERAL.BORDER_TILE_ANIMATION_TIME)
                         .easing(TWEEN.Easing.Quadratic.InOut)
                         .repeat(Infinity)
                         .yoyo(true)
@@ -112,9 +113,9 @@ export default function createTileFactory({ ui, scene, camera }) {
                 }
             },
             stopHighlight: () => {
-                if (tweenHighlight !== undefined) {
-                    tweenHighlight.stop()
-                    tweenHighlight = undefined
+                if (tweenBorder !== undefined) {
+                    tweenBorder.stop()
+                    tweenBorder = undefined
                     border.visible = false
                     // body.material.color = new THREE.Color(1, 1, 1)
                 }

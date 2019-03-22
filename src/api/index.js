@@ -9,11 +9,11 @@ import { screenToWorld } from '../three/utils'
 import createTileFactory from '../three/factories/createTileFactory'
 import createTroopsFactory from '../three/factories/createTroopsFactory'
 import createArrowFactory from '../three/factories/createArrowFactory'
-import { createDecorativeSprite } from '../three'
+import { createSpriteDecorative } from '../three'
 import { generateRandomDecorativeSprites } from '../three/utils'
-import createTileObject from './createTileObject'
-import createTroopsObject from './createTroopsObject'
+import createTroops from './createTroops'
 import { getTileById, getTroopsById, getArrowById } from './getters'
+import { getPositionByCordinate } from '../utils/hexagons'
 
 export default function createApi({
     ui,
@@ -24,22 +24,22 @@ export default function createApi({
     initialZoom
 }) {
     // STATE
-    let currentZoom = initialZoom
+    const state = { currentZoom: initialZoom }
     const tiles = []
     const troopss = []
     const arrows = []
-    const createTile = createTileFactory({
+    const createTileSprite = createTileFactory({
         ui,
         camera,
         scene: sceneSprites
     })
-    const createTroops = createTroopsFactory({
+    const createTroopsSprite = createTroopsFactory({
         ui,
         camera,
         sceneSprites,
         sceneTerrain
     })
-    const createArrow = createArrowFactory({
+    const createArrowSprite = createArrowFactory({
         ui,
         camera,
         scene: sceneTerrain
@@ -50,7 +50,7 @@ export default function createApi({
             return tiles
         },
         updateZoom: ({ zoom }) => {
-            currentZoom = zoom
+            state.currentZoom = zoom
             tiles.forEach(tile => tile.updateScaleDiv(zoom, initialZoom))
             troopss.forEach(troops => troops.updateScaleDiv(zoom, initialZoom))
         },
@@ -69,52 +69,57 @@ export default function createApi({
             )
         },
         createVillage: ({ id, col, row }) => {
-            const tile = createTileObject({
-                id,
-                createTile,
+            const [x, z] = getPositionByCordinate({
                 col,
                 row,
-                spriteConf: VILLAGE,
-                type: ELEMENT_TYPE.VILLAGE,
-                tiles,
-                hexagonSize
+                size: hexagonSize
             })
-            tile.updateScaleDiv(currentZoom, initialZoom)
+            const tile = createTileSprite({
+                id,
+                x,
+                z,
+                area: VILLAGE.area,
+                spriteConf: VILLAGE,
+                type: ELEMENT_TYPE.VILLAGE
+            })
+            tile.updateScaleDiv(state.currentZoom, initialZoom)
             tiles.push(tile)
             return tile
         },
         createCottage: ({ id, col, row }) => {
-            const tile = createTileObject({
-                id,
-                createTile,
+            const [x, z] = getPositionByCordinate({
                 col,
                 row,
-                spriteConf: COTTAGE,
-                type: ELEMENT_TYPE.COTTAGE,
-                tiles,
-                hexagonSize
+                size: hexagonSize
             })
-            tile.updateScaleDiv(currentZoom, initialZoom)
+            const tile = createTileSprite({
+                id,
+                x,
+                z,
+                area: COTTAGE.area,
+                spriteConf: COTTAGE,
+                type: ELEMENT_TYPE.COTTAGE
+            })
+            tile.updateScaleDiv(state.currentZoom, initialZoom)
             tiles.push(tile)
             return tile
         },
         createTroops: ({ id, fromTileId, toTileId }) => {
-            const troops = createTroopsObject({
-                createTroops,
+            return createTroops({
+                createTroopsSprite,
                 troopss,
                 tiles,
                 id,
                 spriteConf: TROOPS,
                 fromTileId,
-                toTileId
+                toTileId,
+                currentZoom: state.currentZoom,
+                initialZoom
             })
-            troops.updateScaleDiv(currentZoom, initialZoom)
-            troopss.push(troops)
-            return troops
         },
         createArrow: ({ id, idTileFrom }) => {
             const tile = getTileById({ tiles, idTile: idTileFrom })
-            const arrow = createArrow({
+            const arrow = createArrowSprite({
                 id,
                 fromX: tile.x,
                 fromZ: tile.z
@@ -236,7 +241,7 @@ export default function createApi({
             const options = Object.assign({}, { ignoreAreas }, DECORATIVE_ITEMS)
             const sprites = generateRandomDecorativeSprites(options)
             sprites.forEach(sprite => {
-                createDecorativeSprite({
+                createSpriteDecorative({
                     scene: sceneSprites,
                     x: sprite.x,
                     z: sprite.z,

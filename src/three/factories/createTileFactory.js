@@ -6,7 +6,7 @@ import {
     createOwnerUiElement,
     createRecruitmentPowerUiElement
 } from '../../ui'
-import { createBuildingSprite } from '../'
+import { createSpriteBorder } from '../'
 import { worldToScreen } from '../utils'
 import { GENERAL } from '../../config/parameters'
 import { RECRUITMENT_POWER_UI_ELEMENT } from '../../config/ui'
@@ -17,7 +17,7 @@ export default function createTileFactory({ ui, scene, camera }) {
         let tweenBorder
         const owners = {}
         const div = createSmartDiv({ container: ui })
-        const { sprite, body, border } = createBuildingSprite({
+        const { sprite, body, border } = createSpriteBorder({
             scene,
             x,
             z,

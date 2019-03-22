@@ -3,13 +3,16 @@ import { TROOPS } from '../config/sprites/animated'
 import { getTileById } from './getters'
 import { GENERAL } from '../config/parameters'
 
-export default function createTroopsObject({
-    createTroops,
+export default function createTroops({
+    createTroopsSprite,
+    troopss,
     tiles,
     id,
     spriteConf,
     fromTileId,
-    toTileId
+    toTileId,
+    currentZoom,
+    initialZoom
 }) {
     const from = getTileById({ tiles, idTile: fromTileId })
     const to = getTileById({ tiles, idTile: toTileId })
@@ -17,7 +20,7 @@ export default function createTroopsObject({
     const fromZ = from.z
     const toX = to.x
     const toZ = to.z
-    const troops = createTroops({
+    const troops = createTroopsSprite({
         id,
         fromX,
         fromZ,
@@ -58,5 +61,7 @@ export default function createTroopsObject({
     troops.fromZ = fromVectorReduced.y
     troops.area = spriteConf.area
 
+    troops.updateScaleDiv(currentZoom, initialZoom)
+    troopss.push(troops)
     return troops
 }

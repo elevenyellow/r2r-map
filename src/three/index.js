@@ -84,7 +84,7 @@ export function createTerrain({ renderer, scene, url }) {
     return mesh
 }
 
-export function createBuildingSprite({ scene, spriteConf, x, z }) {
+export function createSpriteBorder({ scene, spriteConf, x, z }) {
     // Loading body
     const material = new THREE.SpriteMaterial({
         map: textureLoader.load(spriteConf.url)
@@ -116,7 +116,7 @@ export function createBuildingSprite({ scene, spriteConf, x, z }) {
     return { sprite, body, border }
 }
 
-export function createDecorativeSprite({ scene, spriteConf, x, z }) {
+export function createSpriteDecorative({ scene, spriteConf, x, z }) {
     const textureLoaded = textureLoader.load(spriteConf.url)
     const material = new THREE.SpriteMaterial({
         map: textureLoaded

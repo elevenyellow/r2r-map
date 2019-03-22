@@ -2,10 +2,9 @@ import { createThreeWorld, createTerrain } from './three/'
 import createApi from './api'
 import OTHERS from './config/sprites/others'
 import { GENERAL } from './config/parameters'
-import { DOM } from './config/ui'
 import TWEEN from '@tweenjs/tween.js'
 import * as THREE from 'three'
-import { ELEMENT_TYPE, ARROW_ATTACK_ID, ARROW_STATUS } from './const'
+import { ELEMENT_TYPE, ARROW_ATTACK_ID, ARROW_STATUS, DOM } from './const'
 import { getMousePositionFromD3Event } from './utils'
 
 // STATE

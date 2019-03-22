@@ -17,3 +17,11 @@ export const ARROW_STATUS = {
     NORMAL: 'NORMAL',
     INCORRECT: 'INCORRECT'
 }
+
+export const DOM = {
+    UI: 'ui',
+    CANVAS: 'canvas'
+}
+
+export const RECRUITMENT_POWER_UI_ELEMENT = 'recruitmentPower'
+export const TROOPS_UNITS_UI_ELEMENT = 'troopsUnits'

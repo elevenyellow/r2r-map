@@ -4,7 +4,6 @@ import { VILLAGE, COTTAGE, TROOPS } from '../config/sprites/animated'
 // import { ARROW } from '../config/sprites/svg'
 import { DECORATIVE_ITEMS } from '../config/parameters'
 import DECORATIVE from '../config/sprites/decorative'
-import { TILE_OWNER_CLASSES } from '../config/ui'
 import { screenToWorld } from '../three/utils'
 import createTileFactory from '../three/factories/createTileFactory'
 import createTroopsFactory from '../three/factories/createTroopsFactory'
@@ -14,6 +13,12 @@ import { generateRandomDecorativeSprites } from '../three/utils'
 import createTroops from './createTroops'
 import { getTileById, getTroopsById, getArrowById } from './getters'
 import { getPositionByCordinate } from '../utils/hexagons'
+
+export const TILE_OWNER_CLASSES = {
+    [OWNER.NEUTRAL]: 'tileOwner neutral',
+    [OWNER.PLAYER]: 'tileOwner player',
+    [OWNER.ENEMY]: 'tileOwner enemy'
+}
 
 export default function createApi({
     ui,
@@ -110,7 +115,6 @@ export default function createApi({
                 troopss,
                 tiles,
                 id,
-                spriteConf: TROOPS,
                 fromTileId,
                 toTileId,
                 currentZoom: state.currentZoom,

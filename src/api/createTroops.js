@@ -8,7 +8,6 @@ export default function createTroops({
     troopss,
     tiles,
     id,
-    spriteConf,
     fromTileId,
     toTileId,
     currentZoom,
@@ -59,7 +58,7 @@ export default function createTroops({
     troops.diffZ = diffZ
     troops.fromX = fromVectorReduced.x
     troops.fromZ = fromVectorReduced.y
-    troops.area = spriteConf.area
+    troops.area = TROOPS.area
 
     troops.updateScaleDiv(currentZoom, initialZoom)
     troopss.push(troops)

@@ -9,7 +9,7 @@ import {
 import { createSpriteBorder } from '../'
 import { worldToScreen } from '../utils'
 import { GENERAL } from '../../config/parameters'
-import { RECRUITMENT_POWER_UI_ELEMENT } from '../../config/ui'
+import { RECRUITMENT_POWER_UI_ELEMENT } from '../../const'
 import { svgLoader } from '../utils'
 
 export default function createTileFactory({ ui, scene, camera }) {

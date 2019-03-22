@@ -10,24 +10,30 @@ import createSpriteBorder from './createSpriteBorder'
 import { worldToScreen } from './utils'
 import { GENERAL } from '../config/parameters'
 import { RECRUITMENT_POWER_UI_ELEMENT } from '../const'
+import { ARROW } from '../config/sprites/others'
 
 export default function createTileFactory({ ui, scene, camera }) {
     return ({ id, area, x, z, spriteConf, type }) => {
         let tweenBorder
         const owners = {}
         const div = createSmartDiv({ container: ui })
-        const sprite = new THREE.Group()
-        const houses = createSpriteBorder(spriteConf)
-        houses.border.visible = false
-        sprite.position.x = x
-        sprite.position.z = z
-        sprite.add(houses.sprite)
-        scene.add(sprite)
-
         const recruitmentPower = createRecruitmentPowerUiElement({
             className: RECRUITMENT_POWER_UI_ELEMENT
         })
         div.element.appendChild(recruitmentPower.element)
+
+        const houses = createSpriteBorder(spriteConf)
+        houses.border.visible = false
+
+        const arrow = createSpriteBorder(ARROW)
+        arrow.sprite.visible = false
+
+        const sprite = new THREE.Group()
+        sprite.position.x = x
+        sprite.position.z = z
+        sprite.add(houses.sprite)
+        sprite.add(arrow.sprite)
+        scene.add(sprite)
 
         // const { circle } = createCircleHighlight()
         // circle.position.x = x
@@ -96,33 +102,48 @@ export default function createTileFactory({ ui, scene, camera }) {
             },
             startHighlight: () => {
                 if (tweenBorder === undefined) {
+                    arrow.sprite.visible = true
                     houses.border.visible = true
                     tweenBorder = new TWEEN.Tween({
-                        opacity: GENERAL.BORDER_TILE_MINIMUN_OPACITY
+                        opacity: GENERAL.BORDER_TILE_MINIMUN_OPACITY,
+                        arrowPositionY: GENERAL.ARROW_TILE_POSITION_Y_ORIGIN
                     })
-                        .to({ opacity: 1 }, GENERAL.BORDER_TILE_ANIMATION_TIME)
+                        .to(
+                            {
+                                opacity: 1,
+                                arrowPositionY:
+                                    GENERAL.ARROW_TILE_POSITION_Y_DESTINY
+                            },
+                            GENERAL.BORDER_TILE_ANIMATION_TIME
+                        )
                         .easing(TWEEN.Easing.Quadratic.InOut)
                         .repeat(Infinity)
                         .yoyo(true)
                         // .delay(500)
                         .onUpdate(o => {
                             houses.border.material.opacity = o.opacity
-                            // body.material.color = new THREE.Color(
-                            //     o.opacity + 0.5,
-                            //     o.opacity + 0.5,
-                            //     o.opacity + 0.5
-                            // )
+                            arrow.sprite.position.y = o.arrowPositionY
                         })
-                        .start() // Start the tween immediately.
+                        .start()
                 }
             },
             stopHighlight: () => {
                 if (tweenBorder !== undefined) {
                     tweenBorder.stop()
                     tweenBorder = undefined
-                    houses.border.visible = false
-                    // body.material.color = new THREE.Color(1, 1, 1)
                 }
+                arrow.sprite.visible = false
+                houses.border.visible = false
+                houses.border.material.color = new THREE.Color(1, 1, 1)
+                arrow.body.material.color = new THREE.Color(1, 1, 1)
+                arrow.border.material.color = new THREE.Color(1, 1, 1)
+            },
+            highLightRed: () => {
+                arrow.sprite.visible = true
+                houses.border.visible = true
+                houses.border.material.color = new THREE.Color(0xe13416)
+                arrow.body.material.color = new THREE.Color(0xe13416)
+                arrow.border.material.color = new THREE.Color(0xe13416)
             }
         }
     }

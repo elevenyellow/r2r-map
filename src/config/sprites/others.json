@@ -1,5 +1,10 @@
 {
     "TERRAIN": {
         "url": "assets/decorative/terrain.png"
+    },
+    "ARROW": {
+        "url": "assets/animated/arrow.png",
+        "urlBorder": "assets/animated/arrow-border.png",
+        "scale": { "x": 2.5, "y": 2.5, "z": 2.5 }
     }
 }

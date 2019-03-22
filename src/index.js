@@ -4,7 +4,7 @@ import createApi from './api'
 import OTHERS from './config/sprites/others'
 import { GENERAL } from './config/parameters'
 import TWEEN from '@tweenjs/tween.js'
-import { ELEMENT_TYPE, ARROW_ATTACK_ID, ARROW_STATUS, DOM } from './const'
+import { ELEMENT_TYPE, LINE_ATTACK_ID, LINE_STATUS, DOM } from './const'
 import { getMousePositionFromD3Event } from './utils'
 
 // STATE
@@ -76,8 +76,8 @@ function onStart(e) {
                     state.tilesHighLighting = getTilesToAttack({ idFrom })
                     state.preparingAttack = true
                     state.idAttackFrom = element.troopOrTile.id
-                    API.createArrow({
-                        id: ARROW_ATTACK_ID,
+                    API.createLine({
+                        id: LINE_ATTACK_ID,
                         idTileFrom: element.troopOrTile.id
                     })
                     state.tilesHighLighting.forEach(idTile =>
@@ -117,19 +117,19 @@ function onChangePan(e) {
                 })
             ) {
                 state.idAttackTo = element.troopOrTile.id
-                API.changeArrowDirection({
-                    idArrow: ARROW_ATTACK_ID,
+                API.changeLineDirection({
+                    idLine: LINE_ATTACK_ID,
                     x: element.troopOrTile.x,
                     z: element.troopOrTile.z,
-                    status: ARROW_STATUS.NORMAL
+                    status: LINE_STATUS.NORMAL
                 })
             } else {
                 state.idAttackTo = undefined
-                API.changeArrowDirection({
-                    idArrow: ARROW_ATTACK_ID,
+                API.changeLineDirection({
+                    idLine: LINE_ATTACK_ID,
                     x,
                     z,
-                    status: ARROW_STATUS.INCORRECT
+                    status: LINE_STATUS.INCORRECT
                 })
             }
         }
@@ -154,7 +154,7 @@ function onChangeZoom(e, zoom, oldZoom) {
 
 function onEnd(e) {
     if (state && state.preparingAttack) {
-        API.removeArrow({ idArrow: ARROW_ATTACK_ID })
+        API.removeLine({ idLine: LINE_ATTACK_ID })
         const idFrom = state.idAttackFrom
         const idTo = state.idAttackTo
         state.tilesHighLighting.forEach(idTile => API.stopHighlight({ idTile }))

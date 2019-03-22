@@ -8,12 +8,12 @@ export const ELEMENT_TYPE = {
     VILLAGE: 'VILLAGE',
     COTTAGE: 'COTTAGE',
     TROOPS: 'TROOPS',
-    ARROW: 'ARROW'
+    LINE: 'LINE'
 }
 
-export const ARROW_ATTACK_ID = 'ARROW_ATTACK_ID'
+export const LINE_ATTACK_ID = 'LINE_ATTACK_ID'
 
-export const ARROW_STATUS = {
+export const LINE_STATUS = {
     NORMAL: 'NORMAL',
     INCORRECT: 'INCORRECT'
 }

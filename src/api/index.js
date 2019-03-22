@@ -1,17 +1,17 @@
 import * as THREE from 'three'
 import { OWNER, ELEMENT_TYPE } from '../const'
 import { VILLAGE, COTTAGE, TROOPS } from '../config/sprites/animated'
-// import { ARROW } from '../config/sprites/svg'
+// import { LINE } from '../config/sprites/svg'
 import { DECORATIVE_ITEMS } from '../config/parameters'
 import DECORATIVE from '../config/sprites/decorative'
 import { screenToWorld } from '../three/utils'
 import createTileFactory from '../three/createTileFactory'
 import createTroopsFactory from '../three/createTroopsFactory'
-import createArrowFactory from '../three/createArrowFactory'
+import createLineFactory from '../three/createLineFactory'
 import createSpriteDecorative from '../three/createSpriteDecorative'
 import { generateRandomDecorativeSprites } from '../three/utils'
 import createTroops from './createTroops'
-import { getTileById, getTroopsById, getArrowById } from './getters'
+import { getTileById, getTroopsById, getLineById } from './getters'
 import { getPositionByCordinate } from '../utils/hexagons'
 
 export const TILE_OWNER_CLASSES = {
@@ -32,7 +32,7 @@ export default function createApi({
     const state = { currentZoom: initialZoom }
     const tiles = []
     const troopss = []
-    const arrows = []
+    const lines = []
     const createTileSprite = createTileFactory({
         ui,
         camera,
@@ -44,7 +44,7 @@ export default function createApi({
         sceneSprites,
         sceneTerrain
     })
-    const createArrowSprite = createArrowFactory({
+    const createLineSprite = createLineFactory({
         ui,
         camera,
         scene: sceneTerrain
@@ -121,25 +121,25 @@ export default function createApi({
                 initialZoom
             })
         },
-        createArrow: ({ id, idTileFrom }) => {
+        createLine: ({ id, idTileFrom }) => {
             const tile = getTileById({ tiles, idTile: idTileFrom })
-            const arrow = createArrowSprite({
+            const line = createLineSprite({
                 id,
                 fromX: tile.x,
                 fromZ: tile.z
             })
-            arrows.push(arrow)
-            return arrow
+            lines.push(line)
+            return line
         },
-        changeArrowDirection: ({ idArrow, x, z, status }) => {
-            const arrow = getArrowById({ arrows, idArrow })
-            arrow.changeDirection({ toX: x, toZ: z, status })
+        changeLineDirection: ({ idLine, x, z, status }) => {
+            const line = getLineById({ lines, idLine })
+            line.changeDirection({ toX: x, toZ: z, status })
         },
-        removeArrow: ({ idArrow }) => {
-            const arrow = getArrowById({ arrows, idArrow })
-            const index = arrows.indexOf(arrow)
-            arrows.splice(index, 1)
-            arrow.destroy()
+        removeLine: ({ idLine }) => {
+            const line = getLineById({ lines, idLine })
+            const index = lines.indexOf(line)
+            lines.splice(index, 1)
+            line.destroy()
         },
         changeRecruitmentPower: ({ idTile, power }) => {
             const tile = getTileById({ tiles, idTile })

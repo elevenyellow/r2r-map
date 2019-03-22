@@ -5,25 +5,24 @@ import {
     createSmartDiv,
     createOwnerUiElement,
     createRecruitmentPowerUiElement
-} from '../../ui'
-import { createSpriteBorder } from '../'
-import { worldToScreen } from '../utils'
-import { GENERAL } from '../../config/parameters'
-import { RECRUITMENT_POWER_UI_ELEMENT } from '../../const'
-import { svgLoader } from '../utils'
+} from '../ui'
+import createSpriteBorder from './createSpriteBorder'
+import { worldToScreen } from './utils'
+import { GENERAL } from '../config/parameters'
+import { RECRUITMENT_POWER_UI_ELEMENT } from '../const'
 
 export default function createTileFactory({ ui, scene, camera }) {
     return ({ id, area, x, z, spriteConf, type }) => {
         let tweenBorder
         const owners = {}
         const div = createSmartDiv({ container: ui })
-        const { sprite, body, border } = createSpriteBorder({
-            scene,
-            x,
-            z,
-            spriteConf
-        })
-        border.visible = false
+        const sprite = new THREE.Group()
+        const houses = createSpriteBorder(spriteConf)
+        houses.border.visible = false
+        sprite.position.x = x
+        sprite.position.z = z
+        sprite.add(houses.sprite)
+        scene.add(sprite)
 
         const recruitmentPower = createRecruitmentPowerUiElement({
             className: RECRUITMENT_POWER_UI_ELEMENT
@@ -35,6 +34,11 @@ export default function createTileFactory({ ui, scene, camera }) {
         // circle.position.y = -1
         // circle.position.z = z
         // scene.add(circle)
+
+        // const helper = new THREE.AxesHelper(10)
+        // helper.position.x = x
+        // helper.position.z = z
+        // scene.add(helper)
 
         return {
             id,
@@ -92,7 +96,7 @@ export default function createTileFactory({ ui, scene, camera }) {
             },
             startHighlight: () => {
                 if (tweenBorder === undefined) {
-                    border.visible = true
+                    houses.border.visible = true
                     tweenBorder = new TWEEN.Tween({
                         opacity: GENERAL.BORDER_TILE_MINIMUN_OPACITY
                     })
@@ -102,7 +106,7 @@ export default function createTileFactory({ ui, scene, camera }) {
                         .yoyo(true)
                         // .delay(500)
                         .onUpdate(o => {
-                            border.material.opacity = o.opacity
+                            houses.border.material.opacity = o.opacity
                             // body.material.color = new THREE.Color(
                             //     o.opacity + 0.5,
                             //     o.opacity + 0.5,
@@ -116,7 +120,7 @@ export default function createTileFactory({ ui, scene, camera }) {
                 if (tweenBorder !== undefined) {
                     tweenBorder.stop()
                     tweenBorder = undefined
-                    border.visible = false
+                    houses.border.visible = false
                     // body.material.color = new THREE.Color(1, 1, 1)
                 }
             }

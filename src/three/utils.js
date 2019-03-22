@@ -1,7 +1,6 @@
 import * as THREE from 'three'
 import { randomInt } from '../utils/index'
-import TWEEN from '@tweenjs/tween.js'
-import SVGLoader from './SVGLoader'
+import SVGLoader from '../lib/SVGLoader'
 
 export const textureLoader = new THREE.TextureLoader()
 export const svgLoader = new SVGLoader()

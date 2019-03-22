@@ -1,9 +1,9 @@
-import { createThreeWorld, createTerrain } from './three/'
+import createThreeWorld from './three/createThreeWorld'
+import createTerrain from './three/createTerrain'
 import createApi from './api'
 import OTHERS from './config/sprites/others'
 import { GENERAL } from './config/parameters'
 import TWEEN from '@tweenjs/tween.js'
-import * as THREE from 'three'
 import { ELEMENT_TYPE, ARROW_ATTACK_ID, ARROW_STATUS, DOM } from './const'
 import { getMousePositionFromD3Event } from './utils'
 
@@ -33,10 +33,10 @@ isoCamera.view.on('dblclick.zoom', null)
 
 // ADDING TERRAIN
 const terrain = createTerrain({
-    scene: sceneTerrain,
     renderer,
     url: OTHERS.TERRAIN.url
 })
+sceneTerrain.add(terrain)
 
 // CREATING AND EXPOSING API
 const API = createApi({

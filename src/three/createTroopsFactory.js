@@ -1,8 +1,8 @@
 import * as THREE from 'three'
-import { createSmartDiv, createTroopsUnitsUiElement } from '../../ui'
-import { worldToScreen, textureLoader } from '../utils'
-import { GENERAL } from '../../config/parameters'
-import { ELEMENT_TYPE, TROOPS_UNITS_UI_ELEMENT } from '../../const'
+import { createSmartDiv, createTroopsUnitsUiElement } from '../ui'
+import { worldToScreen, textureLoader } from './utils'
+import { GENERAL } from '../config/parameters'
+import { ELEMENT_TYPE, TROOPS_UNITS_UI_ELEMENT } from '../const'
 
 export default function createTroopsFactory({ ui, sceneSprites, camera }) {
     return ({ id, fromX, fromZ, toX, toZ, spriteConf }) => {

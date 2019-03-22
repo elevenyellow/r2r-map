@@ -5,10 +5,10 @@ import { VILLAGE, COTTAGE, TROOPS } from '../config/sprites/animated'
 import { DECORATIVE_ITEMS } from '../config/parameters'
 import DECORATIVE from '../config/sprites/decorative'
 import { screenToWorld } from '../three/utils'
-import createTileFactory from '../three/factories/createTileFactory'
-import createTroopsFactory from '../three/factories/createTroopsFactory'
-import createArrowFactory from '../three/factories/createArrowFactory'
-import { createSpriteDecorative } from '../three'
+import createTileFactory from '../three/createTileFactory'
+import createTroopsFactory from '../three/createTroopsFactory'
+import createArrowFactory from '../three/createArrowFactory'
+import createSpriteDecorative from '../three/createSpriteDecorative'
 import { generateRandomDecorativeSprites } from '../three/utils'
 import createTroops from './createTroops'
 import { getTileById, getTroopsById, getArrowById } from './getters'
@@ -243,14 +243,14 @@ export default function createApi({
                 radius: tile.area
             }))
             const options = Object.assign({}, { ignoreAreas }, DECORATIVE_ITEMS)
-            const sprites = generateRandomDecorativeSprites(options)
-            sprites.forEach(sprite => {
-                createSpriteDecorative({
-                    scene: sceneSprites,
-                    x: sprite.x,
-                    z: sprite.z,
-                    spriteConf: DECORATIVE[sprite.id]
-                })
+            const spritesConfigs = generateRandomDecorativeSprites(options)
+            spritesConfigs.forEach(spriteConfig => {
+                const sprite = createSpriteDecorative(
+                    DECORATIVE[spriteConfig.id]
+                )
+                sprite.position.x = spriteConfig.x
+                sprite.position.z = spriteConfig.z
+                sceneSprites.add(sprite)
             })
         }
     }

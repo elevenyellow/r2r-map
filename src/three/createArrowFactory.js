@@ -1,7 +1,7 @@
 import * as THREE from 'three'
-import { ELEMENT_TYPE, ARROW_STATUS } from '../../const'
-import { ARROW } from '../../config/sprites/svg'
-import { svgLoader } from '../utils'
+import { ELEMENT_TYPE, ARROW_STATUS } from '../const'
+import { ARROW } from '../config/sprites/svg'
+import { svgLoader } from './utils'
 
 export default function createArrowFactory({ ui, scene, camera }) {
     return ({ id, fromX, fromZ }) => {

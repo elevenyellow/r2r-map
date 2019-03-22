@@ -102,6 +102,7 @@ export default function createTileFactory({ ui, scene, camera }) {
             },
             startHighlight: () => {
                 if (tweenBorder === undefined) {
+                    defaultColors({ houses, arrow })
                     arrow.sprite.visible = true
                     houses.border.visible = true
                     tweenBorder = new TWEEN.Tween({
@@ -134,19 +135,25 @@ export default function createTileFactory({ ui, scene, camera }) {
                 }
                 arrow.sprite.visible = false
                 houses.border.visible = false
-                houses.border.material.color = new THREE.Color(1, 1, 1)
-                arrow.body.material.color = new THREE.Color(1, 1, 1)
-                arrow.border.material.color = new THREE.Color(1, 1, 1)
+                defaultColors({ houses, arrow })
             },
             highLightRed: () => {
                 arrow.sprite.visible = true
                 houses.border.visible = true
-                houses.border.material.color = new THREE.Color(0xe13416)
-                arrow.body.material.color = new THREE.Color(0xe13416)
-                arrow.border.material.color = new THREE.Color(0xe13416)
+                houses.border.material.color = new THREE.Color(0xff0000)
+                arrow.body.material.color = new THREE.Color(0xff0000)
+                // arrow.border.material.color = new THREE.Color(0xe13416)
+                arrow.sprite.position.y = GENERAL.ARROW_TILE_POSITION_Y_ORIGIN
+                houses.border.material.opacity = 1
             }
         }
     }
+}
+
+function defaultColors({ houses, arrow }) {
+    houses.border.material.color = new THREE.Color(1, 1, 1)
+    arrow.body.material.color = new THREE.Color(1, 1, 1)
+    arrow.border.material.color = new THREE.Color(1, 1, 1)
 }
 
 // function createCircleHighlight() {

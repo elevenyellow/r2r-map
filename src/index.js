@@ -80,9 +80,7 @@ function onStart(e) {
                         id: LINE_ATTACK_ID,
                         idTileFrom: element.troopOrTile.id
                     })
-                    state.tilesHighLighting.forEach(idTile =>
-                        API.startHighlight({ idTile })
-                    )
+                    highlightTiles(state.tilesHighLighting)
                 }
             }
         }
@@ -116,7 +114,10 @@ function onChangePan(e) {
                     idTo: element.troopOrTile.id
                 })
             ) {
-                state.idAttackTo = element.troopOrTile.id
+                const idTile = element.troopOrTile.id
+                state.idAttackTo = idTile
+                unhighlightTiles(state.tilesHighLighting)
+                API.highLightRed({ idTile })
                 API.changeLineDirection({
                     idLine: LINE_ATTACK_ID,
                     x: element.troopOrTile.x,
@@ -125,6 +126,7 @@ function onChangePan(e) {
                 })
             } else {
                 state.idAttackTo = undefined
+                highlightTiles(state.tilesHighLighting)
                 API.changeLineDirection({
                     idLine: LINE_ATTACK_ID,
                     x,
@@ -157,7 +159,7 @@ function onEnd(e) {
         API.removeLine({ idLine: LINE_ATTACK_ID })
         const idFrom = state.idAttackFrom
         const idTo = state.idAttackTo
-        state.tilesHighLighting.forEach(idTile => API.stopHighlight({ idTile }))
+        unhighlightTiles(state.tilesHighLighting)
         state.tilesHighLighting = []
         state.idAttackFrom = undefined
         state.idAttackTo = undefined
@@ -215,6 +217,14 @@ function onUnselect() {
 }
 
 // UTILS
+function highlightTiles(tiles) {
+    tiles.forEach(idTile => API.startHighlight({ idTile }))
+}
+
+function unhighlightTiles(tiles) {
+    tiles.forEach(idTile => API.stopHighlight({ idTile }))
+}
+
 function getInteractiveElementByMouseEvent({ mouseX, mouseY }) {
     const { x, z } = API.getWorldPositionFromMouse({
         mouseX,

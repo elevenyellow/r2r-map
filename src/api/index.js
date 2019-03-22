@@ -175,6 +175,10 @@ export default function createApi({
             const tile = getTileById({ tiles, idTile })
             tile.stopHighlight()
         },
+        highLightRed: ({ idTile }) => {
+            const tile = getTileById({ tiles, idTile })
+            tile.highLightRed()
+        },
         removeTroops: ({ idTroops }) => {
             const troops = getTroopsById({ troopss, idTroops })
             const index = troopss.indexOf(troops)

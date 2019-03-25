@@ -88,3 +88,10 @@ export function generateRandomDecorativeSprites({
     }
     return result
 }
+
+// export function setSize( myMesh, xSize, ySize, zSize){
+//     const scaleFactorX = xSize / myMesh.geometry.parameters.width;
+//     const scaleFactorY = ySize / myMesh.geometry.parameters.height;
+//     const scaleFactorZ = zSize / myMesh.geometry.parameters.depth;
+//     myMesh.scale.set( scaleFactorX, scaleFactorY, scaleFactorZ );
+//   }

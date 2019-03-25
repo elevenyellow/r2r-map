@@ -6,19 +6,24 @@ import { textureLoader } from './utils'
 export default function createLineFactory({ ui, scene, camera }) {
     return ({ id, fromX, fromZ }) => {
         const fromVector = new THREE.Vector2(fromX, fromZ)
-        const { lines, line, tweens } = createLineLine()
-        lines.position.x = fromX
-        lines.position.z = fromZ
-        scene.add(lines)
+        const { line, textureLoaded } = createLineLine()
+        line.position.x = fromX
+        line.position.z += fromZ
+        scene.add(line)
 
         return {
             id,
             type: ELEMENT_TYPE.LINE,
             changeDirection: ({ toX, toZ, status }) => {
-                // const toVector = new THREE.Vector2(toX, toZ)
-                // const distance = fromVector.distanceTo(toVector)
-                // lines.rotation.y = -Math.atan2(toZ - fromZ, toX - fromX)
-                // lines.children = []
+                const toVector = new THREE.Vector2(toX, toZ)
+                const distance = fromVector.distanceTo(toVector)
+                console.log(distance, line.geometry.parameters.height)
+                const scaleFactorY = distance / line.geometry.parameters.height
+                line.scale.set(1, scaleFactorY, 1)
+                textureLoaded.textureLoaded.repeat.set(distance, 5)
+
+                // line.rotation.y = -Math.atan2(toZ - fromZ, toX - fromX)
+                // line.children = []
                 // const material1 = line.children[0].material
                 // const material2 = material1.clone()
                 // material2.color = new THREE.Color(0x22a8d6)
@@ -37,33 +42,40 @@ export default function createLineFactory({ ui, scene, camera }) {
                 // for (let i = 0; LINE.separation * i < distance; i++) {
                 //     const arr = line.clone()
                 //     arr.position.x = LINE.separation * i
-                //     lines.add(arr)
+                //     line.add(arr)
                 // }
             },
             destroy: () => {
                 // tweens.forEach(tween => tween.stop())
-                scene.remove(lines)
+                scene.remove(line)
             }
         }
     }
 }
 
 function createLineLine() {
-    const geometry = new THREE.PlaneBufferGeometry(10, 10)
+    const width = 0.3
+    const height = 10
+    const geometry = new THREE.PlaneBufferGeometry(width, height)
     const textureLoaded = textureLoader.load(LINE.url)
     const material = new THREE.MeshBasicMaterial({
         color: 0xffffff,
         map: textureLoaded
     })
-    const terrain = new THREE.Mesh(geometry, material)
-    // textureLoaded.wrapS = textureLoaded.wrapT = THREE.RepeatWrapping
-    // textureLoaded.repeat.set(512, 512)
-    terrain.position.y -= 0.5
-    terrain.rotation.x = -Math.PI / 2
-    // terrain.scale.set(200, 200, 200)
-    return { lines: terrain, line: [] }
+    const line = new THREE.Mesh(geometry, material)
+    textureLoaded.repeat.set(10, 5)
+    textureLoaded.wrapS = textureLoaded.wrapT = THREE.RepeatWrapping
 
-    // const lines = new THREE.Group()
+    material.map.minFilter = THREE.LinearFilter //THREE.LinearMipMapNearestFilter
+    line.rotation.x = -Math.PI / 2
+    line.position.z = height / 2
+
+    setInterval(() => {
+        textureLoaded.offset.y += 0.015
+    }, 10)
+    return { line, textureLoaded }
+
+    // const line = new THREE.Group()
     // const line = new THREE.Group()
     // const tweens = []
 
@@ -74,7 +86,7 @@ function createLineLine() {
     //     line.position.z += LINE.offsetZ
     //     line.rotation.x = -Math.PI / 2
     //     // line.position.x += LINE.separation * 2
-    //     // lines.add(line)
+    //     // line.add(line)
 
     //     for (let i = 0; i < paths.length; i++) {
     //         const path = paths[i]
@@ -103,11 +115,11 @@ function createLineLine() {
     //     //     arr.children[0].material = line.children[0].material.clone()
     //     //     // arr.position.x = origin
     //     //     arr.position.x = LINE.separation * i
-    //     //     lines.add(arr)
+    //     //     line.add(arr)
 
     //     //     // tweens.push(tween)
     //     // }
     // })
 
-    return { lines, line, tweens }
+    return { line, line, tweens }
 }

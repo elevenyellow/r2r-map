@@ -1,11 +1,4 @@
 {
-    "LINE": {
-        "offsetX": 0,
-        "offsetZ": 0.6,
-        "url": "assets/svg/line.svg",
-        "scale": { "x": 0.05, "y": 0.05, "z": 0.05 },
-        "separation": 0.5
-    },
     "CIRCLE": {
         "offsetX": -5.5,
         "offsetZ": 2.5,

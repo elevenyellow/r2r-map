@@ -6,5 +6,9 @@
         "url": "assets/animated/arrow.png",
         "urlBorder": "assets/animated/arrow-border.png",
         "scale": { "x": 2.5, "y": 2.5, "z": 2.5 }
+    },
+    "LINE": {
+        "url": "assets/animated/line.png",
+        "scale": { "x": 0.05, "y": 0.05, "z": 0.05 }
     }
 }

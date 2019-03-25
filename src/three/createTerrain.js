@@ -13,7 +13,7 @@ export default function createTerrain({ renderer, url }) {
     textureLoaded.anisotropy = renderer.capabilities.getMaxAnisotropy()
     textureLoaded.wrapS = textureLoaded.wrapT = THREE.RepeatWrapping
     textureLoaded.repeat.set(512, 512)
-    terrain.position.y -= 0.5
+    terrain.position.y -= 1
     terrain.rotation.x = -Math.PI / 2
     terrain.scale.set(200, 200, 200)
     return terrain

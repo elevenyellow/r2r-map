@@ -14,7 +14,7 @@ export const ELEMENT_TYPE = {
 export const LINE_ATTACK_ID = 'LINE_ATTACK_ID'
 
 export const LINE_STATUS = {
-    NORMAL: 'NORMAL',
+    CORRECT: 'CORRECT',
     INCORRECT: 'INCORRECT'
 }
 

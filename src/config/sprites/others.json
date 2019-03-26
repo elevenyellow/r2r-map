@@ -9,6 +9,8 @@
     },
     "LINE": {
         "url": "assets/animated/line.png",
-        "scale": { "x": 0.05, "y": 0.05, "z": 0.05 }
+        "height": 0.4,
+        "repeatX": 5,
+        "repeatY": 1
     }
 }

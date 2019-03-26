@@ -122,7 +122,7 @@ function onChangePan(e) {
                     idLine: LINE_ATTACK_ID,
                     x: element.troopOrTile.x,
                     z: element.troopOrTile.z,
-                    status: LINE_STATUS.NORMAL
+                    status: LINE_STATUS.CORRECT
                 })
             } else {
                 state.idAttackTo = undefined

@@ -47,9 +47,11 @@ export default function createLineFactory({ scene }) {
                 if (status === LINE_STATUS.CORRECT) {
                     tweenOffSet = 0.015
                     material.opacity = 1
+                    // material.color = new THREE.Color(1, 1, 1)
                 } else {
                     tweenOffSet = 0
-                    material.opacity = 0.7
+                    material.opacity = 0.6
+                    // material.color = new THREE.Color(0xff9955)
                 }
             },
             destroy: () => {

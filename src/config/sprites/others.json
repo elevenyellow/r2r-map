@@ -1,14 +1,14 @@
 {
     "TERRAIN": {
-        "url": "assets/decorative/terrain.png"
+        "url": "assets/map/decorative/terrain.png"
     },
     "ARROW": {
-        "url": "assets/animated/arrow.png",
-        "urlBorder": "assets/animated/arrow-border.png",
+        "url": "assets/map/animated/arrow.png",
+        "urlBorder": "assets/map/animated/arrow-border.png",
         "scale": { "x": 2.5, "y": 2.5, "z": 2.5 }
     },
     "LINE": {
-        "url": "assets/animated/line.png",
+        "url": "assets/map/animated/line.png",
         "height": 0.4,
         "repeatX": 5,
         "repeatY": 1

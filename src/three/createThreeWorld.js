@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import * as d3 from '../lib/d3'
-import ThreeIsoGameCamera from '/mnt/c/Users/enzo/drive/projects/three-iso-game-camera/'
+import ThreeIsoGameCamera from '@ocio/three-iso-game-camera'
 
 export default function createThreeWorld({ canvas, onStart, onChange, onEnd }) {
     const canvasWidth = window.innerWidth

@@ -1,7 +1,9 @@
 {
-    "name": "r2r-map",
-    "version": "1.0.0",
+    "name": "@ocio/r2r-map",
+    "version": "1.0.1",
+    "main": "src/",
     "dependencies": {
+        "@ocio/three-iso-game-camera": "^1.0.0",
         "@tweenjs/tween.js": "^17.3.0",
         "d3-dispatch": "^1.0.5",
         "d3-drag": "^1.2.3",

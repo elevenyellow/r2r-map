@@ -55,7 +55,9 @@ export default function init({ canvas, ui }) {
             mouseX: e.clientX,
             mouseY: e.clientY
         })
-        element ? onSelect(element.troopOrTile.id) : onUnselect()
+        element
+            ? API.onSelect({ id: element.troopOrTile.id, type: element.type })
+            : API.onUnselect()
     })
 
     // EVENTS FUNCTIONS
@@ -70,8 +72,10 @@ export default function init({ canvas, ui }) {
                 })
                 if (element !== undefined) {
                     const idFrom = element.troopOrTile.id
-                    if (shallWeStartAttack({ idFrom })) {
-                        state.tilesHighLighting = getTilesToAttack({ idFrom })
+                    if (API.shallWeStartAttack({ idFrom })) {
+                        state.tilesHighLighting = API.getTilesToAttack({
+                            idFrom
+                        })
                         state.preparingAttack = true
                         state.idAttackFrom = element.troopOrTile.id
                         API.createLine({
@@ -97,7 +101,7 @@ export default function init({ canvas, ui }) {
 
     function onChangePan(e) {
         if (API !== undefined) {
-            onUnselect()
+            API.onUnselect()
             if (state.preparingAttack) {
                 const { mouseX, mouseY } = getMousePositionFromD3Event(event)
                 const { element, x, z } = getInteractiveElementByMouseEvent({
@@ -107,7 +111,7 @@ export default function init({ canvas, ui }) {
                 const idFrom = state.idAttackFrom
                 if (
                     element !== undefined &&
-                    shallWeAttack({
+                    API.shallWeAttack({
                         idFrom,
                         idTo: element.troopOrTile.id
                     })
@@ -163,7 +167,7 @@ export default function init({ canvas, ui }) {
             state.idAttackTo = undefined
             state.preparingAttack = false
             if (idFrom !== undefined && idTo !== undefined) {
-                onAttack({ idFrom, idTo })
+                API.onAttack({ idFrom, idTo })
             }
         }
         // console.log('onEnd')
@@ -191,28 +195,12 @@ export default function init({ canvas, ui }) {
     onAnimationFrame()
 
     // EXTERNAL API CALLS (DOP)
-    function shallWeStartAttack({ idFrom }) {
-        const found = API.getTiles().find(tile => tile.id === idFrom)
-        return found !== undefined && found.type === ELEMENT_TYPE.VILLAGE
-    }
-    function shallWeAttack({ idFrom, idTo }) {
-        const found = API.getTiles().find(tile => tile.id === idTo)
-        return found !== undefined && found.type === ELEMENT_TYPE.COTTAGE
-    }
-    function getTilesToAttack({ idFrom }) {
-        return API.getTiles()
-            .filter(tile => tile.type === ELEMENT_TYPE.COTTAGE)
-            .map(tile => tile.id)
-    }
-    function onAttack({ idFrom, idTo }) {
-        console.log({ idFrom, idTo })
-    }
-    function onSelect(id) {
-        log.innerHTML = id // REMOVE THIS
-    }
-    function onUnselect() {
-        log.innerHTML = '' // REMOVE THIS
-    }
+    API.shallWeStartAttack = function({ idFrom }) {}
+    API.shallWeAttack = function({ idFrom, idTo }) {}
+    API.getTilesToAttack = function({ idFrom }) {}
+    API.onAttack = function({ idFrom, idTo }) {}
+    API.onSelect = function({ type, id }) {}
+    API.onUnselect = function() {}
 
     // UTILS
     function highlightTiles(tiles) {
@@ -240,28 +228,32 @@ export default function init({ canvas, ui }) {
     }
 
     return API
-
-    // HELPERS
-    // isoCamera.onChange = updateUi
-    // const axes = new isoCamera.THREE.AxesHelper(10)
-    // axes.position.x = 0
-    // axes.position.z = 0
-    // sceneSprites.add(axes)
-    // sceneTerrain.add(new isoCamera.THREE.GridHelper(1000, 1000, 0xaaaaaa, 0x999999))
-    // go({ scene })
-
-    // // LINES
-    // var geometry = new THREE.Geometry()
-    // var material = new THREE.LineDashedMaterial({
-    //     color: 0xffffff,
-    //     linewidth: 10,
-    //     dashSize: 1.0,
-    //     gapSize: 0.5
-    // }) //new THREE.LineBasicMaterial({ color: 0xFFFFFF, linewidth: 10 });
-
-    // geometry.vertices.push(new THREE.Vector3(0, 0, 0), new THREE.Vector3(30, 0, 30))
-
-    // var line = new THREE.Line(geometry, material)
-    // line.computeLineDistances()
-    // sceneTerrain.add(line)
 }
+
+export { ELEMENT_TYPE, LINE_ATTACK_ID, LINE_STATUS }
+
+// export { ELEMENT_TYPE, LINE_ATTACK_ID, LINE_STATUS }
+
+// HELPERS
+// isoCamera.onChange = updateUi
+// const axes = new isoCamera.THREE.AxesHelper(10)
+// axes.position.x = 0
+// axes.position.z = 0
+// sceneSprites.add(axes)
+// sceneTerrain.add(new isoCamera.THREE.GridHelper(1000, 1000, 0xaaaaaa, 0x999999))
+// go({ scene })
+
+// // LINES
+// var geometry = new THREE.Geometry()
+// var material = new THREE.LineDashedMaterial({
+//     color: 0xffffff,
+//     linewidth: 10,
+//     dashSize: 1.0,
+//     gapSize: 0.5
+// }) //new THREE.LineBasicMaterial({ color: 0xFFFFFF, linewidth: 10 });
+
+// geometry.vertices.push(new THREE.Vector3(0, 0, 0), new THREE.Vector3(30, 0, 30))
+
+// var line = new THREE.Line(geometry, material)
+// line.computeLineDistances()
+// sceneTerrain.add(line)

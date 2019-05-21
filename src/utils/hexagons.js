@@ -1,14 +1,10 @@
 // import * as THREE from 'three'
+import * as Honeycomb from 'honeycomb-grid'
 
 export function getPositionByCordinate({ col, row, size }) {
-    const hor_distance = Math.sqrt(3) * size
-    const ver_distance = (2 * size * 3) / 4
-    return [
-        row % 2 === 0
-            ? col * hor_distance
-            : col * hor_distance - hor_distance / 2,
-        row * ver_distance
-    ]
+    const Hex = Honeycomb.extendHex({ size: size })
+    const point = Hex(col, row).toPoint()
+    return [point.x, point.y]
 }
 
 // function pointyHexagonalCorner(center_x, center_y, size, i) {

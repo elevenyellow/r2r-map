@@ -10,6 +10,7 @@
         "d3-selection": "^1.4.0",
         "d3-transition": "^1.2.0",
         "d3-zoom": "^1.7.3",
+        "honeycomb-grid": "^2.0.1",
         "three": "^0.100.0"
     }
 }

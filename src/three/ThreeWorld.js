@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import * as d3 from '../lib/d3'
 import ThreeIsoGameCamera from '@ocio/three-iso-game-camera'
 
-export default function createThreeWorld({ canvas, onStart, onChange, onEnd }) {
+export default function ThreeWorld({ canvas, onStart, onChange, onEnd }) {
     const canvasWidth = window.innerWidth
     const canvasHeight = window.innerHeight
     const sceneTerrain = new THREE.Scene()

@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { textureLoader } from './utils'
 
 // https://gamedev.stackexchange.com/questions/167762/how-to-avoid-the-cutoff-of-a-sprite-when-overlapping-in-a-terrain?noredirect=1#comment298081_167762
-export default function createTerrain({ renderer, url }) {
+export default function Terrain({ renderer, url }) {
     const geometry = new THREE.PlaneBufferGeometry(100, 100)
     const textureLoaded = textureLoader.load(url)
     const material = new THREE.MeshBasicMaterial({

@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { textureLoader } from './utils'
 
-export default function createSpriteDecorative({ url, scale }) {
+export default function SpriteDecorative({ url, scale }) {
     const textureLoaded = textureLoader.load(url)
     const material = new THREE.SpriteMaterial({
         map: textureLoaded

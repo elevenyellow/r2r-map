@@ -1,5 +1,5 @@
-import createThreeWorld from './three/createThreeWorld'
-import createTerrain from './three/createTerrain'
+import ThreeWorld from './three/ThreeWorld'
+import Terrain from './three/Terrain'
 import createApi from './api'
 import OTHERS from './config/sprites/others'
 import { GENERAL } from './config/parameters'
@@ -18,7 +18,7 @@ export default function init({ canvas, ui }) {
         sceneTerrain,
         sceneSprites,
         isoCamera
-    } = createThreeWorld({
+    } = ThreeWorld({
         canvas,
         onStart,
         onChange,
@@ -29,7 +29,7 @@ export default function init({ canvas, ui }) {
     isoCamera.view.on('dblclick.zoom', null)
 
     // ADDING TERRAIN
-    const terrain = createTerrain({
+    const terrain = Terrain({
         renderer,
         url: OTHERS.TERRAIN.url
     })

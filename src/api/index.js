@@ -5,10 +5,10 @@ import { VILLAGE, COTTAGE, TROOPS } from '../config/sprites/animated'
 import { DECORATIVE_ITEMS } from '../config/parameters'
 import DECORATIVE from '../config/sprites/decorative'
 import { screenToWorld } from '../three/utils'
-import createTileFactory from '../three/createTileFactory'
-import createTroopsFactory from '../three/createTroopsFactory'
-import createLineFactory from '../three/createLineFactory'
-import createSpriteDecorative from '../three/createSpriteDecorative'
+import TileFactory from '../three/TileFactory'
+import TroopsFactory from '../three/TroopsFactory'
+import LineFactory from '../three/LineFactory'
+import SpriteDecorative from '../three/SpriteDecorative'
 import { generateRandomDecorativeSprites } from '../three/utils'
 import createTroops from './createTroops'
 import { getTileById, getTroopsById, getLineById } from './getters'
@@ -33,18 +33,18 @@ export default function createApi({
     const tiles = []
     const troopss = []
     const lines = []
-    const createTileSprite = createTileFactory({
+    const createTileSprite = TileFactory({
         ui,
         camera,
         scene: sceneSprites
     })
-    const createTroopsSprite = createTroopsFactory({
+    const createTroopsSprite = TroopsFactory({
         ui,
         camera,
         sceneSprites,
         sceneTerrain
     })
-    const createLineSprite = createLineFactory({
+    const createLineSprite = LineFactory({
         ui,
         camera,
         scene: sceneTerrain
@@ -249,9 +249,7 @@ export default function createApi({
             const options = Object.assign({}, { ignoreAreas }, DECORATIVE_ITEMS)
             const spritesConfigs = generateRandomDecorativeSprites(options)
             spritesConfigs.forEach(spriteConfig => {
-                const sprite = createSpriteDecorative(
-                    DECORATIVE[spriteConfig.id]
-                )
+                const sprite = SpriteDecorative(DECORATIVE[spriteConfig.id])
                 sprite.position.x = spriteConfig.x
                 sprite.position.z = spriteConfig.z
                 sceneSprites.add(sprite)

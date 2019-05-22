@@ -1,4 +1,4 @@
-export function createSmartDiv({ container, offsetX = 0, offsetY = 0 }) {
+export function SmartDiv({ container, offsetX = 0, offsetY = 0 }) {
     const element = document.createElement('div')
     const style = element.style
     style.position = 'absolute'
@@ -23,7 +23,7 @@ export function createSmartDiv({ container, offsetX = 0, offsetY = 0 }) {
     }
 }
 
-export function createOwnerUiElement() {
+export function OwnerUiElement() {
     const element = document.createElement('div')
     const textElement = document.createElement('div')
     const unitsElement = document.createElement('div')
@@ -48,7 +48,7 @@ export function createOwnerUiElement() {
     }
 }
 
-export function createRecruitmentPowerUiElement({ className }) {
+export function RecruitmentPowerUiElement({ className }) {
     const element = document.createElement('div')
     const textElement = document.createElement('div')
     element.appendChild(textElement)
@@ -61,7 +61,7 @@ export function createRecruitmentPowerUiElement({ className }) {
     }
 }
 
-export function createTroopsUnitsUiElement({ className }) {
+export function TroopsUnitsUiElement({ className }) {
     const element = document.createElement('div')
     const textElement = document.createElement('div')
     element.appendChild(textElement)

@@ -1,12 +1,12 @@
 import * as THREE from 'three'
-import { createSmartDiv, createTroopsUnitsUiElement } from '../ui'
+import { SmartDiv, TroopsUnitsUiElement } from '../ui'
 import { worldToScreen, textureLoader } from './utils'
 import { GENERAL } from '../config/parameters'
 import { ELEMENT_TYPE, TROOPS_UNITS_UI_ELEMENT } from '../const'
 
-export default function createTroopsFactory({ ui, sceneSprites, camera }) {
+export default function TroopsFactory({ ui, sceneSprites, camera }) {
     return ({ id, fromX, fromZ, toX, toZ, spriteConf }) => {
-        const div = createSmartDiv({ container: ui })
+        const div = SmartDiv({ container: ui })
         const sprite = createTroopsSprite({
             scene: sceneSprites,
             fromX,
@@ -14,7 +14,7 @@ export default function createTroopsFactory({ ui, sceneSprites, camera }) {
             spriteConf
         })
 
-        const units = createTroopsUnitsUiElement({
+        const units = TroopsUnitsUiElement({
             className: TROOPS_UNITS_UI_ELEMENT
         })
         div.element.appendChild(units.element)

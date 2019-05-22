@@ -3,7 +3,7 @@ import { ELEMENT_TYPE, LINE_STATUS } from '../const'
 import { LINE } from '../config/sprites/others'
 import { textureLoader } from './utils'
 
-export default function createLineFactory({ scene }) {
+export default function LineFactory({ scene }) {
     return ({ id, fromX, fromZ }) => {
         const width = 1
         const height = LINE.height

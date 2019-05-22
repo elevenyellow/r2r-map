@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { textureLoader } from './utils'
 
-export default function createSpriteBorder({ url, urlBorder, scale }) {
+export default function SpriteBorder({ url, urlBorder, scale }) {
     // Loading body
     const material = new THREE.SpriteMaterial({
         map: textureLoader.load(url)

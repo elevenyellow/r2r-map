@@ -1,31 +1,27 @@
 import TWEEN from '@tweenjs/tween.js'
 import * as THREE from 'three'
 // import { CIRCLE } from '../../config/sprites/svg'
-import {
-    createSmartDiv,
-    createOwnerUiElement,
-    createRecruitmentPowerUiElement
-} from '../ui'
-import createSpriteBorder from './createSpriteBorder'
+import { SmartDiv, OwnerUiElement, RecruitmentPowerUiElement } from '../ui'
+import SpriteBorder from './SpriteBorder'
 import { worldToScreen } from './utils'
 import { GENERAL } from '../config/parameters'
 import { RECRUITMENT_POWER_UI_ELEMENT } from '../const'
 import { ARROW } from '../config/sprites/others'
 
-export default function createTileFactory({ ui, scene, camera }) {
+export default function TileFactory({ ui, scene, camera }) {
     return ({ id, area, x, z, spriteConf, type }) => {
         let tweenBorder
         const owners = {}
-        const div = createSmartDiv({ container: ui })
-        const recruitmentPower = createRecruitmentPowerUiElement({
+        const div = SmartDiv({ container: ui })
+        const recruitmentPower = RecruitmentPowerUiElement({
             className: RECRUITMENT_POWER_UI_ELEMENT
         })
         div.element.appendChild(recruitmentPower.element)
 
-        const houses = createSpriteBorder(spriteConf)
+        const houses = SpriteBorder(spriteConf)
         houses.border.visible = false
 
-        const arrow = createSpriteBorder(ARROW)
+        const arrow = SpriteBorder(ARROW)
         arrow.sprite.visible = false
 
         const sprite = new THREE.Group()
@@ -73,7 +69,7 @@ export default function createTileFactory({ ui, scene, camera }) {
                 recruitmentPower.changePower(power)
             },
             addOwner: id => {
-                const owner = createOwnerUiElement()
+                const owner = OwnerUiElement()
                 div.element.insertBefore(
                     owner.element,
                     recruitmentPower.element

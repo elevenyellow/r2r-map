@@ -1,6 +1,6 @@
 {
-    "name": "@ocio/r2r-map",
-    "version": "1.0.3",
+    "name": "runandrisk-map",
+    "version": "1.0.0",
     "main": "src/",
     "dependencies": {
         "@ocio/three-iso-game-camera": "^1.0.0",

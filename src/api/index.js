@@ -15,7 +15,6 @@ import { getTileById, getTroopsById, getLineById } from './getters'
 import { getPositionByCordinate } from '../utils/hexagons'
 
 export const TILE_OWNER_CLASSES = {
-    [OWNER.NEUTRAL]: 'tileOwner neutral',
     [OWNER.PLAYER]: 'tileOwner player',
     [OWNER.ENEMY]: 'tileOwner enemy'
 }

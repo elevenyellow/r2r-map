@@ -1,6 +1,7 @@
 import * as THREE from 'three'
-import { OWNER, ELEMENT_TYPE } from '../const'
-import { VILLAGE, COTTAGE, TROOPS } from '../config/sprites/animated'
+import { OWNER } from '../const'
+const { TILE } = require('runandrisk-common/const')
+import { VILLAGE, COTTAGE } from '../config/sprites/animated'
 // import { LINE } from '../config/sprites/svg'
 import { DECORATIVE_ITEMS } from '../config/parameters'
 import DECORATIVE from '../config/sprites/decorative'
@@ -84,7 +85,7 @@ export default function createApi({
                 z,
                 area: VILLAGE.area,
                 spriteConf: VILLAGE,
-                type: ELEMENT_TYPE.VILLAGE
+                type: TILE.VILLAGE
             })
             tile.updateScaleDiv(state.currentZoom, initialZoom)
             tiles.push(tile)
@@ -102,7 +103,7 @@ export default function createApi({
                 z,
                 area: COTTAGE.area,
                 spriteConf: COTTAGE,
-                type: ELEMENT_TYPE.COTTAGE
+                type: TILE.COTTAGE
             })
             tile.updateScaleDiv(state.currentZoom, initialZoom)
             tiles.push(tile)

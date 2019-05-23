@@ -1,8 +1,3 @@
-const TILE = {
-    COTTAGE: 0,
-    VILLAGE: 1
-}
-
 const OWNER = {
     PLAYER: 1,
     ENEMY: 2
@@ -26,7 +21,6 @@ const RECRUITMENT_POWER_UI_ELEMENT = 'recruitmentPower'
 const TROOPS_UNITS_UI_ELEMENT = 'troopsUnits'
 
 module.exports = {
-    TILE,
     OWNER,
     ELEMENT_TYPE,
     LINE_ATTACK_ID,

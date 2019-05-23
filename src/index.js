@@ -4,7 +4,7 @@ import createApi from './api'
 import OTHERS from './config/sprites/others'
 import { GENERAL } from './config/parameters'
 import TWEEN from '@tweenjs/tween.js'
-import { ELEMENT_TYPE, LINE_ATTACK_ID, LINE_STATUS } from './const'
+import { LINE_ATTACK_ID, LINE_STATUS } from './const'
 import { getMousePositionFromD3Event } from './utils'
 
 export default function init({ canvas, ui }) {
@@ -230,9 +230,7 @@ export default function init({ canvas, ui }) {
     return API
 }
 
-export { ELEMENT_TYPE, LINE_ATTACK_ID, LINE_STATUS }
-
-// export { ELEMENT_TYPE, LINE_ATTACK_ID, LINE_STATUS }
+export { LINE_ATTACK_ID, LINE_STATUS }
 
 // HELPERS
 // isoCamera.onChange = updateUi

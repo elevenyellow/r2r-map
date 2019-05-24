@@ -16,7 +16,7 @@ import { getTileById, getTroopsById, getLineById } from './getters'
 import { getPositionByCordinate } from '../utils/hexagons'
 
 export const TILE_OWNER_CLASSES = {
-    [OWNER.PLAYER]: 'tileOwner player',
+    [OWNER.ME]: 'tileOwner me',
     [OWNER.ENEMY]: 'tileOwner enemy'
 }
 
@@ -145,10 +145,10 @@ export default function createApi({
             const tile = getTileById({ tiles, idTile })
             tile.changeRecruitmentPower(power)
         },
-        addOwnerAsPlayer: ({ idTile, idOwner, name = '', units = 0 }) => {
+        addOwnerAsMe: ({ idTile, idOwner, name = '', units = 0 }) => {
             const tile = getTileById({ tiles, idTile })
             tile.addOwner(idOwner)
-            tile.changeOwner(idOwner, TILE_OWNER_CLASSES[OWNER.PLAYER])
+            tile.changeOwner(idOwner, TILE_OWNER_CLASSES[OWNER.ME])
             tile.changeName(idOwner, name)
             tile.changeUnits(idOwner, units)
         },

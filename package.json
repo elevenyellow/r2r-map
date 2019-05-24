@@ -11,7 +11,7 @@
         "d3-transition": "^1.2.0",
         "d3-zoom": "^1.7.3",
         "honeycomb-grid": "^2.0.1",
-        "runandrisk-common": "file:../runandrisk-common",
+        "runandrisk-common": "github:ocio/runandrisk-common",
         "three": "^0.100.0"
     }
 }

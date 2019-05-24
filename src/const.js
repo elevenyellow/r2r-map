@@ -1,5 +1,5 @@
 const OWNER = {
-    PLAYER: 1,
+    ME: 1,
     ENEMY: 2
 }
 

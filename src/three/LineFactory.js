@@ -1,5 +1,6 @@
 import * as THREE from 'three'
-import { ELEMENT_TYPE, LINE_STATUS } from '../const'
+import { ELEMENT_TYPE } from 'runandrisk-common/const'
+import { LINE_STATUS } from '../const'
 import { LINE } from '../config/sprites/others'
 import { textureLoader } from './utils'
 

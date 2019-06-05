@@ -1,3 +1,4 @@
+import { ELEMENT_TYPE } from 'runandrisk-common/const'
 import ThreeWorld from './three/ThreeWorld'
 import Terrain from './three/Terrain'
 import createApi from './api'
@@ -72,7 +73,8 @@ export default function init({ canvas, ui }) {
                 })
                 if (element !== undefined) {
                     const idFrom = element.troopOrTile.id
-                    if (API.shallWeStartAttack({ idFrom })) {
+                    const elementType = element.type
+                    if (API.shallWeStartAttack({ idFrom, elementType })) {
                         state.tilesHighLighting = API.getTilesToAttack({
                             idFrom
                         })
@@ -113,7 +115,8 @@ export default function init({ canvas, ui }) {
                     element !== undefined &&
                     API.shallWeAttack({
                         idFrom,
-                        idTo: element.troopOrTile.id
+                        idTo: element.troopOrTile.id,
+                        elementType: element.type
                     })
                 ) {
                     const idTile = element.troopOrTile.id
@@ -195,8 +198,8 @@ export default function init({ canvas, ui }) {
     onAnimationFrame()
 
     // EXTERNAL API CALLS (DOP)
-    API.shallWeStartAttack = function({ idFrom }) {}
-    API.shallWeAttack = function({ idFrom, idTo }) {}
+    API.shallWeStartAttack = function({ idFrom, elementType }) {}
+    API.shallWeAttack = function({ idFrom, idTo, elementType }) {}
     API.getTilesToAttack = function({ idFrom }) {}
     API.onAttack = function({ idFrom, idTo }) {}
     API.onSelect = function({ type, id }) {}

@@ -76,7 +76,8 @@ export default function init({ canvas, ui }) {
                     const elementType = element.type
                     if (API.shallWeStartAttack({ idFrom, elementType })) {
                         state.tilesHighLighting = API.getTilesToAttack({
-                            idFrom
+                            idFrom,
+                            elementType
                         })
                         state.preparingAttack = true
                         state.idAttackFrom = element.troopOrTile.id
@@ -200,7 +201,7 @@ export default function init({ canvas, ui }) {
     // EXTERNAL API CALLS (DOP)
     API.shallWeStartAttack = function({ idFrom, elementType }) {}
     API.shallWeAttack = function({ idFrom, idTo, elementType }) {}
-    API.getTilesToAttack = function({ idFrom }) {}
+    API.getTilesToAttack = function({ idFrom, elementType }) {}
     API.onAttack = function({ idFrom, idTo }) {}
     API.onSelect = function({ type, id }) {}
     API.onUnselect = function() {}

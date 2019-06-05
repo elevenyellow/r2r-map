@@ -1,6 +1,5 @@
 import * as THREE from 'three'
-import { OWNER } from '../const'
-const { TILE } = require('runandrisk-common/const')
+import { TILE, OWNER } from 'runandrisk-common/const'
 import { VILLAGE, COTTAGE } from '../config/sprites/animated'
 // import { LINE } from '../config/sprites/svg'
 import { DECORATIVE_ITEMS } from '../config/parameters'

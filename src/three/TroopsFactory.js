@@ -1,8 +1,9 @@
 import * as THREE from 'three'
+import { ELEMENT_TYPE } from 'runandrisk-common/const'
+import { TROOPS_UNITS_UI_ELEMENT } from '../const'
 import { SmartDiv, TroopsUnitsUiElement } from '../ui'
 import { worldToScreen, textureLoader } from './utils'
 import { GENERAL } from '../config/parameters'
-import { ELEMENT_TYPE, TROOPS_UNITS_UI_ELEMENT } from '../const'
 
 export default function TroopsFactory({ ui, sceneSprites, camera }) {
     return ({ id, fromX, fromZ, toX, toZ, spriteConf }) => {

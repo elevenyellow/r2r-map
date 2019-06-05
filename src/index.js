@@ -72,7 +72,8 @@ export default function init({ canvas, ui }) {
                 })
                 if (element !== undefined) {
                     const idFrom = element.troopOrTile.id
-                    if (API.shallWeStartAttack({ idFrom })) {
+                    const type = element.type
+                    if (API.shallWeStartAttack({ idFrom, type })) {
                         state.tilesHighLighting = API.getTilesToAttack({
                             idFrom
                         })
@@ -108,33 +109,36 @@ export default function init({ canvas, ui }) {
                     mouseX,
                     mouseY
                 })
-                const idFrom = state.idAttackFrom
-                if (
-                    element !== undefined &&
-                    API.shallWeAttack({
-                        idFrom,
-                        idTo: element.troopOrTile.id
-                    })
-                ) {
-                    const idTile = element.troopOrTile.id
-                    state.idAttackTo = idTile
-                    unhighlightTiles(state.tilesHighLighting)
-                    API.highLightRed({ idTile })
-                    API.changeLineDirection({
-                        idLine: LINE_ATTACK_ID,
-                        x: element.troopOrTile.x,
-                        z: element.troopOrTile.z,
-                        status: LINE_STATUS.CORRECT
-                    })
-                } else {
-                    state.idAttackTo = undefined
-                    highlightTiles(state.tilesHighLighting)
-                    API.changeLineDirection({
-                        idLine: LINE_ATTACK_ID,
-                        x,
-                        z,
-                        status: LINE_STATUS.INCORRECT
-                    })
+                if (element !== undefined) {
+                    const idFrom = state.idAttackFrom
+                    const type = element.type
+                    if (
+                        API.shallWeAttack({
+                            idFrom,
+                            idTo: element.troopOrTile.id,
+                            type
+                        })
+                    ) {
+                        const idTile = element.troopOrTile.id
+                        state.idAttackTo = idTile
+                        unhighlightTiles(state.tilesHighLighting)
+                        API.highLightRed({ idTile })
+                        API.changeLineDirection({
+                            idLine: LINE_ATTACK_ID,
+                            x: element.troopOrTile.x,
+                            z: element.troopOrTile.z,
+                            status: LINE_STATUS.CORRECT
+                        })
+                    } else {
+                        state.idAttackTo = undefined
+                        highlightTiles(state.tilesHighLighting)
+                        API.changeLineDirection({
+                            idLine: LINE_ATTACK_ID,
+                            x,
+                            z,
+                            status: LINE_STATUS.INCORRECT
+                        })
+                    }
                 }
             }
         }

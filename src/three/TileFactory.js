@@ -69,13 +69,17 @@ export default function TileFactory({ ui, scene, camera }) {
                 recruitmentPower.changePower(power)
             },
             addOwner: id => {
-                const owner = OwnerUiElement()
-                div.element.insertBefore(
-                    owner.element,
-                    recruitmentPower.element
-                )
-                owners[id] = owner
-                return owner
+                if (owners[id] === undefined) {
+                    const owner = OwnerUiElement()
+                    div.element.insertBefore(
+                        owner.element,
+                        recruitmentPower.element
+                    )
+                    owners[id] = owner
+                    return owner
+                } else {
+                    return owners[id]
+                }
             },
             removeOwner: id => {
                 const owner = owners[id]

@@ -5,6 +5,7 @@ import createApi from './api'
 import OTHERS from './config/sprites/others'
 import { GENERAL } from './config/parameters'
 import TWEEN from '@tweenjs/tween.js'
+import * as THREE from 'three'
 import { LINE_ATTACK_ID, LINE_STATUS } from './const'
 import { getMousePositionFromD3Event } from './utils'
 
@@ -49,6 +50,8 @@ export default function init({ canvas, ui }) {
     // if (typeof window != 'undefined') {
     //     window.API = API
     // }
+
+    const clock = new THREE.Clock()
 
     // Capturing when user select a tile or troops
     canvas.addEventListener('click', e => {
@@ -185,6 +188,12 @@ export default function init({ canvas, ui }) {
             renderer.autoClear = false
         })
         requestAnimationFrame(onAnimationFrame)
+
+        // Updating troops animation
+        const delta = clock.getDelta()
+        API.getTroops().forEach(troop => {
+            troop.spriteManager.update(delta)
+        })
 
         // Updating UI
         if (API !== undefined) {

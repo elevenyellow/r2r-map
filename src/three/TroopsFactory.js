@@ -1,14 +1,14 @@
 import * as THREE from 'three'
 import { ELEMENT_TYPE } from 'runandrisk-common/const'
 import { SmartDiv, TroopsUnitsUiElement } from '../ui'
-import { worldToScreen, textureLoader } from './utils'
+import { worldToScreen, textureLoader, SpriteManager } from './utils'
 import { GENERAL } from '../config/parameters'
 import { TROOPS_UNITS_UI_ELEMENT } from '../const'
 
 export default function TroopsFactory({ ui, sceneSprites, camera }) {
     return ({ id, fromX, fromZ, toX, toZ, spriteConf }) => {
         const div = SmartDiv({ container: ui })
-        const sprite = createTroopsSprite({
+        const { sprite, spriteManager } = createTroopsSprite({
             scene: sceneSprites,
             fromX,
             fromZ,
@@ -25,6 +25,7 @@ export default function TroopsFactory({ ui, sceneSprites, camera }) {
             type: ELEMENT_TYPE.TROOPS,
             div,
             sprite,
+            spriteManager,
             updatePositionDiv: ({ canvasWidth, canvasHeight }) => {
                 const position = worldToScreen({
                     x: sprite.position.x + spriteConf.uiOffsetX,
@@ -64,14 +65,26 @@ export default function TroopsFactory({ ui, sceneSprites, camera }) {
 }
 
 export function createTroopsSprite({ scene, spriteConf, fromX, fromZ }) {
-    const textureLoaded = textureLoader.load(spriteConf.url)
-    const material = new THREE.SpriteMaterial({
-        map: textureLoaded
-    })
-    const sprite = new THREE.Sprite(material)
-    sprite.scale.set(spriteConf.scale.x, spriteConf.scale.y, spriteConf.scale.z)
+    const spriteManager = SpriteManager()
+    const textureLoaded = textureLoader.load(
+        'https://i.ibb.co/5LyxShK/spritesheet-1.png'
+    ) //spriteConf.urlFront
+    const sprite = spriteManager.ActionSprite(textureLoaded, 1, 31, 31, 25)
+
     sprite.position.x = fromX
     sprite.position.z = fromZ
+    sprite.scale.set(spriteConf.scale.x, spriteConf.scale.y, spriteConf.scale.z)
     scene.add(sprite)
-    return sprite
+    return { sprite, spriteManager }
+
+    // const textureLoaded = textureLoader.load(spriteConf.url)
+    // const material = new THREE.SpriteMaterial({
+    //     map: textureLoaded
+    // })
+    // const sprite = new THREE.Sprite(material)
+    // sprite.scale.set(spriteConf.scale.x, spriteConf.scale.y, spriteConf.scale.z)
+    // sprite.position.x = fromX
+    // sprite.position.z = fromZ
+    // scene.add(sprite)
+    // return sprite
 }

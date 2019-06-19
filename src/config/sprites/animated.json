@@ -20,6 +20,8 @@
         "uiOffsetX": 2,
         "uiOffsetZ": 2,
         "url": "assets/map/animated/troops.png",
+        "urlFront": "assets/map/animated/unit-front.png",
+        "urlBack": "assets/map/animated/unit-back.png",
         "scale": { "x": 2, "y": 2, "z": 2 }
     }
 }

@@ -3,18 +3,20 @@ import { textureLoader } from './utils'
 
 export default function SpriteBorder({ url, urlBorder, scale }) {
     // Loading body
+    const texture = textureLoader.load(url)
     const material = new THREE.SpriteMaterial({
-        map: textureLoader.load(url)
+        map: texture
     })
     const body = new THREE.Sprite(material)
-    material.map.minFilter = THREE.LinearFilter //THREE.LinearMipMapNearestFilter
+    texture.minFilter = THREE.LinearFilter //THREE.LinearMipMapNearestFilter
     // textureLoaded.anisotropy = window.renderer.capabilities.getMaxAnisotropy()
 
     // Loading border
+    const textureborder = textureLoader.load(urlBorder)
     const materialBorder = new THREE.SpriteMaterial({
-        map: textureLoader.load(urlBorder)
+        map: textureborder
     })
-    materialBorder.map.minFilter = THREE.LinearFilter //THREE.LinearMipMapNearestFilter
+    textureborder.minFilter = THREE.LinearFilter //THREE.LinearMipMapNearestFilter
     const border = new THREE.Sprite(materialBorder)
 
     const sprite = new THREE.Group()

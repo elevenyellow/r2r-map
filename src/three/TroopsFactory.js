@@ -64,10 +64,11 @@ export default function TroopsFactory({ ui, sceneSprites, camera }) {
 }
 
 export function createTroopsSprite({ scene, spriteConf, fromX, fromZ }) {
-    const textureLoaded = textureLoader.load(spriteConf.url)
+    const texture = textureLoader.load(spriteConf.url)
     const material = new THREE.SpriteMaterial({
-        map: textureLoaded
+        map: texture
     })
+    texture.minFilter = THREE.LinearMipMapLinearFilter
     const sprite = new THREE.Sprite(material)
     sprite.scale.set(spriteConf.scale.x, spriteConf.scale.y, spriteConf.scale.z)
     sprite.position.x = fromX

@@ -8,9 +8,9 @@ export default function ThreeWorld({ canvas, onStart, onChange, onEnd }) {
     const sceneTerrain = new THREE.Scene()
     const sceneSprites = new THREE.Scene()
     const renderer = new THREE.WebGLRenderer({
-        canvas,
-        alpha: true,
-        antialias: true
+        canvas
+        // alpha: true,
+        // antialias: true
     })
     const camera = new THREE.PerspectiveCamera(
         2, // fov

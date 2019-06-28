@@ -118,9 +118,9 @@ export default function TileFactory({
                 const owner = owners[id]
                 owner.changeUnits(units)
             },
-            changeOwner: (id, className) => {
+            changeColor: (id, color) => {
                 const owner = owners[id]
-                owner.changeOwner(className)
+                owner.changeColor(color)
             },
             startHighlight: () => {
                 if (tweenBorder === undefined) {

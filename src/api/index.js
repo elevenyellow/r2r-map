@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { TILE, OWNER } from 'runandrisk-common/const'
+import { TILE } from 'runandrisk-common/const'
 import { VILLAGE, COTTAGE } from '../config/sprites/animated'
 // import { LINE } from '../config/sprites/svg'
 import { DECORATIVE_ITEMS } from '../config/parameters'
@@ -15,8 +15,10 @@ import { getTileById, getTroopsById, getLineById } from './getters'
 import { getPositionByCordinate } from '../utils/hexagons'
 
 export const TILE_OWNER_CLASSES = {
-    [OWNER.ME]: 'tileOwner me',
-    [OWNER.ENEMY]: 'tileOwner enemy'
+    [1]: 'tileOwner color1',
+    [2]: 'tileOwner color2',
+    [3]: 'tileOwner color3',
+    [4]: 'tileOwner color4'
 }
 
 export default function createApi({
@@ -145,17 +147,24 @@ export default function createApi({
             const tile = getTileById({ tiles, idTile })
             tile.changeRecruitmentPower(power)
         },
-        addOwnerAsMe: ({ idTile, idOwner, name = '', units = 0 }) => {
+        // addOwnerAsMe: ({ idTile, idOwner, name = '', units = 0 }) => {
+        //     const tile = getTileById({ tiles, idTile })
+        //     tile.addOwner(idOwner)
+        //     tile.changeOwner(idOwner, TILE_OWNER_CLASSES[OWNER.ME])
+        //     tile.changeName(idOwner, name)
+        //     tile.changeUnits(idOwner, units)
+        // },
+        // addOwnerAsEnemy: ({ idTile, idOwner, name = '', units = 0 }) => {
+        //     const tile = getTileById({ tiles, idTile })
+        //     tile.addOwner(idOwner)
+        //     tile.changeOwner(idOwner, TILE_OWNER_CLASSES[OWNER.ENEMY])
+        //     tile.changeName(idOwner, name)
+        //     tile.changeUnits(idOwner, units)
+        // },
+        addOwner: ({ idTile, idOwner, color, name = '', units = 0 }) => {
             const tile = getTileById({ tiles, idTile })
             tile.addOwner(idOwner)
-            tile.changeOwner(idOwner, TILE_OWNER_CLASSES[OWNER.ME])
-            tile.changeName(idOwner, name)
-            tile.changeUnits(idOwner, units)
-        },
-        addOwnerAsEnemy: ({ idTile, idOwner, name = '', units = 0 }) => {
-            const tile = getTileById({ tiles, idTile })
-            tile.addOwner(idOwner)
-            tile.changeOwner(idOwner, TILE_OWNER_CLASSES[OWNER.ENEMY])
+            tile.changeColor(idOwner, color)
             tile.changeName(idOwner, name)
             tile.changeUnits(idOwner, units)
         },

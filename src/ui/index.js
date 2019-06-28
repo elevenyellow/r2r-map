@@ -42,8 +42,8 @@ export function OwnerUiElement() {
                 unitsElement.style.display = 'none'
             }
         },
-        changeOwner: className => {
-            element.className = className
+        changeColor: color => {
+            element.className = `tileOwner color${color}`
         }
     }
 }

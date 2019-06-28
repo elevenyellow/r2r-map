@@ -9,7 +9,12 @@ import { GENERAL } from '../config/parameters'
 import { RECRUITMENT_POWER_UI_ELEMENT } from '../const'
 import { ARROW } from '../config/sprites/others'
 
-export default function TileFactory({ ui, scene, camera }) {
+export default function TileFactory({
+    ui,
+    sceneSprites,
+    sceneTerrain,
+    camera
+}) {
     return ({ id, area, x, z, spriteConf, type }) => {
         let tweenBorder
         const owners = {}
@@ -25,23 +30,36 @@ export default function TileFactory({ ui, scene, camera }) {
         const arrow = SpriteBorder(ARROW)
         arrow.sprite.visible = false
 
+        // const geometry =
+        //     type === TILE.VILLAGE
+        //         ? new THREE.TorusGeometry(6, 0.35, 2, 64, Math.PI * 1.5) // village
+        //         : new THREE.TorusGeometry(3.5, 0.3, 2, 64) // cottage
+        // const material = new THREE.MeshBasicMaterial({ color: 0xff2200 })
+        // material.transparent = true
+        // material.opacity = 0.6
+        // const torus = new THREE.Mesh(geometry, material)
+        // torus.position.x = x
+        // torus.position.z = z
+        // torus.rotation.x = Math.PI / 2
+        // sceneTerrain.add(torus)
+
         const sprite = new THREE.Group()
         sprite.position.x = x
         sprite.position.z = z
         sprite.add(houses.sprite)
         sprite.add(arrow.sprite)
-        scene.add(sprite)
+        sceneSprites.add(sprite)
 
         // const { circle } = createCircleHighlight()
         // circle.position.x = x
         // circle.position.y = -1
         // circle.position.z = z
-        // scene.add(circle)
+        // sceneSprites.add(circle)
 
         // const helper = new THREE.AxesHelper(10)
         // helper.position.x = x
         // helper.position.z = z
-        // scene.add(helper)
+        // sceneSprites.add(helper)
 
         return {
             id,

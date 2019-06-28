@@ -35,7 +35,8 @@ export default function createApi({
     const createTileSprite = TileFactory({
         ui,
         camera,
-        scene: sceneSprites
+        sceneSprites,
+        sceneTerrain
     })
     const createTroopsSprite = TroopsFactory({
         ui,

@@ -30,16 +30,24 @@ export default function TileFactory({
         const arrow = SpriteBorder(ARROW)
         arrow.sprite.visible = false
 
+        // // const color = 0x009bf4
+        // // const color = 0xf02314
+        // // const color = 0x4db740
+        // const color = 0xf7b200
+        // houses.border.material.color = new THREE.Color(color)
+        // houses.border.material.opacity = 0.6
+
         // const geometry =
         //     type === TILE.VILLAGE
-        //         ? new THREE.TorusGeometry(6, 0.35, 2, 64, Math.PI * 1.5) // village
-        //         : new THREE.TorusGeometry(3.5, 0.3, 2, 64) // cottage
-        // const material = new THREE.MeshBasicMaterial({ color: 0xff2200 })
+        //         ? new THREE.CircleGeometry(3.5, 64) // village
+        //         : new THREE.CircleGeometry(1.8, 64) // cottage
+        // const material = new THREE.MeshBasicMaterial({ color: color })
         // material.transparent = true
-        // material.opacity = 0.6
+        // material.opacity = 0.4
         // const torus = new THREE.Mesh(geometry, material)
         // torus.position.x = x
         // torus.position.z = z
+        // torus.rotation.y = Math.PI
         // torus.rotation.x = Math.PI / 2
         // sceneTerrain.add(torus)
 

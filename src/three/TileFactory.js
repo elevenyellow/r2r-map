@@ -2,7 +2,7 @@ import TWEEN from '@tweenjs/tween.js'
 import * as THREE from 'three'
 import { TILE, ELEMENT_TYPE } from 'runandrisk-common/const'
 // import { CIRCLE } from '../../config/sprites/svg'
-import { SmartDiv, OwnerUiElement, RecruitmentPowerUiElement } from '../ui'
+import { SmartDiv, PlayerUiElement, RecruitmentPowerUiElement } from '../ui'
 import SpriteBorder from './SpriteBorder'
 import { worldToScreen } from './utils'
 import { GENERAL } from '../config/parameters'
@@ -30,20 +30,21 @@ export default function TileFactory({
         const arrow = SpriteBorder(ARROW)
         arrow.sprite.visible = false
 
-        // // const color = 0x009bf4
+        // const color = 0x009bf4
         // // const color = 0xf02314
         // // const color = 0x4db740
-        // const color = 0xf7b200
+        // // const color = 0xf7b200
         // houses.border.material.color = new THREE.Color(color)
-        // houses.border.material.opacity = 0.6
+        // houses.border.material.opacity = 0.7
+        // houses.border.visible = true
 
         // const geometry =
         //     type === TILE.VILLAGE
-        //         ? new THREE.CircleGeometry(3.5, 64) // village
-        //         : new THREE.CircleGeometry(1.8, 64) // cottage
+        //         ? new THREE.CircleGeometry(3.3, 64) // village
+        //         : new THREE.CircleGeometry(1.5, 64) // cottage
         // const material = new THREE.MeshBasicMaterial({ color: color })
         // material.transparent = true
-        // material.opacity = 0.4
+        // material.opacity = 0.5
         // const torus = new THREE.Mesh(geometry, material)
         // torus.position.x = x
         // torus.position.z = z
@@ -98,9 +99,9 @@ export default function TileFactory({
             changeRecruitmentPower: power => {
                 recruitmentPower.changePower(power)
             },
-            addOwner: id => {
+            addPlayer: id => {
                 if (owners[id] === undefined) {
-                    const owner = OwnerUiElement()
+                    const owner = PlayerUiElement()
                     div.element.insertBefore(
                         owner.element,
                         recruitmentPower.element
@@ -111,7 +112,7 @@ export default function TileFactory({
                     return owners[id]
                 }
             },
-            removeOwner: id => {
+            removePlayer: id => {
                 const owner = owners[id]
                 if (owner !== undefined) {
                     delete owners[id]
@@ -127,6 +128,7 @@ export default function TileFactory({
                 owner.changeUnits(units)
             },
             changeColor: (id, color) => {
+                console.log('changeColor', color)
                 const owner = owners[id]
                 owner.changeColor(color)
             },

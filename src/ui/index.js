@@ -23,7 +23,7 @@ export function SmartDiv({ container, offsetX = 0, offsetY = 0 }) {
     }
 }
 
-export function OwnerUiElement() {
+export function PlayerUiElement() {
     const element = document.createElement('div')
     const textElement = document.createElement('div')
     const unitsElement = document.createElement('div')
@@ -43,7 +43,7 @@ export function OwnerUiElement() {
             }
         },
         changeColor: color => {
-            element.className = `tileOwner color${color}`
+            element.className = `tilePlayer color${color}`
         }
     }
 }

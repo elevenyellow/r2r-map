@@ -15,10 +15,10 @@ import { getTileById, getTroopsById, getLineById } from './getters'
 import { getPositionByCordinate } from '../utils/hexagons'
 
 export const TILE_OWNER_CLASSES = {
-    [1]: 'tileOwner color1',
-    [2]: 'tileOwner color2',
-    [3]: 'tileOwner color3',
-    [4]: 'tileOwner color4'
+    [1]: 'tilePlayer color1',
+    [2]: 'tilePlayer color2',
+    [3]: 'tilePlayer color3',
+    [4]: 'tilePlayer color4'
 }
 
 export default function createApi({
@@ -147,34 +147,20 @@ export default function createApi({
             const tile = getTileById({ tiles, idTile })
             tile.changeRecruitmentPower(power)
         },
-        // addOwnerAsMe: ({ idTile, idOwner, name = '', units = 0 }) => {
-        //     const tile = getTileById({ tiles, idTile })
-        //     tile.addOwner(idOwner)
-        //     tile.changeOwner(idOwner, TILE_OWNER_CLASSES[OWNER.ME])
-        //     tile.changeName(idOwner, name)
-        //     tile.changeUnits(idOwner, units)
-        // },
-        // addOwnerAsEnemy: ({ idTile, idOwner, name = '', units = 0 }) => {
-        //     const tile = getTileById({ tiles, idTile })
-        //     tile.addOwner(idOwner)
-        //     tile.changeOwner(idOwner, TILE_OWNER_CLASSES[OWNER.ENEMY])
-        //     tile.changeName(idOwner, name)
-        //     tile.changeUnits(idOwner, units)
-        // },
-        addOwner: ({ idTile, idOwner, color, name = '', units = 0 }) => {
+        addPlayer: ({ idTile, idPlayer, color, name = '', units = 0 }) => {
             const tile = getTileById({ tiles, idTile })
-            tile.addOwner(idOwner)
-            tile.changeColor(idOwner, color)
-            tile.changeName(idOwner, name)
-            tile.changeUnits(idOwner, units)
+            tile.addPlayer(idPlayer)
+            tile.changeColor(idPlayer, color)
+            tile.changeName(idPlayer, name)
+            tile.changeUnits(idPlayer, units)
         },
-        removeOwner: ({ idTile, idOwner }) => {
+        removePlayer: ({ idTile, idPlayer }) => {
             const tile = getTileById({ tiles, idTile })
-            tile.removeOwner(idOwner)
+            tile.removePlayer(idPlayer)
         },
-        changeUnits: ({ idTile, idOwner, units }) => {
+        changeUnits: ({ idTile, idPlayer, units }) => {
             const tile = getTileById({ tiles, idTile })
-            tile.changeUnits(idOwner, units)
+            tile.changeUnits(idPlayer, units)
         },
         startHighlight: ({ idTile }) => {
             const tile = getTileById({ tiles, idTile })

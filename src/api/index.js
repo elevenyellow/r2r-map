@@ -149,8 +149,7 @@ export default function createApi({
         },
         addPlayer: ({ idTile, idPlayer, color, name = '', units = 0 }) => {
             const tile = getTileById({ tiles, idTile })
-            tile.addPlayer(idPlayer)
-            tile.changeColor(idPlayer, color)
+            tile.addPlayer(idPlayer, color)
             tile.changeName(idPlayer, name)
             tile.changeUnits(idPlayer, units)
         },

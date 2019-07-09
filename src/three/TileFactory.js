@@ -99,9 +99,9 @@ export default function TileFactory({
             changeRecruitmentPower: power => {
                 recruitmentPower.changePower(power)
             },
-            addPlayer: id => {
+            addPlayer: (id, color) => {
                 if (owners[id] === undefined) {
-                    const owner = PlayerUiElement()
+                    const owner = PlayerUiElement(color)
                     div.element.insertBefore(
                         owner.element,
                         recruitmentPower.element
@@ -127,11 +127,11 @@ export default function TileFactory({
                 const owner = owners[id]
                 owner.changeUnits(units)
             },
-            changeColor: (id, color) => {
-                console.log('changeColor', color)
-                const owner = owners[id]
-                owner.changeColor(color)
-            },
+            // changeColor: (id, color) => {
+            //     console.log('changeColor', color)
+            //     const owner = owners[id]
+            //     owner.changeColor(color)
+            // },
             startHighlight: () => {
                 if (tweenBorder === undefined) {
                     defaultColors({ houses, arrow })

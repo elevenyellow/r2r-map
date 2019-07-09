@@ -23,12 +23,13 @@ export function SmartDiv({ container, offsetX = 0, offsetY = 0 }) {
     }
 }
 
-export function PlayerUiElement() {
+export function PlayerUiElement(color) {
     const element = document.createElement('div')
     const textElement = document.createElement('div')
     const unitsElement = document.createElement('div')
     element.appendChild(textElement)
     element.appendChild(unitsElement)
+    element.className = `tilePlayer color${color}`
     return {
         element,
         changeName: name => {
@@ -41,9 +42,6 @@ export function PlayerUiElement() {
             } else {
                 unitsElement.style.display = 'none'
             }
-        },
-        changeColor: color => {
-            element.className = `tilePlayer color${color}`
         }
     }
 }

@@ -17,6 +17,7 @@ export default function TileFactory({
 }) {
     return ({ id, area, x, z, spriteConf, type }) => {
         let tweenBorder
+        let color
         const owners = {}
         const div = SmartDiv({ container: ui })
         const recruitmentPower = RecruitmentPowerUiElement({
@@ -30,27 +31,21 @@ export default function TileFactory({
         const arrow = SpriteBorder(ARROW)
         arrow.sprite.visible = false
 
-        // const color = 0x009bf4
-        // // const color = 0xf02314
-        // // const color = 0x4db740
-        // // const color = 0xf7b200
-        // houses.border.material.color = new THREE.Color(color)
-        // houses.border.material.opacity = 0.7
-        // houses.border.visible = true
-
-        // const geometry =
-        //     type === TILE.VILLAGE
-        //         ? new THREE.CircleGeometry(3.3, 64) // village
-        //         : new THREE.CircleGeometry(1.5, 64) // cottage
-        // const material = new THREE.MeshBasicMaterial({ color: color })
-        // material.transparent = true
-        // material.opacity = 0.5
-        // const torus = new THREE.Mesh(geometry, material)
-        // torus.position.x = x
-        // torus.position.z = z
-        // torus.rotation.y = Math.PI
-        // torus.rotation.x = Math.PI / 2
-        // sceneTerrain.add(torus)
+        const circle =
+            type === TILE.VILLAGE
+                ? new THREE.CircleGeometry(3.3, 64) // village
+                : new THREE.CircleGeometry(1.5, 64) // cottage
+        const circle_material = new THREE.MeshBasicMaterial()
+        circle_material.transparent = true
+        circle_material.opacity = 0.7
+        circle_material.visible = false
+        // circle_material.color = new THREE.Color(0xff0000)
+        const circle_mesh = new THREE.Mesh(circle, circle_material)
+        circle_mesh.position.x = x
+        circle_mesh.position.z = z
+        circle_mesh.rotation.y = Math.PI
+        circle_mesh.rotation.x = Math.PI / 2
+        sceneTerrain.add(circle_mesh)
 
         const sprite = new THREE.Group()
         sprite.position.x = x
@@ -127,16 +122,26 @@ export default function TileFactory({
                 const owner = owners[id]
                 owner.changeUnits(units)
             },
-            // changeColor: (id, color) => {
-            //     console.log('changeColor', color)
-            //     const owner = owners[id]
-            //     owner.changeColor(color)
-            // },
+            changeColor: c => {
+                color = c
+                houses.border.visible = true
+                houses.border.material.color = new THREE.Color(c)
+                houses.border.material.opacity = GENERAL.OWNER_BORDER_OPACITY
+                circle_material.visible = true
+                circle_material.color = new THREE.Color(c)
+            },
+            deleteColor: () => {
+                color = undefined
+                houses.border.visible = false
+                circle_material.visible = false
+            },
             startHighlight: () => {
                 if (tweenBorder === undefined) {
-                    defaultColors({ houses, arrow })
-                    arrow.sprite.visible = true
                     houses.border.visible = true
+                    houses.border.material.color = new THREE.Color(1, 1, 1)
+                    arrow.body.material.color = new THREE.Color(1, 1, 1)
+                    arrow.border.material.color = new THREE.Color(1, 1, 1)
+                    arrow.sprite.visible = true
                     tweenBorder = new TWEEN.Tween({
                         opacity: GENERAL.BORDER_TILE_MINIMUN_OPACITY,
                         arrowPositionY: GENERAL.ARROW_TILE_POSITION_Y_ORIGIN
@@ -166,8 +171,17 @@ export default function TileFactory({
                     tweenBorder = undefined
                 }
                 arrow.sprite.visible = false
-                houses.border.visible = false
-                defaultColors({ houses, arrow })
+                arrow.body.material.color = new THREE.Color(1, 1, 1)
+                arrow.border.material.color = new THREE.Color(1, 1, 1)
+                if (color === undefined) {
+                    houses.border.visible = false
+                    houses.border.material.color = new THREE.Color(1, 1, 1)
+                } else {
+                    houses.border.visible = true
+                    houses.border.material.color = new THREE.Color(color)
+                    houses.border.material.opacity =
+                        GENERAL.OWNER_BORDER_OPACITY
+                }
             },
             highLightRed: () => {
                 arrow.sprite.visible = true
@@ -180,12 +194,6 @@ export default function TileFactory({
             }
         }
     }
-}
-
-function defaultColors({ houses, arrow }) {
-    houses.border.material.color = new THREE.Color(1, 1, 1)
-    arrow.body.material.color = new THREE.Color(1, 1, 1)
-    arrow.border.material.color = new THREE.Color(1, 1, 1)
 }
 
 // function createCircleHighlight() {

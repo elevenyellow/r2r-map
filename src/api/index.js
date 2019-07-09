@@ -161,6 +161,14 @@ export default function createApi({
             const tile = getTileById({ tiles, idTile })
             tile.changeUnits(idPlayer, units)
         },
+        changeColor: ({ idTile, color }) => {
+            const tile = getTileById({ tiles, idTile })
+            tile.changeColor(color)
+        },
+        deleteColor: ({ idTile }) => {
+            const tile = getTileById({ tiles, idTile })
+            tile.deleteColor()
+        },
         startHighlight: ({ idTile }) => {
             const tile = getTileById({ tiles, idTile })
             tile.startHighlight()

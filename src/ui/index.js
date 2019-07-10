@@ -2,8 +2,10 @@ export function SmartDiv({ container, offsetX = 0, offsetY = 0 }) {
     const element = document.createElement('div')
     const style = element.style
     style.position = 'absolute'
+    // style.width = '200px'
+    // style.height = '200px'
     // style.pointerEvents = 'auto'
-    // style.background = 'red'
+    // style.background = 'rgba(0,0,0,.3)'
     container.appendChild(element)
     return {
         element,

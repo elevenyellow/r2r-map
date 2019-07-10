@@ -3,6 +3,7 @@ import * as THREE from 'three'
 import { TILE, ELEMENT_TYPE } from 'runandrisk-common/const'
 // import { CIRCLE } from '../../config/sprites/svg'
 import { SmartDiv, PlayerUiElement, RecruitmentPowerUiElement } from '../ui'
+import ProgressBar from '../ui/ProgressBar'
 import SpriteBorder from './SpriteBorder'
 import { worldToScreen } from './utils'
 import { GENERAL } from '../config/parameters'
@@ -18,8 +19,12 @@ export default function TileFactory({
     return ({ id, area, x, z, spriteConf, type }) => {
         let tweenBorder
         let color
+
         const owners = {}
         const div = SmartDiv({ container: ui })
+
+        const disputedBar = ProgressBar({ container: div.element })
+
         const recruitmentPower = RecruitmentPowerUiElement({
             className: RECRUITMENT_POWER_UI_ELEMENT
         })

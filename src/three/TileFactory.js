@@ -7,7 +7,7 @@ import ProgressBar from '../ui/ProgressBar'
 import SpriteBorder from './SpriteBorder'
 import { worldToScreen } from './utils'
 import { GENERAL } from '../config/parameters'
-import { RECRUITMENT_POWER_UI_ELEMENT } from '../const'
+import { RECRUITMENT_POWER_UI_ELEMENT, UI } from '../const'
 import { ARROW } from '../config/sprites/others'
 
 export default function TileFactory({
@@ -21,9 +21,25 @@ export default function TileFactory({
         let color
 
         const owners = {}
-        const div = SmartDiv({ container: ui })
+        const div = SmartDiv({
+            container: ui,
+            height:
+                type === TILE.VILLAGE
+                    ? UI.VILLAGE_DIV_HEIGHT
+                    : UI.COTTAGE_DIV_HEIGHT
+        })
 
-        const disputedBar = ProgressBar({ container: div.element })
+        const disputedBar = ProgressBar({
+            container: div.element,
+            size:
+                type === TILE.VILLAGE
+                    ? UI.VILLAGE_PROGRESSBAR_SIZE
+                    : UI.COTTAGE_PROGRESSBAR_SIZE,
+            stroke:
+                type === TILE.VILLAGE
+                    ? UI.VILLAGE_PROGRESSBAR_STROKE
+                    : UI.COTTAGE_PROGRESSBAR_STROKE
+        })
 
         const recruitmentPower = RecruitmentPowerUiElement({
             className: RECRUITMENT_POWER_UI_ELEMENT
@@ -84,9 +100,9 @@ export default function TileFactory({
             sprite,
             updatePositionDiv: ({ canvasWidth, canvasHeight }) => {
                 const position = worldToScreen({
-                    x: sprite.position.x + spriteConf.uiOffsetX,
+                    x: sprite.position.x /* + spriteConf.uiOffsetX*/,
                     y: sprite.position.y,
-                    z: sprite.position.z + spriteConf.uiOffsetZ,
+                    z: sprite.position.z /* + spriteConf.uiOffsetZ*/,
                     camera,
                     canvasWidth,
                     canvasHeight

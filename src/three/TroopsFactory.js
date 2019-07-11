@@ -3,7 +3,7 @@ import { ELEMENT_TYPE } from 'runandrisk-common/const'
 import { SmartDiv, TroopsUnitsUiElement } from '../ui'
 import { worldToScreen, textureLoader } from './utils'
 import { GENERAL } from '../config/parameters'
-import { TROOPS_UNITS_UI_ELEMENT } from '../const'
+import { TROOPS_UNITS_UI_ELEMENT, UI } from '../const'
 
 export default function TroopsFactory({ ui, sceneSprites, camera }) {
     return ({ id, fromX, fromZ, toX, toZ, spriteConf }) => {
@@ -27,9 +27,9 @@ export default function TroopsFactory({ ui, sceneSprites, camera }) {
             sprite,
             updatePositionDiv: ({ canvasWidth, canvasHeight }) => {
                 const position = worldToScreen({
-                    x: sprite.position.x + spriteConf.uiOffsetX,
+                    x: sprite.position.x /* + spriteConf.uiOffsetX*/,
                     y: sprite.position.y,
-                    z: sprite.position.z + spriteConf.uiOffsetZ,
+                    z: sprite.position.z /* + spriteConf.uiOffsetZ*/,
                     camera,
                     canvasWidth,
                     canvasHeight

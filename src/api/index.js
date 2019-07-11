@@ -256,6 +256,22 @@ export default function createApi({
                 sprite.position.z = spriteConfig.z
                 sceneSprites.add(sprite)
             })
+        },
+        showTileProgress: ({ idTile }) => {
+            const tile = getTileById({ tiles, idTile })
+            tile.showProgress()
+        },
+        hideTileProgress: ({ idTile }) => {
+            const tile = getTileById({ tiles, idTile })
+            tile.hideProgress()
+        },
+        changePercentageTileProgress: ({ idTile, percentage }) => {
+            const tile = getTileById({ tiles, idTile })
+            tile.changePercentage({ percentage })
+        },
+        changeColorTileProgress: ({ idTile, color }) => {
+            const tile = getTileById({ tiles, idTile })
+            tile.changeColor({ color })
         }
     }
 }

@@ -29,7 +29,7 @@ export default function TileFactory({
                     : UI.COTTAGE_DIV_HEIGHT
         })
 
-        const disputedBar = ProgressBar({
+        const progressBar = ProgressBar({
             container: div.element,
             size:
                 type === TILE.VILLAGE
@@ -212,6 +212,15 @@ export default function TileFactory({
                 // arrow.border.material.color = new THREE.Color(0xe13416)
                 arrow.sprite.position.y = GENERAL.ARROW_TILE_POSITION_Y_ORIGIN
                 houses.border.material.opacity = 1
+            },
+            showProgress: () => {
+                progressBar.show()
+            },
+            changePercentage: ({ percentage }) => {
+                progressBar.changePercentage({ percentage })
+            },
+            changeColor: ({ color }) => {
+                progressBar.changeColor({ color })
             }
         }
     }

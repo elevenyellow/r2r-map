@@ -219,7 +219,7 @@ export default function TileFactory({
             changePercentage: ({ percentage }) => {
                 progressBar.changePercentage({ percentage })
             },
-            changeColor: ({ color }) => {
+            changeColorProgressBar: ({ color }) => {
                 progressBar.changeColor({ color })
             }
         }

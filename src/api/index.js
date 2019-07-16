@@ -271,7 +271,7 @@ export default function createApi({
         },
         changeColorTileProgress: ({ idTile, color }) => {
             const tile = getTileById({ tiles, idTile })
-            tile.changeColor({ color })
+            tile.changeColorProgressBar({ color })
         }
     }
 }

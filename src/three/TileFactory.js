@@ -216,6 +216,9 @@ export default function TileFactory({
             showProgress: () => {
                 progressBar.show()
             },
+            hideProgress: () => {
+                progressBar.hide()
+            },
             changePercentage: ({ percentage }) => {
                 progressBar.changePercentage({ percentage })
             },
